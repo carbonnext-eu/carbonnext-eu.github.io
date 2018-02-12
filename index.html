@@ -66,16 +66,13 @@
   });
 	  
 $.ajax({
-   url: 'https://prtr.ec.europa.eu/pollutantreleaseSearch?LOV_AreaGroupID=1&LOV_PollutantID=15&ReportingYear=2015',
-   xhrFields: {
-      withCredentials: true
+   url: 'CO.json',
+   success: function(data) {
+	console.log(data);
    },
-	success: function(data) {
-	 console.log(data);
-	},
-	error: function() {
-	 console.log('An error occurred');
-	}
+   error: function() {
+	console.log('An error occurred');
+   }
 });
 	  
    var runLayer = omnivore.csv('data.csv', null, customLayer)
