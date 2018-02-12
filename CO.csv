@@ -4956,7 +4956,6 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1275312;2014;Carbon monoxide (CO);0.000514;FINANCIERA MADERERA, S.A. - COGENERACION DEL NOROESTE S.L.;SANTIAGO DE COMPOSTELA;Spain;42.913554;-8.498791;Manufacture of veneer sheets and wood-based panels;514000;kilogram
 1304801;2014;Carbon monoxide (CO);0.000507;Norbord Ltd, Pulp and Board Plant;Cowie;United Kingdom;56.0772;-3.86844;Manufacture of veneer sheets and wood-based panels;507000;kilogram
 1189469;2014;Carbon monoxide (CO);0.000598;FQM Kevitsa Mining Oy, Kevitsan kaivos;PETKULA;Finland;67.69043;26.93765;Mining of other non-ferrous metal ores;598000;kilogram
-FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryName;Lat;Long;NACEMainEconomicActivityName;TotalQuantity;UnitName;Total
 1113741;2014;Carbon monoxide (CO);0.000721;Estavayer Lait SA;Estavayer-le-Lac;Switzerland;46.84599433;6.85161235;Operation of dairies and cheese making;721000;kilogram
 1405650;2014;Carbon monoxide (CO);0.00576;Stabilimento di Portovesme;PORTOSCUSO;Italy;39.214722;8.419722;Other non-ferrous metal production;5760000;kilogram
 1234771;2014;Carbon monoxide (CO);0.0151;PGE Górnictwo i Energetyka Konwencjonalna S.A., Oddzia? Elektrownia Be?chatów;Rogowiec;Poland;51.265782;19.315338;Production of electricity;15100000;kilogram
