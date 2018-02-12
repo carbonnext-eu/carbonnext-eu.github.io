@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
   integrity="sha384-Zh+y1U8o6/7ni8Mp8szvUfZjGeKKS10CGH3IlD6L1X+XwzYgQ1llOjw/Wslc0cma"
   crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.1/css/dvf.css" integrity="sha256-Nd2GYmWjQVljoYgRUP2AWWniAYagCg1k7QhXa9N1kLg=" crossorigin="anonymous" />
   
   <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
   integrity="sha384-6rCYjRgWDEI2RlZxiVihj1WIZB/uvFiRCGpavTVgFrSPDL0Bk1AiqCW+mmv5h0LP"
@@ -17,6 +18,7 @@
   <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.1/css/dvf.min.css" integrity="sha256-5uAy8QzyDa8Zw5Peo+DoYafYtmaukqtPsHhnaL7bAWA=" crossorigin="anonymous" />
   <!-- Position the map and title with Cascading Style Sheet (.css) -->
   <style>
   body { margin:0; padding:0; }
@@ -65,10 +67,20 @@
     }
   });
 	  
+var magnitudeColorFunction = new L.HSLHueFunction(new L.Point(0,90), new L.Point(10,0), {outputSaturation: '100%', outputLuminosity: '25%'});
+var magnitudeFillColorFunction = new L.HSLHueFunction(new L.Point(0,90), new L.Point(10,0), {outputSaturation: '100%', outputLuminosity: '50%'});
+var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0,10), new L.Point(10,30));
    var runLayer = omnivore.csv('CO.csv', 
 	{latfield: 'latitude',
     	lonfield: 'longitude',
-    	delimiter: ';'}		       
+    	delimiter: ';',
+	displayOptions: {
+		'MTonnes': {
+			displayName: 'Emissions (MTonnes)',
+			color: magnitudeColorFunction,
+			fillColor: magnitudeFillColorFunction,
+			radius: magnitudeRadiusFunction
+		},}		       
 	, customLayer)
    .on('ready', function() {
      map.fitBounds(runLayer.getBounds());
