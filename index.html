@@ -65,17 +65,7 @@
     }
   });
 	  
-$.ajax({
-   url: 'CO.json',
-   success: function(data) {
-	console.log(data);
-   },
-   error: function() {
-	console.log('An error occurred');
-   }
-});
-	  
-   var runLayer = omnivore.csv('data.csv', null, customLayer)
+   var runLayer = omnivore.csv('CO.csv', null, customLayer)
    .on('ready', function() {
      map.fitBounds(runLayer.getBounds());
    }).addTo(map);
