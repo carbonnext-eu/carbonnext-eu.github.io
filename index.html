@@ -65,7 +65,11 @@
     }
   });
 	  
-   var runLayer = omnivore.csv('CO.csv', null, customLayer)
+   var runLayer = omnivore.csv('CO.csv', 
+	{latfield: 'latitude',
+    	lonfield: 'longitude',
+    	delimiter: ';'}		       
+	, customLayer)
    .on('ready', function() {
      map.fitBounds(runLayer.getBounds());
      console.log(runLayer);
