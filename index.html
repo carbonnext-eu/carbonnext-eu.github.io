@@ -75,14 +75,11 @@ $.ajax('CO.csv', {
 		    pointToLayer: function(feature, latlon) {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
 			// To draw a circle overlay with a radius in meters, use L.circle()
-			if(feature.properties.MTonnes>min + (max-min)*0.02){
-			  return L.circleMarker(latlon, {weight: 0, radius: ((feature.properties.MTonnes-min)/(max-min)*50+1)});
-			}
+			return L.circleMarker(latlon, {weight: 0, radius: ((feature.properties.MTonnes-min)/(max-min)*50+1)});
 		    },
 		    onEachFeature: function(feature, layer) {
 			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
-				  layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();
-				  
+				  layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();				  
 			    }
 			    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
 		    }
@@ -90,8 +87,9 @@ $.ajax('CO.csv', {
 		console.log(layers);
 		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
 		$('div#layercontrol').append($('<div id="layercontrolCO">'));
+		var i = 1;
 		for(layer in layers){
-			var checkb = $('div#layercontrolCO').append($('<label><input type="checkbox" data-layer="'+layer+'">'+layer+'</label><br>'));
+			var checkb = $('div#layercontrolCO').append($('<label><input type="checkbox" data-layer="'+i+'">'+layer+'</label><br>'));
 			// scope preserver for "layer"
 			console.log(checkb);
 			checkb.on('click', (function(layer) {    
