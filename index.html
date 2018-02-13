@@ -93,7 +93,8 @@ $.ajax('CO.csv', {
 		$('div#layercontrolCO input[type="checkbox"]').on('click', function() {
 			    var checkbox = $(this);
 			    // toggle the layer
-			    console.log(checkbox, this, checkbox.id, numberedLayers[checkbox.id.replace('COcheckb','')]);
+			    console.log(checkbox, this);
+			    console.log(checkbox.id, numberedLayers[checkbox.id.replace('COcheckb','')]);
 			    if (checkbox.is(':checked')) {
 				map.addLayer(numberedLayers[checkbox.id.replace('COcheckb','')]);
 			    }
