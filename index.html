@@ -86,10 +86,11 @@ $.ajax('CO.csv', {
             lonfield: 'longitude',
             delimiter: ';',
         }, function(err, geoJSON) {
-            // Setup a new data layer
-		console.log(geoJSON);
-	    //var sortedGeo = [].sort.call(geoJSON, function(a, b) {return parseFloat(a.properties.MTonnes) - parseFloat(b.properties.MTonnes)});
-	    //var top600 = [].slice.call(sortedGeo, 0, 600);
+		
+           /* // Setup a new data layer
+		console.log(geoJSON.features[0]);
+	    var sortedGeo = [].sort.call(geoJSON, function(a, b) {return parseFloat(a.properties.MTonnes) - parseFloat(b.properties.MTonnes)});
+	    var top600 = [].slice.call(sortedGeo, 0, 600);
 	//	console.log(sortedGeo, top600);
             dataLayer = new L.DataLayer(top600, {
                 displayOptions: {
@@ -116,7 +117,15 @@ $.ajax('CO.csv', {
                     iconAnchor: new L.Point(-4, 76)
                 }
             });
-	    map.addLayer(dataLayer);
+	    map.addLayer(dataLayer);*/
+		
+		dataLayer = L.featureLayer(geojson, {
+		    pointToLayer: function(feature, latlon) {
+			// L.circleMarker() draws a circle with fixed radius in pixels. 
+			// To draw a circle overlay with a radius in meters, use L.circle()
+			return L.circleMarker(latlon, {radius: feature.properties.MTonnes});
+		    }
+		}).addTo(map);
 	    controlLayers.addOverlay(dataLayer, 'Markers from data.csv');
         });
     }
