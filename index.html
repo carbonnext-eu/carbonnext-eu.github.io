@@ -21,9 +21,9 @@
   <!-- Position the map and title with Cascading Style Sheet (.css) -->
   <style>
   body { margin:0; padding:0; }
-  #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  #map { position: absolute; top:0; bottom:0; right:100px; left:0; }
   #map-title { position: relative; margin-top: 10px; margin-left: 50px; float: left; background: white; border: 2px solid rgba(0,0,0,0.2); padding: 6px 8px; font-family: Helvetica; font-weight: bold; font-size: 24px; z-index: 800; }
-  div#layercontrol {z-index:9999;}
+  div#layercontrol {position: absolute;top: 0; right: 0; width:100px;}
   div#layercontrolCO {padding-left:6px;}
   </style>
 </head>
@@ -32,6 +32,7 @@
   <!-- Display the map and title with HTML division tags  -->
   <div id="map-title">oh test</div>
   <div id="map"></div>
+  <div id="layercontrol" class="leaflet-right leaflet-top">
   </div>
 
   <!-- Create the map content with JavaScript (.js) -->
@@ -57,8 +58,8 @@ var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/ligh
 var dataLayer;
 var layers = {};
 $.ajax('CO.csv', {
-    error: function(xhr, status, error) {
-        console.log(status, error);
+    error: function(xhr,status,error){
+	    console.log(status,error);
     },
     success: function(data) {
         csv2geojson.csv2geojson(data, {
@@ -66,95 +67,51 @@ $.ajax('CO.csv', {
             lonfield: 'longitude',
             delimiter: ';',
         }, function(err, geojson) {
-            var max = Math.max.apply(Math, geojson.features.map(function(o) {
-                return o.properties.MTonnes;
-            }));
-            var min = Math.min.apply(Math, geojson.features.map(function(o) {
-                return o.properties.MTonnes;
-            }));
-            console.log(min, max);
-
-            dataLayer = L.geoJSON(geojson, {
-                pointToLayer: function(feature, latlon) {
-                    // L.circleMarker() draws a circle with fixed radius in pixels. 
-                    // To draw a circle overlay with a radius in meters, use L.circle()
-                    if (feature.properties.MTonnes > min + (max - min) * 0.02) {
-                        return L.circleMarker(latlon, {
-                            weight: 0,
-                            radius: ((feature.properties.MTonnes - min) / (max - min) * 50 + 1)
-                        });
-                    }
-                },
-                onEachFeature: function(feature, layer) {
-                    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
-                        layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();
-
-                    }
-                    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
-                }
-            });
-            console.log(layers);
-            // create the control
-	    L.Control.Boxes = L.Control.extend({
-		  options: {
-		    // topright, topleft, bottomleft, bottomright
-		    position: 'topright'
-		  },
-		  initialize: function (options /*{ data: {...}  }*/) {
-		    // constructor
-		    L.Util.setOptions(this, options);
-		  },
-		  onAdd: function (map) {
-		    // happens after added to map
-		    var container = L.DomUtil.create('div', 'layer-container');
-		    this.form = L.DomUtil.create('form', 'form', container);
-		    var group = L.DomUtil.create('div', 'form-group', this.form);
-		    var label = L.DomUtil.create('label', 'COlabel', group);
-		    this.input = L.DomUtil.create('input', 'COinput', label);
-		    this.input.type = 'checkbox';
-		    L.DomEvent.addListener(this.input, 'change', this.keyup, this);
-		    L.DomEvent.disableClickPropagation(container);
-		    return container;
-		  },
-		  onRemove: function (map) {
-		    // when removed
-		    L.DomEvent.removeListener(this._input, 'keyup', this.keyup, this);
-		  },
-		  keyup: function(e) {
-		    var layer = this.data().layer;
-                    console.log(layer, this.checked);
-                    if (this.checked) {
-                        if (layer == "CO") {
-                            map.addLayer(layers);
-                        } else {
-                            map.addLayer(layer);
-                        }
-                    } else {
-                        if (layer == "CO") {
-                            map.removeLayer(layers);
-                        }
-                        map.removeLayer(layer);
-                    }
-		  }		  
+		var max = Math.max.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
+		var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
+		console.log(min, max);
+		
+		dataLayer = L.geoJSON(geojson, {
+		    pointToLayer: function(feature, latlon) {
+			// L.circleMarker() draws a circle with fixed radius in pixels. 
+			// To draw a circle overlay with a radius in meters, use L.circle()
+			if(feature.properties.MTonnes>min + (max-min)*0.02){
+			  return L.circleMarker(latlon, {weight: 0, radius: ((feature.properties.MTonnes-min)/(max-min)*50+1)});
+			}
+		    },
+		    onEachFeature: function(feature, layer) {
+			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
+				  layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();
+				  
+			    }
+			    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
+		    }
 		});
-
-		L.control.boxes = function(id, options) {
-		  return new L.Control.Boxes(id, options);
+		console.log(layers);
+		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
+		$('div#layercontrol').append($('<div id="layercontrolCO">'));
+		for(layer in layers){
+			$('div#layercontrolCO').append($('<label><input type="checkbox" data-layer="'+layer+'">'+layer+'</label><br>'));
+			$('div#layercontrol input[type="checkbox"]').on('click', function() {    
+			    var checkbox = $(this);
+			    var layer = checkbox.data().layer; 
+			    // toggle the layer
+			    if (checkbox.is(':checked')) {
+				if(layer=="CO"){
+					map.addLayer(layers);
+				}
+				else {
+					map.addLayer(layer);
+				}
+			    } else {
+				if(layer=="CO"){
+					map.removeLayer(layers);
+				}
+				map.removeLayer(layer);
+			    }
+			});
 		}
-            /*
-                $('#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
-                $('#layercontrol').append($('<div id="layercontrolCO">'));
-		var i = 1;
-                for (layer in layers) {
-                    $('div#layercontrolCO').append($('<label><input type="checkbox" id="checkbox-' + i + '" data-layer="' + layer + '">' + layer + '</label><br>'));
-                    $('#checkbox-' + i).on("click", handleCommand, false);
-		    i = i + 1;
-                }
-                return div;
-            };
-            command.addTo(map);
-*/
-
+		
         });
     }
 });
