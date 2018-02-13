@@ -94,12 +94,12 @@ $.ajax('CO.csv', {
 			    var checkbox = $(this);
 			    // toggle the layer
 			    console.log(checkbox, this);
-			    console.log(checkbox.id, numberedLayers[checkbox.id.replace('COcheckb','')]);
+			    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);
 			    if (checkbox.is(':checked')) {
-				map.addLayer(numberedLayers[checkbox.id.replace('COcheckb','')]);
+				map.addLayer(numberedLayers[this.id.replace('COcheckb','')]);
 			    }
 			    else {
-				map.removeLayer(numberedLayers[checkbox.id.replace('COcheckb','')]);
+				map.removeLayer(numberedLayers[this.id.replace('COcheckb','')]);
 			    }
 			});
         });
