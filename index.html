@@ -123,7 +123,7 @@ $.ajax('CO.csv', {
                 $('#layercontrol').append($('<div id="layercontrolCO">'));
                 for (layer in layers) {
                     $('div#layercontrolCO').append($('<label><input type="checkbox" id="checkbox-' + layer + '" data-layer="' + layer + '">' + layer + '</label><br>'));
-                    $('#checkbox-' + layer).addEventListener("click", handleCommand, false);
+                    $('#checkbox-' + layer).on("click", handleCommand, false);
                 }
                 return div;
             };
