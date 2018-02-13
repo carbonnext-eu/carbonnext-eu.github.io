@@ -84,10 +84,10 @@ $.ajax('CO.csv', {
 		$('div#layercontrol').append($('<div id="layercontrolCO">'));
 		var i = 1;
 		for(layer in layers){
-			var checkb = $('div#layercontrolCO').append($('<label><input type="checkbox" data-layer="'+i+'">'+layer+'</label><br>'));
+			var checkb = $('div#layercontrolCO').append($('<label><input type="checkbox" data-layer="COcheckb'+i+'">'+layer+'</label><br>'));
 			// scope preserver for "layer"
-			console.log(checkb);
-			checkb.on('click', (function(layer) {    
+			console.log($('#COcheckb'+i));
+			$('#COcheckb'+i).on('click', (function(layer) {    
 			    var checkbox = $(this);
 			    // toggle the layer
 			    if (checkbox.is(':checked')) {
