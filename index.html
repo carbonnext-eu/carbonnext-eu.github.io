@@ -86,38 +86,7 @@ $.ajax('CO.csv', {
             lonfield: 'longitude',
             delimiter: ';',
         }, function(err, geojson) {
-		
-           /* // Setup a new data layer
-		console.log(geoJSON.features[0]);
-	    var sortedGeo = [].sort.call(geoJSON, function(a, b) {return parseFloat(a.properties.MTonnes) - parseFloat(b.properties.MTonnes)});
-	    var top600 = [].slice.call(sortedGeo, 0, 600);
-	//	console.log(sortedGeo, top600);
-            dataLayer = new L.DataLayer(top600, {
-                displayOptions: {
-                    'properties.MTonnes': {
-                        displayName: 'MTonnes',
-                        color: magnitudeColorFunction,
-                        fillColor: magnitudeFillColorFunction,
-                        radius: magnitudeRadiusFunction,
-                    },
-                },
-                layerOptions: {
-                    numberOfSides: 4,
-                    radius: 10,
-                    weight: 1,
-                    color: '#000',
-                    opacity: 0.2,
-                    stroke: true,
-                    fillOpacity: 0.7,
-                    dropShadow: true,
-                    gradient: true
-                },
-                tooltipOptions: {
-                    iconSize: new L.Point(90, 76),
-                    iconAnchor: new L.Point(-4, 76)
-                }
-            });
-	    map.addLayer(dataLayer);*/
+		console.log(geojson);
 		var max = Math.max.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		console.log(min, max);
