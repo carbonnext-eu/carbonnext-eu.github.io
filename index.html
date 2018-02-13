@@ -103,12 +103,13 @@ $.ajax('CO.csv', {
 		    onEachFeature: function(feature, layer) {
 			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
 				  layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();
+				  controlLayers.addOverlay(layers[feature.properties.NACEMainEconomicActivityName]);
 			    }
 			    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
 		    }
 		}).addTo(map);
 		console.log(layers);
-	    controlLayers.addOverlay(layers);
+	    
         });
     }
 });
