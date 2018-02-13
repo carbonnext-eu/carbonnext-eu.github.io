@@ -100,15 +100,15 @@ $.ajax('CO.csv', {
 		    var checkbox = $(this);
 		    var layer = checkbox.data().layer; 
 		    // toggle the layer
-		    if (checkbox):is('checked') {
-			if(layer="CO"){
+		    if (checkbox.is(':checked')) {
+			if(layer=="CO"){
 				map.addLayer(layers);
 			}
 			else {
 				map.addLayer(layer);
 			}
 		    } else {
-			if(layer="CO"){
+			if(layer=="CO"){
 				map.removeLayer(layers);
 			}
 			map.removeLayer(layer);
