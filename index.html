@@ -81,17 +81,16 @@ $.ajax('CO.csv', {
 	    console.log(status,error);
     },
     success: function(data) {
-	console.log(data);
         csv2geojson.csv2geojson(data, {
             latfield: 'latitude',
             lonfield: 'longitude',
             delimiter: ';',
         }, function(err, data) {
             // Setup a new data layer
-            console.log(data);
-            dataLayer = new L.DataLayer(data, {
+	    var top600 = data.sort(function(a, b) { return a.Variable1 > b.Variable1 ? 1 : -1; }).slice(0, 600);
+            dataLayer = new L.DataLayer(top600, {
                 displayOptions: {
-                    'MTonnes': {
+                    'properties.MTonnes': {
                         displayName: 'MTonnes',
                         color: magnitudeColorFunction,
                         fillColor: magnitudeFillColorFunction,
