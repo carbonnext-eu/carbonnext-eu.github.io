@@ -15,7 +15,7 @@
   integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
   crossorigin=""></script>
   <!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+  <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 <script src="leaflet-dvf.js"></script>
@@ -34,66 +34,96 @@
 
   <!-- Create the map content with JavaScript (.js) -->
   <script>
-
-  /* Set up the map with initial center and zoom level */
-  var map = L.map('map', {
-    center: [50.1218292,8.5995234], // EDIT latitude, longitude to re-center map
-    zoom: 6,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+/* Set up the map with initial center and zoom level */
+var map = L.map('map', {
+    center: [50.1218292, 8.5995234], // EDIT latitude, longitude to re-center map
+    zoom: 6, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
     scrollWheelZoom: false
-  });
+});
 
-  /* Control panel to display map layers */
-   var controlLayers = L.control.layers( null, null, {
+/* Control panel to display map layers */
+var controlLayers = L.control.layers(null, null, {
     position: "topright",
     collapsed: false
-   }).addTo(map);
+}).addTo(map);
 
-  /* Carto light-gray basemap tiles with labels */
-  var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+/* Carto light-gray basemap tiles with labels */
+var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
-  }).addTo(map); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
-  controlLayers.addBaseLayer(light, 'Carto Light basemap');
+}).addTo(map); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
+controlLayers.addBaseLayer(light, 'Carto Light basemap');
 
-  /* Stamen colored terrain basemap tiles with labels */
-  var terrain = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
+/* Stamen colored terrain basemap tiles with labels */
+var terrain = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
     attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-  }); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
-  controlLayers.addBaseLayer(terrain, 'Stamen Terrain basemap');
+}); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
+controlLayers.addBaseLayer(terrain, 'Stamen Terrain basemap');
 
-  /* Upload Latitude/Longitude markers from data.csv file, show Title in pop-up, and override initial center and zoom to fit all in map */
-  var customLayer = L.geoJson(null, {
+/* Upload Latitude/Longitude markers from data.csv file, show Title in pop-up, and override initial center and zoom to fit all in map */
+var customLayer = L.geoJson(null, {
     onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.Title);
+        layer.bindPopup(feature.properties.Title);
     }
-  });
-	  
-var magnitudeColorFunction = new L.HSLHueFunction(new L.Point(0,90), new L.Point(10,0), {outputSaturation: '100%', outputLuminosity: '25%'});
-var magnitudeFillColorFunction = new L.HSLHueFunction(new L.Point(0,90), new L.Point(10,0), {outputSaturation: '100%', outputLuminosity: '50%'});
-var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0,10), new L.Point(10,30));
-   var runLayer = omnivore.csv('CO.csv', 
-	{
-	   latfield: 'latitude',
-    	   lonfield: 'longitude',
-    	   delimiter: ';',
-	   displayOptions: {
-		'MTonnes': {
-		   displayName: 'Emissions (MTonnes)',
-		   color: magnitudeColorFunction,
-		   fillColor: magnitudeFillColorFunction,
-		   radius: magnitudeRadiusFunction
-		},
-	   },
-        }, customLayer)
-   .on('ready', function() {
-     map.fitBounds(runLayer.getBounds());
-     console.log(runLayer);
-   }).on('error', function(e) {
-        console.log(e);
-    }).addTo(map);
-   controlLayers.addOverlay(customLayer, 'Markers from data.csv');
+});
 
-  map.on('focus', () => { map.scrollWheelZoom.enable(); });
-  map.on('blur', () => { map.scrollWheelZoom.disable(); });
+var magnitudeColorFunction = new L.HSLHueFunction(new L.Point(0, 90), new L.Point(10, 0), {
+    outputSaturation: '100%',
+    outputLuminosity: '25%'
+});
+var magnitudeFillColorFunction = new L.HSLHueFunction(new L.Point(0, 90), new L.Point(10, 0), {
+    outputSaturation: '100%',
+    outputLuminosity: '50%'
+});
+var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0, 10), new L.Point(10, 30));
+var dataLayer;
+$.ajax('CO.csv', {
+    success: function(data) {
+        csv2geojson.csv2geojson(csvString, {
+            latfield: 'latitude',
+            lonfield: 'longitude',
+            delimiter: ';',
+        }, function(err, data) {
+            // Setup a new data layer
+            console.log(data);
+            dataLayer = new L.DataLayer(data, {
+                displayOptions: {
+                    'MTonnes': {
+                        displayName: 'MTonnes',
+                        color: magnitudeColorFunction,
+                        fillColor: magnitudeFillColorFunction,
+                        radius: magnitudeRadiusFunction,
+                        text: textFunction
+                    },
+                },
+                layerOptions: {
+                    numberOfSides: 4,
+                    radius: 10,
+                    weight: 1,
+                    color: '#000',
+                    opacity: 0.2,
+                    stroke: true,
+                    fillOpacity: 0.7,
+                    dropShadow: true,
+                    gradient: true
+                },
+                tooltipOptions: {
+                    iconSize: new L.Point(90, 76),
+                    iconAnchor: new L.Point(-4, 76)
+                }
+            });
+        });
+    }
+});
+
+map.addLayer(dataLayer);
+controlLayers.addOverlay(dataLayer, 'Markers from data.csv');
+
+map.on('focus', () => {
+    map.scrollWheelZoom.enable();
+});
+map.on('blur', () => {
+    map.scrollWheelZoom.disable();
+});
   </script>
 </body>
 </html>
