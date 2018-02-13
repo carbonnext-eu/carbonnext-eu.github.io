@@ -119,7 +119,7 @@ $.ajax('CO.csv', {
             });
 	    map.addLayer(dataLayer);*/
 		
-		dataLayer = L.featureLayer(geojson, {
+		dataLayer = L.geoJSON(geojson, {
 		    pointToLayer: function(feature, latlon) {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
 			// To draw a circle overlay with a radius in meters, use L.circle()
