@@ -90,6 +90,7 @@ $.ajax('CO.csv', {
 			$('#COcheckb'+i).on('change', (function(layer) {    
 			    var checkbox = $(this);
 			    // toggle the layer
+				console.log(checkbox, this, layer);
 			    if (checkbox.is(':checked')) {
 				map.addLayer(layer);
 			    }
