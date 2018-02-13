@@ -77,7 +77,11 @@ var magnitudeFillColorFunction = new L.HSLHueFunction(new L.Point(0, 90), new L.
 var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0, 10), new L.Point(10, 30));
 var dataLayer;
 $.ajax('CO.csv', {
+    error: function(xhr,status,error){
+	    console.log(status,error);
+    },
     success: function(data) {
+	console.log(data);
         csv2geojson.csv2geojson(data, {
             latfield: 'latitude',
             lonfield: 'longitude',
