@@ -114,12 +114,11 @@ $.ajax('CO.csv', {
                     iconAnchor: new L.Point(-4, 76)
                 }
             });
+	    map.addLayer(dataLayer);
+	    controlLayers.addOverlay(dataLayer, 'Markers from data.csv');
         });
     }
 });
-
-map.addLayer(dataLayer);
-controlLayers.addOverlay(dataLayer, 'Markers from data.csv');
 
 map.on('focus', () => {
     map.scrollWheelZoom.enable();
