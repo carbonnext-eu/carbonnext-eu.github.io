@@ -95,15 +95,33 @@ $.ajax('CO.csv', {
             });
             console.log(layers);
             // create the control
-            var command = L.control({
-                position: 'topright'
-            });
-            command.onAdd = function(map) {
-                var div = L.DomUtil.create('div', 'command');
-                $(div).append($('<form id="layercontrol"></form>'));
-                // add the event handler
-                function handleCommand() {
-                    var layer = this.data().layer;
+	    L.Control.Boxes = L.Control.extend({
+		  options: {
+		    // topright, topleft, bottomleft, bottomright
+		    position: 'topright'
+		  },
+		  initialize: function (options /*{ data: {...}  }*/) {
+		    // constructor
+		    L.Util.setOptions(this, options);
+		  },
+		  onAdd: function (map) {
+		    // happens after added to map
+		    var container = L.DomUtil.create('div', 'layer-container');
+		    this.form = L.DomUtil.create('form', 'form', container);
+		    var group = L.DomUtil.create('div', 'form-group', this.form);
+		    var label = L.DomUtil.create('label', 'COlabel', group);
+		    this.input = L.DomUtil.create('input', 'COinput', label);
+		    this.input.type = 'checkbox';
+		    L.DomEvent.addListener(this.input, 'change', this.keyup, this);
+		    L.DomEvent.disableClickPropagation(container);
+		    return container;
+		  },
+		  onRemove: function (map) {
+		    // when removed
+		    L.DomEvent.removeListener(this._input, 'keyup', this.keyup, this);
+		  },
+		  keyup: function(e) {
+		    var layer = this.data().layer;
                     console.log(layer, this.checked);
                     if (this.checked) {
                         if (layer == "CO") {
@@ -117,8 +135,13 @@ $.ajax('CO.csv', {
                         }
                         map.removeLayer(layer);
                     }
-                }
+		  }		  
+		});
 
+		L.control.boxes = function(id, options) {
+		  return new L.Control.Boxes(id, options);
+		}
+            /*
                 $('#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
                 $('#layercontrol').append($('<div id="layercontrolCO">'));
 		var i = 1;
@@ -130,7 +153,7 @@ $.ajax('CO.csv', {
                 return div;
             };
             command.addTo(map);
-
+*/
 
         });
     }
