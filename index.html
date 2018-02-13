@@ -90,13 +90,8 @@ $.ajax('CO.csv', {
 			active: false,
 			name: "CO",
 			layer: dataLayer,
-		    }, 
-		    {
-			name: "CO2",
-			layer: {
-			}
 		    }
-		]
+		];
 		var over1 = L.control.panelLayers(null, confLayers, {
 		    title: "Emissions",
 		    position: 'topright',
