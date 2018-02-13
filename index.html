@@ -18,7 +18,7 @@
   <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
-<script src="leaflet-dvf.js"></script>
+<script src="http://labs.easyblog.it/maps/leaflet-panel-layers/dist/leaflet-panel-layers.min.js"></script>
   <!-- Position the map and title with Cascading Style Sheet (.css) -->
   <style>
   body { margin:0; padding:0; }
@@ -50,31 +50,8 @@ var controlLayers = L.control.layers(null, null, {
 /* Carto light-gray basemap tiles with labels */
 var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
-}).addTo(map); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
-controlLayers.addBaseLayer(light, 'Carto Light basemap');
+}).addTo(map);
 
-/* Stamen colored terrain basemap tiles with labels */
-var terrain = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
-    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-}); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
-controlLayers.addBaseLayer(terrain, 'Stamen Terrain basemap');
-
-/* Upload Latitude/Longitude markers from data.csv file, show Title in pop-up, and override initial center and zoom to fit all in map */
-var customLayer = L.geoJson(null, {
-    onEachFeature: function(feature, layer) {
-        layer.bindPopup(feature.properties.Title);
-    }
-});
-
-var magnitudeColorFunction = new L.HSLHueFunction(new L.Point(0, 90), new L.Point(10, 0), {
-    outputSaturation: '100%',
-    outputLuminosity: '25%'
-});
-var magnitudeFillColorFunction = new L.HSLHueFunction(new L.Point(0, 90), new L.Point(10, 0), {
-    outputSaturation: '100%',
-    outputLuminosity: '50%'
-});
-var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0, 10), new L.Point(10, 30));
 var dataLayer;
 var layers = {};
 $.ajax('CO.csv', {
@@ -87,7 +64,6 @@ $.ajax('CO.csv', {
             lonfield: 'longitude',
             delimiter: ';',
         }, function(err, geojson) {
-		console.log(geojson);
 		var max = Math.max.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		console.log(min, max);
@@ -103,12 +79,30 @@ $.ajax('CO.csv', {
 		    onEachFeature: function(feature, layer) {
 			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
 				  layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();
-				  controlLayers.addOverlay(layers[feature.properties.NACEMainEconomicActivityName], feature.properties.NACEMainEconomicActivityName);
+				  
 			    }
 			    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
 		    }
 		});
 		console.log(layers);
+		var confLayers = [
+		    {
+			active: false,
+			name: "CO",
+			layer: dataLayer,
+		    }, 
+		    {
+			name: "CO2",
+			layer: {
+			}
+		    }
+		]
+		var over1 = L.control.panelLayers(null, confLayers, {
+		    title: "Emissions",
+		    position: 'topright',
+		    compact: true
+		}).addTo(map);
+		//controlLayers.addOverlay(layers[feature.properties.NACEMainEconomicActivityName], feature.properties.NACEMainEconomicActivityName);
 	    
         });
     }
