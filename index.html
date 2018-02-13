@@ -91,7 +91,7 @@ $.ajax('CO.csv', {
 		var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		console.log(min, max);
 		var layers = {};
-		dataLayer = L.geoJSON('CO.geojson', {
+		dataLayer = L.geoJSON('geojson', {
 		    pointToLayer: function(feature, latlon) {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
 			// To draw a circle overlay with a radius in meters, use L.circle()
