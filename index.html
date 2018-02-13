@@ -126,7 +126,7 @@ $.ajax('CO.csv', {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
 			// To draw a circle overlay with a radius in meters, use L.circle()
 			if(feature.properties.MTonnes>min + (max-min)*0.1){
-			  return L.circleMarker(latlon, {weight: 0; radius: ((feature.properties.MTonnes-min)/(max-min)*50+1)});
+			  return L.circleMarker(latlon, {weight: 0, radius: ((feature.properties.MTonnes-min)/(max-min)*50+1)});
 			}
 		    }
 		}).addTo(map);
