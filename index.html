@@ -85,9 +85,9 @@ $.ajax('CO.csv', {
             latfield: 'latitude',
             lonfield: 'longitude',
             delimiter: ';',
-        }, function(err, data) {
+        }, function(err, geoJSON) {
             // Setup a new data layer
-	    var top600 = data.sort(function(a, b) { return a.Variable1 > b.Variable1 ? 1 : -1; }).slice(0, 600);
+	    var top600 = geoJSON.sort(function(a, b) { return a.properties.MTonnes > b.properties.MTonnes ? 1 : -1; }).slice(0, 600);
             dataLayer = new L.DataLayer(top600, {
                 displayOptions: {
                     'properties.MTonnes': {
