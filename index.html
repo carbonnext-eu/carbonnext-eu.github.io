@@ -83,6 +83,7 @@ $.ajax('CO.csv', {
 		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
 		$('div#layercontrol').append($('<div id="layercontrolCO">'));
 		var i = 1;
+		var numberedLayers = [];
 		for(layer in layers){
 			var checkb = $('div#layercontrolCO').append($('<label><input type="checkbox" id="COcheckb'+i+'">'+layer+'</label><br>'));
 			// scope preserver for "layer"
@@ -97,9 +98,12 @@ $.ajax('CO.csv', {
 			    else {
 				map.removeLayer(layer);
 			    }
+			    numberedLayers[i] = layer;
 			})(layers[layer]));
+			i = i + 1;
+			
 		}
-		
+		console.log(numberedLayers);
         });
     }
 });
