@@ -92,35 +92,36 @@ $.ajax('CO.csv', {
 		command.onAdd = function (map) {
 		    var div = L.DomUtil.create('div', 'command');
 		    div.innerHTML = '<form id="layercontrol"></form>'; 
+			// add the event handler
+			function handleCommand() {
+			   var layer = this.data().layer;
+				console.log(layer, this.checked);
+			   if(this.checked){
+			     if(layer=="CO"){
+					map.addLayer(layers);
+				}
+				else {
+					map.addLayer(layer);
+				}
+			      } else {
+				if(layer=="CO"){
+					map.removeLayer(layers);
+				}
+				map.removeLayer(layer);
+			      }
+			    }
+			}
+
+			$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
+			$('div#layercontrol').append($('<div id="layercontrolCO">'));
+			for(layer in layers){
+				$('div#layercontrolCO').append($('<label><input type="checkbox" id="checkbox-'+layer+'" data-layer="'+layer+'">'+layer+'</label><br>'));
+				$('#checkbox-'+layer).addEventListener ("click", handleCommand, false);
+			}
 		    return div;
 		};
 		command.addTo(map);
-		// add the event handler
-		function handleCommand() {
-		   var layer = this.data().layer;
-			console.log(layer, this.checked);
-		   if(this.checked){
-		     if(layer=="CO"){
-				map.addLayer(layers);
-			}
-			else {
-				map.addLayer(layer);
-			}
-		      } else {
-			if(layer=="CO"){
-				map.removeLayer(layers);
-			}
-			map.removeLayer(layer);
-		      }
-		    }
-		}
 		
-		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
-		$('div#layercontrol').append($('<div id="layercontrolCO">'));
-		for(layer in layers){
-			$('div#layercontrolCO').append($('<label><input type="checkbox" id="checkbox-'+layer+'" data-layer="'+layer+'">'+layer+'</label><br>'));
-			$('#checkbox-'+layer).addEventListener ("click", handleCommand, false);
-		}
 		
         });
     }
