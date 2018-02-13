@@ -18,12 +18,15 @@
   <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
-<script src="leaflet-panel-layers.min.js"></script>
   <!-- Position the map and title with Cascading Style Sheet (.css) -->
   <style>
   body { margin:0; padding:0; }
   #map { position: absolute; top:0; bottom:0; right:0; left:0; }
   #map-title { position: relative; margin-top: 10px; margin-left: 50px; float: left; background: white; border: 2px solid rgba(0,0,0,0.2); padding: 6px 8px; font-family: Helvetica; font-weight: bold; font-size: 24px; z-index: 800; }
+  div#layercontrol {
+    position: absolute;
+    top: 0; left: 0;
+  }
   </style>
 </head>
 <body>
@@ -31,6 +34,9 @@
   <!-- Display the map and title with HTML division tags  -->
   <div id="map-title">oh test</div>
   <div id="map"></div>
+  <div id="layercontrol">
+    <label><input type="checkbox" data-layer="cities">Cities</label>
+  </div>
 
   <!-- Create the map content with JavaScript (.js) -->
   <script>
@@ -85,20 +91,29 @@ $.ajax('CO.csv', {
 		    }
 		});
 		console.log(layers);
-		var confLayers = [
-		    {
-			active: false,
-			name: "CO",
-			layer: dataLayer,
+		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label>'));
+		$('div#layercontrol').append($('<div id="layercontrolCO">'));
+		for(layer in layers){
+			$('div#layercontrolCO').append($('<label><input type="checkbox" data-layer="'+layer+'">'+layer+'</label>'));
+		}
+		$('div#layercontrol input[type="checkbox"]').on('change', function() {    
+		    var checkbox = $(this);
+		    var layer = checkbox.data().layer; 
+		    // toggle the layer
+		    if (checkbox):is('checked') {
+			if(layer="CO"){
+				map.addLayer(layers);
+			}
+			else {
+				map.addLayer(layer);
+			}
+		    } else {
+			if(layer="CO"){
+				map.removeLayer(layers);
+			}
+			map.removeLayer(layer);
 		    }
-		];
-		var over1 = L.control.panelLayers(null, confLayers, {
-		    title: "Emissions",
-		    position: 'topright',
-		    compact: true
-		}).addTo(map);
-		//controlLayers.addOverlay(layers[feature.properties.NACEMainEconomicActivityName], feature.properties.NACEMainEconomicActivityName);
-	    
+		})
         });
     }
 });
