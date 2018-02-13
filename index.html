@@ -87,9 +87,10 @@ $.ajax('CO.csv', {
             delimiter: ';',
         }, function(err, geoJSON) {
             // Setup a new data layer
-	    var sortedGeo = [].sort.call(geoJSON, function(a, b) { return a.properties.MTonnes > b.properties.MTonnes ? 1 : -1; });
-	    var top600 = [].slice.call(sortedGeo, 0, 600);
-		console.log(sortedGeo, top600);
+		console.log(geoJSON);
+	    //var sortedGeo = [].sort.call(geoJSON, function(a, b) {return parseFloat(a.properties.MTonnes) - parseFloat(b.properties.MTonnes)});
+	    //var top600 = [].slice.call(sortedGeo, 0, 600);
+	//	console.log(sortedGeo, top600);
             dataLayer = new L.DataLayer(top600, {
                 displayOptions: {
                     'properties.MTonnes': {
