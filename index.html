@@ -78,7 +78,7 @@ var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0, 10), new L.Poi
 var dataLayer;
 $.ajax('CO.csv', {
     success: function(data) {
-        csv2geojson.csv2geojson(csvString, {
+        csv2geojson.csv2geojson(data, {
             latfield: 'latitude',
             lonfield: 'longitude',
             delimiter: ';',
