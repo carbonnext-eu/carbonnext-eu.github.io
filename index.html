@@ -76,6 +76,7 @@ var magnitudeFillColorFunction = new L.HSLHueFunction(new L.Point(0, 90), new L.
 });
 var magnitudeRadiusFunction = new L.LinearFunction(new L.Point(0, 10), new L.Point(10, 30));
 var dataLayer;
+var layers = {};
 $.ajax('CO.csv', {
     error: function(xhr,status,error){
 	    console.log(status,error);
@@ -90,7 +91,7 @@ $.ajax('CO.csv', {
 		var max = Math.max.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
 		console.log(min, max);
-		var layers = {};
+		
 		dataLayer = L.geoJSON(geojson, {
 		    pointToLayer: function(feature, latlon) {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
@@ -106,6 +107,7 @@ $.ajax('CO.csv', {
 			    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
 		    }
 		}).addTo(map);
+		console.log(layers);
 	    controlLayers.addOverlay(layers);
         });
     }
