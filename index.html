@@ -85,25 +85,22 @@ $.ajax('CO.csv', {
 		var i = 1;
 		var numberedLayers = [];
 		for(layer in layers){
-			var checkb = $('div#layercontrolCO').append($('<label><input type="checkbox" id="COcheckb'+i+'">'+layer+'</label><br>'));
-			// scope preserver for "layer"
-			console.log($('#COcheckb'+i));
-			$('#COcheckb'+i).on('change', (function(layer) {    
-			    var checkbox = $(this);
-			    // toggle the layer
-				console.log(checkbox, this, layer);
-			    if (checkbox.is(':checked')) {
-				map.addLayer(layer);
-			    }
-			    else {
-				map.removeLayer(layer);
-			    }
-			    numberedLayers[i] = layer;
-			})(layers[layer]));
+			$('div#layercontrolCO').append($('<label><input type="checkbox" id="COcheckb'+i+'">'+layer+'</label><br>'));
+			numberedLayers[i] = layers[layer];
 			i = i + 1;
-			
 		}
 		console.log(numberedLayers);
+		$('div#layercontrolCO input[type="checkbox"]').on('click', function() {
+			    var checkbox = $(this);
+			    // toggle the layer
+			    console.log(checkbox, this, checkbox.id, numberedLayers[checkbox.id.replace('COcheckb','')]);
+			    if (checkbox.is(':checked')) {
+				map.addLayer(numberedLayers[checkbox.id.replace('COcheckb','')]);
+			    }
+			    else {
+				map.removeLayer(numberedLayers[checkbox.id.replace('COcheckb','')]);
+			    }
+			});
         });
     }
 });
