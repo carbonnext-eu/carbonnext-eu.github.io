@@ -118,12 +118,14 @@ $.ajax('CO.csv', {
                 }
             });
 	    map.addLayer(dataLayer);*/
-		
+		var max = Math.max.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
+		var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
+		console.log(min, max);
 		dataLayer = L.geoJSON(geojson, {
 		    pointToLayer: function(feature, latlon) {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
 			// To draw a circle overlay with a radius in meters, use L.circle()
-			return L.circleMarker(latlon, {radius: feature.properties.MTonnes});
+			return L.circleMarker(latlon, {radius: ((feature.properties.MTonnes-min)/(max-min)*50+1)});
 		    }
 		}).addTo(map);
 	    controlLayers.addOverlay(dataLayer, 'Markers from data.csv');
