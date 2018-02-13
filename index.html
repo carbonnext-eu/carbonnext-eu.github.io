@@ -121,9 +121,11 @@ $.ajax('CO.csv', {
 
                 $('#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
                 $('#layercontrol').append($('<div id="layercontrolCO">'));
+		var i = 1;
                 for (layer in layers) {
-                    $('div#layercontrolCO').append($('<label><input type="checkbox" id="checkbox-' + layer + '" data-layer="' + layer + '">' + layer + '</label><br>'));
-                    $('#checkbox-' + layer).on("click", handleCommand, false);
+                    $('div#layercontrolCO').append($('<label><input type="checkbox" id="checkbox-' + i + '" data-layer="' + layer + '">' + layer + '</label><br>'));
+                    $('#checkbox-' + i).on("click", handleCommand, false);
+		    i = i + 1;
                 }
                 return div;
             };
