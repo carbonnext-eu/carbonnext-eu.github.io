@@ -115,7 +115,7 @@ $.ajax('CO.csv', {
 				  layers[feature.properties.NACEMainEconomicActivityName] = {layer: new L.LayerGroup(), total: 0};				  
 			    }
 			    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
-			    layers[feature.properties.NACEMainEconomicActivityName].total += feature.properties.MTonnes;
+			    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
 		    }
 		});
 		console.log(layers);
@@ -133,9 +133,8 @@ $.ajax('CO.csv', {
 		$('div#layercontrol').append($('<div id="layercontrolCO">'));
 		var i = 1;
 		var numberedLayers = [];
-		for(obj in layers){
-			var layer = obj.layer;
-			$('div#layercontrolCO').append($('<label><input type="checkbox" data-layer='+layer+' id="COcheckb'+i+'">'+layer+'</label><br>'));
+		for(layerName in layers){
+			$('div#layercontrolCO').append($('<label><input type="checkbox" data-layer='+layerName+' id="COcheckb'+i+'">'+layerName+' ('+layers[layerName].total+'&nbsp;Mt)</label><br>'));
 			i = i + 1;
 		}
 		console.log(numberedLayers);
