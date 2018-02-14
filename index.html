@@ -18,6 +18,7 @@
   <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <!-- Position the map and title with Cascading Style Sheet (.css) -->
   <style>
   body { margin:0; padding:0; }
@@ -80,7 +81,16 @@ $.ajax('CO.csv', {
 		    }
 		});
 		console.log(layers);
-		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO">CO</label><br>'));
+		$('div#layercontrol').append($('<label><i id="COtogglebutton" class="fal fa-plus-square"></i><input type="checkbox" data-layer="CO">CO</label><br>'));
+		$('#COtogglebutton').on('click', function() {
+			if($(this).hasClass('fa-plus-square')){
+				$(this).removeClass('fa-plus-square').addClass('fa-minus-square');
+				$('div#layercontrolCO').show();
+			}
+			else {
+				$(this).removeClass('fa-minus-square').addClass('fa-plus-square');
+				$('div#layercontrolCO').hide();
+			}
 		$('div#layercontrol').append($('<div id="layercontrolCO">'));
 		var i = 1;
 		var numberedLayers = [];
