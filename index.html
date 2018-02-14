@@ -143,24 +143,25 @@ function getEmissionData(emName, file){
 				$('div#layercontrol-'+emName).append($('<label><input type="checkbox" data-layer=\''+keysSorted[layerName]+'\' class="'+emName+'">'+keysSorted[layerName]+' ('+layers[keysSorted[layerName]].total.toFixed(2)+'&nbsp;Mt, '+layers[keysSorted[layerName]].count+')</label><br>'));
 				i = i + 1;
 			}
-			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {			
-				    if ($(this).is(':checked')) {
-					    if(this.id == emName+"checkbAll"){
-						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", true);
-					    }
-					    else {
-						map.addLayer(layers[$(this).attr('data-layer')].layer);
-					    }
+			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {
+			    console.log($(this), this);
+			    if ($(this).is(':checked')) {
+				    if(this.id == emName+"checkbAll"){
+					$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", true);
 				    }
 				    else {
-					    if(this.id == emName+"checkbAll"){
-						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", false);
-					    }
-					    else {
-						map.removeLayer(layers[$(this).attr('data-layer')].layer);
-					    }
+					map.addLayer(layers[$(this).attr('data-layer')].layer);
 				    }
-				});
+			    }
+			    else {
+				    if(this.id == emName+"checkbAll"){
+					$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", false);
+				    }
+				    else {
+					map.removeLayer(layers[$(this).attr('data-layer')].layer);
+				    }
+			    }
+			});
 		});
 	    }
 	});	
