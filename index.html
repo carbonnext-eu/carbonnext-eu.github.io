@@ -137,7 +137,7 @@ $.ajax('CO.csv', {
 			    console.log(checkbox, this);			
 			    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);			
 			    if (checkbox.is(':checked')) {
-				    if(checkbox.id = "COcheckbAll"){
+				    if(this.id == "COcheckbAll"){
 				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", true);
 				    }
 				    else {
@@ -145,7 +145,7 @@ $.ajax('CO.csv', {
 				    }
 			    }
 			    else {
-				    if(checkbox.id = "COcheckbAll"){
+				    if(this.id == "COcheckbAll"){
 				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
 				    }
 				    else {
