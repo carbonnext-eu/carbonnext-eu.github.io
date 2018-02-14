@@ -132,28 +132,25 @@ $.ajax('CO.csv', {
 			i = i + 1;
 		}
 		console.log(numberedLayers);
-		$('#COcheckbAll').on('change', function() {
-		    var checkbox = $(this);
-		    // toggle the layer
-		    console.log(checkbox, this);
-		    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);
-		    if (checkbox.is(':checked')) {
-			$('div#layercontrolCO input[type="checkbox"]').prop("checked", true);
-		    }
-		    else {
-			$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
-		    }
-		});
-		$('div#layercontrolCO input[type="checkbox"]').on('change', function() {
+		$('div#layercontrol input[type="checkbox"]').on('change', function() {
 			    var checkbox = $(this);
-			    // toggle the layer
-			    console.log(checkbox, this);
-			    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);
+			    console.log(checkbox, this);			
+			    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);			
 			    if (checkbox.is(':checked')) {
-				map.addLayer(numberedLayers[this.id.replace('COcheckb','')]);
+				    if(checkbox.id = "COcheckbAll"){
+				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", true);
+				    }
+				    else {
+					map.addLayer(numberedLayers[this.id.replace('COcheckb','')]);
+				    }
 			    }
 			    else {
-				map.removeLayer(numberedLayers[this.id.replace('COcheckb','')]);
+				    if(checkbox.id = "COcheckbAll"){
+				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
+				    }
+				    else {
+					map.removeLayer(numberedLayers[this.id.replace('COcheckb','')]);
+				    }
 			    }
 			});
         });
