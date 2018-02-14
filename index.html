@@ -94,11 +94,7 @@ getEmissionData('CO2', 'CO2.csv');
 function getEmissionData(emName, file){	
 	var dataLayer;
 	var layers = {};
-	$.ajax(file, {
-	    error: function(xhr,status,error){
-		    console.log(status,error);
-	    },
-	    success: function(data) {
+	fetch(file).then(function(data) {
 		csv2geojson.csv2geojson(data, {
 		    latfield: 'latitude',
 		    lonfield: 'longitude',
