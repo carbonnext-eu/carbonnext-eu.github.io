@@ -108,7 +108,7 @@ $.ajax('CO.csv', {
 		    pointToLayer: function(feature, latlon) {
 			// L.circleMarker() draws a circle with fixed radius in pixels. 
 			// To draw a circle overlay with a radius in meters, use L.circle()
-			return L.circleMarker(latlon, {weight: 0, radius: (Math.sqrt((feature.properties.MTonnes-min)/(max-min)+1)*50)});
+			return L.circleMarker(latlon, {weight: 0, radius: (Math.sqrt((feature.properties.MTonnes-min)/(max-min))*50+1)});
 		    },
 		    onEachFeature: function(feature, layer) {
 			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
