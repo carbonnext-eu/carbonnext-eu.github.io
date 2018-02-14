@@ -115,9 +115,10 @@ function getEmissionData(emName, file){
 				return L.circleMarker(latlon, {weight: 0, radius: (Math.sqrt((feature.properties.MTonnes-min)/(max-min))*50+1)});
 			    },
 			    onEachFeature: function(feature, layer) {
+				    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&quot;");
 				    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
 					  layers[feature.properties.NACEMainEconomicActivityName] = {layer: new L.LayerGroup(), total: 0, count: 0};				  
-				    }
+				    }				    
 				    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
 				    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
 				    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
