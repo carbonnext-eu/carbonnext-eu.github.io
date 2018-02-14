@@ -54,7 +54,7 @@
 
   body { margin:0; padding:0; }
   #map { position: absolute; top:0; bottom:0; right:250px; left:0; }
-  div#layercontrol {position: absolute;top: 0; right: 0; width:250px;}
+  div#layercontrol {position: absolute;top: 0; right: 0; width:250px; overflow-y: overlay;}
   div#layercontrolCO {padding-left:12px; font-size: small; display: none;}
   </style>
 </head>
@@ -89,6 +89,7 @@ var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/ligh
 }).addTo(map);
 	  
 getEmissionData('CO', 'CO.csv');
+getEmissionData('CO2', 'CO2.csv');
 	  
 function getEmissionData(emName, file){	
 	var dataLayer;
