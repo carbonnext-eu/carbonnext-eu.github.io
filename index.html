@@ -139,16 +139,13 @@ function getEmissionData(emName, file){
 			$('div#layercontrol').append($('<div id="layercontrol-'+emName+'">'));
 			var i = 1;
 			var keysSorted = Object.keys(layers).sort(function(a,b){return layers[b].total-layers[a].total});
-			console.log(keysSorted);
 			for(layerName in keysSorted){
 				$('div#layercontrol-'+emName).append($('<label><input type="checkbox" data-layer=\''+keysSorted[layerName]+'\' class="'+emName+'">'+keysSorted[layerName]+' ('+layers[keysSorted[layerName]].total.toFixed(2)+'&nbsp;Mt, '+layers[keysSorted[layerName]].count+')</label><br>'));
 				i = i + 1;
 			}
-			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {
-				    var checkbox = $(this);			
-				    console.log($(this).attr('data-layer'), layers[$(this).attr('data-layer')]);			
+			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {			
 				    if (checkbox.is(':checked')) {
-					    if(this.id == "'+emName+'checkbAll"){
+					    if(this.id == emName+"checkbAll"){
 						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", true);
 					    }
 					    else {
@@ -156,7 +153,7 @@ function getEmissionData(emName, file){
 					    }
 				    }
 				    else {
-					    if(this.id == "'+emName+'checkbAll"){
+					    if(this.id == emName+"checkbAll"){
 						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", false);
 					    }
 					    else {
