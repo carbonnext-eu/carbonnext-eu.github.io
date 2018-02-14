@@ -124,7 +124,7 @@ function getEmissionData(emName, file){
 			    }
 			});
 			console.log(layers);
-			$('div#layercontrol').append($('<span id="'+emName+'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" id="'+emName+'checkbAll">'+emName+'</label><br>'));
+			$('div#layercontrol').append($('<span id="'+emName+'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="'+emName+' id="'+emName+'checkbAll">'+emName+'</label><br>'));
 			$('#'+emName+'togglebutton').on('click', function() {
 				if($(this).hasClass('icon-folder-plus')){
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
