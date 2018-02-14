@@ -140,13 +140,13 @@ $.ajax('CO.csv', {
 		console.log(numberedLayers);
 		$('div#layercontrol input[type="checkbox"]').on('change', function() {
 			    var checkbox = $(this);			
-			    console.log(this.attr('data-layer'), layers[this.attr('data-layer')]);			
+			    console.log($(this).attr('data-layer'), layers[$(this).attr('data-layer')]);			
 			    if (checkbox.is(':checked')) {
 				    if(this.id == "COcheckbAll"){
 				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", true);
 				    }
 				    else {
-					map.addLayer(layers[this.attr('data-layer')].layer);
+					map.addLayer(layers[$(this).attr('data-layer')].layer);
 				    }
 			    }
 			    else {
@@ -154,7 +154,7 @@ $.ajax('CO.csv', {
 				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
 				    }
 				    else {
-					map.removeLayer(layers[this.attr('data-layer')].layer);
+					map.removeLayer(layers[$(this).attr('data-layer')].layer);
 				    }
 			    }
 			});
