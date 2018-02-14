@@ -117,13 +117,15 @@
         function getEmissionData(emName, file) {
             fetch(file)
                 .then(function(response) {
+		    console.log(response);
                     return response.blob();
                 })
-                .then(convertCSV)
+                .then(myBlob => convertCSV(myBlob))
 		.then(geojson => mangleGeoJSON(geojson, emName, file));
         };
 
-        function convertCSV(myBlob) {          
+        function convertCSV(myBlob) {
+		console.log(myBlob);
 		return new Promise(function(resolve, reject) {
 			csv2geojson.csv2geojson(myBlob, {
 				latfield: 'latitude',
@@ -134,6 +136,7 @@
 					console.error(err);
 				}
 				else {
+					console.log(geojson);
 					resolve(geojson);
 				}
 			});
