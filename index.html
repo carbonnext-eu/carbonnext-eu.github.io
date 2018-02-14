@@ -117,8 +117,7 @@
         function getEmissionData(emName, file) {
             fetch(file)
                 .then(function(response) {
-		    console.log(response);
-                    return response.blob();
+                    return response.text();
                 })
                 .then(myBlob => convertCSV(myBlob))
 		.then(geojson => mangleGeoJSON(geojson, emName, file));
