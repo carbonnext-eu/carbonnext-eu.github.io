@@ -162,7 +162,7 @@
                     });
                 },
                 onEachFeature: function(feature, layer) {
-                    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
+		    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
                     if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
                         layers[feature.properties.NACEMainEconomicActivityName] = {
                             layer: new L.LayerGroup(),
@@ -222,7 +222,7 @@
                                 .prop("checked", true);
                         } else {
                             map.addLayer(layers[$(this)
-                                .attr('data-layer')].layer);
+                                .attr('data-layer').replace("'", "&#39;")].layer);
                         }
                     } else {
                         if (this.id == emName + "checkbAll") {
@@ -230,7 +230,7 @@
                                 .prop("checked", false);
                         } else {
                             map.removeLayer(layers[$(this)
-                                .attr('data-layer')].layer);
+                                .attr('data-layer').replace("'", "&#39;")].layer);
                         }
                     }
                 });
