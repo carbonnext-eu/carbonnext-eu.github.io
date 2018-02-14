@@ -119,20 +119,28 @@
                 .then(function(response) {
                     return response.blob();
                 })
-                .then(function(myBlob) {
-                    convertCSV(myBlob);
-                });
+                .then(convertCSV)
+				.then(mangleGeoJSON);
         };
 
-        function convertCSV(myBlob) {
-            csv2geojson.csv2geojson(myBlob, {
-                latfield: 'latitude',
-                lonfield: 'longitude',
-                delimiter: ';',
-            }, mangleGeoJSON);
-        };
+        function convertCSV(myBlob) {          
+			return new Promise(function(resolve, reject) {
+				csv2geojson.csv2geojson(myBlob, {
+					latfield: 'latitude',
+					lonfield: 'longitude',
+					delimiter: ';',
+				}, function(err, geojson){
+					if (err){
+						console.error(err);
+					}
+					else {
+						resolve(geojson);
+					}
+				};
+			});
+		}
 
-        function mangleGeoJSON(err, geojson) {
+        function mangleGeoJSON(geojson) {
             var layers = {};
             var max = Math.max.apply(Math, geojson.features.map(function(o) {
                 return o.properties.MTonnes;
