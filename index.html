@@ -23,7 +23,9 @@
 	  @font-face {
 	  font-family: 'icomoon';
 	  src:
-	    url('fonts/icomoon.svg?akaywm#icomoon') format('svg');
+	    url('fonts/icomoon.svg?akaywm#icomoon') format('svg'),
+	    url('fonts/icomoon.ttf?akaywm') format('truetype'),
+	    url('fonts/icomoon.woff?akaywm') format('woff');
 	  font-weight: normal;
 	  font-style: normal;
 	}
@@ -130,7 +132,7 @@ $.ajax('CO.csv', {
 			i = i + 1;
 		}
 		console.log(numberedLayers);
-		$('#COcheckbAll').on('click', function() {
+		$('#COcheckbAll').on('change', function() {
 		    var checkbox = $(this);
 		    // toggle the layer
 		    console.log(checkbox, this);
@@ -142,7 +144,7 @@ $.ajax('CO.csv', {
 			$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
 		    }
 		});
-		$('div#layercontrolCO input[type="checkbox"]').on('click', function() {
+		$('div#layercontrolCO input[type="checkbox"]').on('change', function() {
 			    var checkbox = $(this);
 			    // toggle the layer
 			    console.log(checkbox, this);
