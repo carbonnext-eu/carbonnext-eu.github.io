@@ -1,174 +1,225 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>leaflet-map-simple</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="utf-8">
+    <title>leaflet-map-simple</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
 
-  <!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
-  integrity="sha384-Zh+y1U8o6/7ni8Mp8szvUfZjGeKKS10CGH3IlD6L1X+XwzYgQ1llOjw/Wslc0cma"
-  crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.1/css/dvf.css" integrity="sha256-Nd2GYmWjQVljoYgRUP2AWWniAYagCg1k7QhXa9N1kLg=" crossorigin="anonymous" />
-  
-  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-  integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-  crossorigin=""></script>
-  <!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
-  <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			  crossorigin="anonymous"></script>
-  <!-- Position the map and title with Cascading Style Sheet (.css) -->
-  <style>
-	  @font-face {
-	  font-family: 'icomoon';
-	  src:
-	    url('fonts/icomoon.svg?akaywm#icomoon') format('svg'),
-	    url('fonts/icomoon.ttf?akaywm') format('truetype'),
-	    url('fonts/icomoon.woff?akaywm') format('woff');
-	  font-weight: normal;
-	  font-style: normal;
-	}
+    <!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" integrity="sha384-Zh+y1U8o6/7ni8Mp8szvUfZjGeKKS10CGH3IlD6L1X+XwzYgQ1llOjw/Wslc0cma" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.1/css/dvf.css" integrity="sha256-Nd2GYmWjQVljoYgRUP2AWWniAYagCg1k7QhXa9N1kLg=" crossorigin="anonymous" />
 
-	[class^="icon-"], [class*=" icon-"] {
-	  /* use !important to prevent issues with browser extensions that change fonts */
-	  font-family: 'icomoon' !important;
-	  speak: none;
-	  font-style: normal;
-	  font-weight: normal;
-	  font-variant: normal;
-	  text-transform: none;
-	  line-height: 1;
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
+    <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Position the map and title with Cascading Style Sheet (.css) -->
+    <style>
+        @font-face {
+            font-family: 'icomoon';
+            src: url('fonts/icomoon.svg?akaywm#icomoon') format('svg'),
+            url('fonts/icomoon.ttf?akaywm') format('truetype'),
+            url('fonts/icomoon.woff?akaywm') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-	  /* Better Font Rendering =========== */
-	  -webkit-font-smoothing: antialiased;
-	  -moz-osx-font-smoothing: grayscale;
-	}
+        [class^="icon-"],
+        [class*=" icon-"] {
+            /* use !important to prevent issues with browser extensions that change fonts */
+            font-family: 'icomoon' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
 
-	.icon-folder-plus:before {
-	  content: "\e931";
-	}
-	.icon-folder-minus:before {
-	  content: "\e932";
-	}
+            /* Better Font Rendering =========== */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-  body { margin:0; padding:0; }
-  #map { position: absolute; top:0; bottom:0; right:250px; left:0; }
-  div#layercontrol {position: absolute;top: 0; right: 0; width:250px; overflow-y: overlay;}
-  div[id*="layercontrol-"] {padding-left:12px; font-size: small; display: none;}
-  </style>
+        .icon-folder-plus:before {
+            content: "\e931";
+        }
+
+        .icon-folder-minus:before {
+            content: "\e932";
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 250px;
+            left: 0;
+        }
+
+        div#layercontrol {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            overflow-y: overlay;
+        }
+
+        div[id*="layercontrol-"] {
+            padding-left: 12px;
+            font-size: small;
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="map"></div>
-  <div id="layercontrol"></div>
+    <div id="map"></div>
+    <div id="layercontrol"></div>
 
-  <!-- Create the map content with JavaScript (.js) -->
-  <script>
-jQuery.propHooks.checked = {
-    set: function (el, value) {
-        el.checked = value;
-        $(el).trigger('change');
-    }
-};
-/* Set up the map with initial center and zoom level */
-var map = L.map('map', {
-    center: [50.1218292, 8.5995234], // EDIT latitude, longitude to re-center map
-    zoom: 6, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
-    scrollWheelZoom: false
-});
+    <!-- Create the map content with JavaScript (.js) -->
+    <script>
+        jQuery.propHooks.checked = {
+            set: function(el, value) {
+                el.checked = value;
+                $(el)
+                    .trigger('change');
+            }
+        };
+        /* Set up the map with initial center and zoom level */
+        var map = L.map('map', {
+            center: [50.1218292, 8.5995234], // EDIT latitude, longitude to re-center map
+            zoom: 6, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+            scrollWheelZoom: false
+        });
 
-/* Control panel to display map layers */
-var controlLayers = L.control.layers(null, null, {
-    position: "topright",
-    collapsed: false
-}).addTo(map);
+        /* Control panel to display map layers */
+        var controlLayers = L.control.layers(null, null, {
+                position: "topright",
+                collapsed: false
+            })
+            .addTo(map);
 
-/* Carto light-gray basemap tiles with labels */
-var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
-}).addTo(map);
-	  
-getEmissionData('CO', 'CO.csv');
-getEmissionData('CO2', 'CO2.csv');
-	  
-function getEmissionData(emName, file){	
-	var dataLayer;
-	var layers = {};
-	fetch(file).then(function(data) {
-		csv2geojson.csv2geojson(data, {
-		    latfield: 'latitude',
-		    lonfield: 'longitude',
-		    delimiter: ';',
-		}, function(err, geojson) {
-			var max = Math.max.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
-			var min = Math.min.apply(Math,geojson.features.map(function(o){return o.properties.MTonnes;}));
-			console.log(min, max);
+        /* Carto light-gray basemap tiles with labels */
+        var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+            })
+            .addTo(map);
 
-			dataLayer = L.geoJSON(geojson, {
-			    pointToLayer: function(feature, latlon) {
-				// L.circleMarker() draws a circle with fixed radius in pixels. 
-				// To draw a circle overlay with a radius in meters, use L.circle()
-				return L.circleMarker(latlon, {weight: 0, radius: (Math.sqrt((feature.properties.MTonnes-min)/(max-min))*50+1)});
-			    },
-			    onEachFeature: function(feature, layer) {
-				    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&quot;");
-				    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
-					  layers[feature.properties.NACEMainEconomicActivityName] = {layer: new L.LayerGroup(), total: 0, count: 0};				  
-				    }				    
-				    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
-				    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
-				    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-				    layer.bindPopup(feature.properties.FacilityName+'<br />'+feature.properties.NACEMainEconomicActivityName+'<br />'+feature.properties.MTonnes+' Mt '+emName);
-			    }
-			});
-			console.log(layers);
-			$('div#layercontrol').append($('<span id="'+emName+'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="'+emName+'" id="'+emName+'checkbAll">'+emName+'</label><br>'));
-			$('#'+emName+'togglebutton').on('click', function() {
-				if($(this).hasClass('icon-folder-plus')){
-					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
-					$('div#layercontrol-'+emName).show();
-				}
-				else {
-					$(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
-					$('div#layercontrol-'+emName).hide();
-				}
-			});
-			$('div#layercontrol').append($('<div id="layercontrol-'+emName+'">'));
-			var i = 1;
-			var keysSorted = Object.keys(layers).sort(function(a,b){return layers[b].total-layers[a].total});
-			for(layerName in keysSorted){
-				$('div#layercontrol-'+emName).append($('<label><input type="checkbox" data-layer=\''+keysSorted[layerName]+'\' class="'+emName+'">'+keysSorted[layerName]+' ('+layers[keysSorted[layerName]].total.toFixed(2)+'&nbsp;Mt, '+layers[keysSorted[layerName]].count+')</label><br>'));
-				i = i + 1;
-			}
-			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {
-			    console.log($(this), this);
-			    if ($(this).is(':checked')) {
-				    if(this.id == emName+"checkbAll"){
-					$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", true);
-				    }
-				    else {
-					map.addLayer(layers[$(this).attr('data-layer')].layer);
-				    }
-			    }
-			    else {
-				    if(this.id == emName+"checkbAll"){
-					$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", false);
-				    }
-				    else {
-					map.removeLayer(layers[$(this).attr('data-layer')].layer);
-				    }
-			    }
-			});
-		});
-	    }
-	});	
-}
-map.on('focus', () => {
-    map.scrollWheelZoom.enable();
-});
-map.on('blur', () => {
-    map.scrollWheelZoom.disable();
-});
-  </script>
+        getEmissionData('CO', 'CO.csv');
+        getEmissionData('CO2', 'CO2.csv');
+
+        function getEmissionData(emName, file) {
+            var dataLayer;
+            var layers = {};
+            fetch(file)
+                .then(function(data) {
+                    csv2geojson.csv2geojson(data, {
+                        latfield: 'latitude',
+                        lonfield: 'longitude',
+                        delimiter: ';',
+                    }, function(err, geojson) {
+                        var max = Math.max.apply(Math, geojson.features.map(function(o) {
+                            return o.properties.MTonnes;
+                        }));
+                        var min = Math.min.apply(Math, geojson.features.map(function(o) {
+                            return o.properties.MTonnes;
+                        }));
+                        console.log(min, max);
+
+                        dataLayer = L.geoJSON(geojson, {
+                            pointToLayer: function(feature, latlon) {
+                                // L.circleMarker() draws a circle with fixed radius in pixels.
+                                // To draw a circle overlay with a radius in meters, use L.circle()
+                                return L.circleMarker(latlon, {
+                                    weight: 0,
+                                    radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
+                                });
+                            },
+                            onEachFeature: function(feature, layer) {
+                                feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&quot;");
+                                if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
+                                    layers[feature.properties.NACEMainEconomicActivityName] = {
+                                        layer: new L.LayerGroup(),
+                                        total: 0,
+                                        count: 0
+                                    };
+                                }
+                                layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+                                layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
+                                layers[feature.properties.NACEMainEconomicActivityName].count += 1;
+                                layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
+                            }
+                        });
+                        console.log(layers);
+                        $('div#layercontrol')
+                            .append($('<span id="' + emName + 'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
+                        $('#' + emName + 'togglebutton')
+                            .on('click', function() {
+                                if ($(this)
+                                    .hasClass('icon-folder-plus')) {
+                                    $(this)
+                                        .removeClass('icon-folder-plus')
+                                        .addClass('icon-folder-minus');
+                                    $('div#layercontrol-' + emName)
+                                        .show();
+                                } else {
+                                    $(this)
+                                        .removeClass('icon-folder-minus')
+                                        .addClass('icon-folder-plus');
+                                    $('div#layercontrol-' + emName)
+                                        .hide();
+                                }
+                            });
+                        $('div#layercontrol')
+                            .append($('<div id="layercontrol-' + emName + '">'));
+                        var i = 1;
+                        var keysSorted = Object.keys(layers)
+                            .sort(function(a, b) {
+                                return layers[b].total - layers[a].total
+                            });
+                        for (layerName in keysSorted) {
+                            $('div#layercontrol-' + emName)
+                                .append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')</label><br>'));
+                            i = i + 1;
+                        }
+                        $('div#layercontrol input[type="checkbox"].' + emName)
+                            .on('change', function() {
+                                console.log($(this), this);
+                                if ($(this)
+                                    .is(':checked')) {
+                                    if (this.id == emName + "checkbAll") {
+                                        $('div#layercontrol-' + emName + ' input[type="checkbox"]')
+                                            .prop("checked", true);
+                                    } else {
+                                        map.addLayer(layers[$(this)
+                                            .attr('data-layer')].layer);
+                                    }
+                                } else {
+                                    if (this.id == emName + "checkbAll") {
+                                        $('div#layercontrol-' + emName + ' input[type="checkbox"]')
+                                            .prop("checked", false);
+                                    } else {
+                                        map.removeLayer(layers[$(this)
+                                            .attr('data-layer')].layer);
+                                    }
+                                }
+                            });
+                    });
+                });
+        }
+        map.on('focus', () => {
+            map.scrollWheelZoom.enable();
+        });
+        map.on('blur', () => {
+            map.scrollWheelZoom.disable();
+        });
+    </script>
 </body>
+
 </html>
