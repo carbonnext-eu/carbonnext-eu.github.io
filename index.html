@@ -124,21 +124,21 @@
         };
 
         function convertCSV(myBlob) {          
-			return new Promise(function(resolve, reject) {
-				csv2geojson.csv2geojson(myBlob, {
-					latfield: 'latitude',
-					lonfield: 'longitude',
-					delimiter: ';',
-				}, function(err, geojson){
-					if (err){
-						console.error(err);
-					}
-					else {
-						resolve(geojson);
-					}
-				};
+		return new Promise(function(resolve, reject) {
+			csv2geojson.csv2geojson(myBlob, {
+				latfield: 'latitude',
+				lonfield: 'longitude',
+				delimiter: ';',
+			}, function(err, geojson){
+				if (err){
+					console.error(err);
+				}
+				else {
+					resolve(geojson);
+				}
 			});
-		}
+		});
+	};
 
         function mangleGeoJSON(geojson) {
             var layers = {};
