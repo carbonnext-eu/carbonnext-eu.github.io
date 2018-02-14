@@ -23,8 +23,6 @@
 	  @font-face {
 	  font-family: 'icomoon';
 	  src:
-	    url('fonts/icomoon.ttf?akaywm') format('truetype'),
-	    url('fonts/icomoon.woff?akaywm') format('woff'),
 	    url('fonts/icomoon.svg?akaywm#icomoon') format('svg');
 	  font-weight: normal;
 	  font-style: normal;
@@ -112,7 +110,7 @@ $.ajax('CO.csv', {
 		    }
 		});
 		console.log(layers);
-		$('div#layercontrol').append($('<label><input type="checkbox" data-layer="CO"><span id="COtogglebutton" class="icon-folder-plus"></span>CO</label><br>'));
+		$('div#layercontrol').append($('<span id="COtogglebutton" class="icon-folder-plus"></span><label><input type="checkbox" id="COcheckbAll">CO</label><br>'));
 		$('#COtogglebutton').on('click', function() {
 			if($(this).hasClass('icon-folder-plus')){
 				$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
@@ -132,6 +130,18 @@ $.ajax('CO.csv', {
 			i = i + 1;
 		}
 		console.log(numberedLayers);
+		$('#COcheckbAll').on('click', function() {
+		    var checkbox = $(this);
+		    // toggle the layer
+		    console.log(checkbox, this);
+		    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);
+		    if (checkbox.is(':checked')) {
+			$('div#layercontrolCO input[type="checkbox"]').prop("checked", true);
+		    }
+		    else {
+			$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
+		    }
+		};
 		$('div#layercontrolCO input[type="checkbox"]').on('click', function() {
 			    var checkbox = $(this);
 			    // toggle the layer
