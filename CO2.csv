@@ -1,4 +1,4 @@
-FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryName;latitude;longitude;NACEMainEconomicActivityName
+FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryName;Lat;Long;NACEMainEconomicActivityName
 1113729;2014;Carbon dioxide (CO2);0,349;Varo Refining Cressier SA / Raffinerie de Cressier;Cressier;Switzerland;47,04003782;7,035794988;Manufacture of refined petroleum products
 1113730;2014;Carbon dioxide (CO2);0,283;KEBAG AG;Zuchwil;Switzerland;47,2152774;7,570646783;Treatment and disposal of non-hazardous waste
 1113734;2014;Carbon dioxide (CO2);0,125;Cimo SA;Monthey;Switzerland;46,25293905;6,965316545;Treatment and disposal of hazardous waste
@@ -106,11 +106,11 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1189757;2014;Carbon dioxide (CO2);0,302;PVO Lämpövoima Oy, Tahkoluodon voimalaitos;PORI;Finland;61,63243;21,40475;Production of electricity
 1189761;2014;Carbon dioxide (CO2);0,435;Rauman Biovoima Oy;RAUMA;Finland;61,1175;21,4778;Production of electricity
 1189788;2014;Carbon dioxide (CO2);1,35;Turun Seudun Energiantuotanto Oy, Naantalin voimalaitos;NAANTALI;Finland;60,4585;22,0536;Production of electricity
-1228968;2014;Carbon dioxide (CO2);1,63;Akcin? bendrov? ORLEN Lietuva;Juodeikiai;Lithuania;56,312821;22,914165;Manufacture of refined petroleum products
+1228968;2014;Carbon dioxide (CO2);1,63;Akcin? bendrov? `ORLEN Lietuva`;Juodeikiai;Lithuania;56,312821;22,914165;Manufacture of refined petroleum products
 1228969;2014;Carbon dioxide (CO2);0,394;Lietuvos elektrin?;Elektr?nai;Lithuania;54,781038;24,644315;Production of electricity
 1228976;2014;Carbon dioxide (CO2);0,257;Termofikacin? elektrin? Nr. 2 (E-2);Vilnius;Lithuania;54,666087;25,235453;Steam and air conditioning supply
-1228984;2014;Carbon dioxide (CO2);2,38;AB Achema;Jonalaukis;Lithuania;55,082596;24,33405;Manufacture of fertilisers and nitrogen compounds
-1228986;2014;Carbon dioxide (CO2);0,807;AB Akmen?s cementas;Naujoji Akmen?;Lithuania;56,312821;22,914165;Manufacture of cement
+1228984;2014;Carbon dioxide (CO2);2,38;AB `Achema`;Jonalaukis;Lithuania;55,082596;24,33405;Manufacture of fertilisers and nitrogen compounds
+1228986;2014;Carbon dioxide (CO2);0,807;AB `Akmen?s cementas`;Naujoji Akmen?;Lithuania;56,312821;22,914165;Manufacture of cement
 1228990;2014;Carbon dioxide (CO2);0,2;Kauno elektrine;Kaunas;Lithuania;54,92009;24,019529;Distribution of electricity
 1229032;2014;Carbon dioxide (CO2);0,207;Termofikacin? elektrin? Nr. 3 (E-3);Vilnius;Lithuania;54,667798;25,155883;Steam and air conditioning supply
 1229086;2014;Carbon dioxide (CO2);0,186;ArcelorMittal Belval & Differdange (Site de Differdange);Esch-sur-Alzette;Luxembourg;49,52597;5,89753;Manufacture of basic iron and steel and of ferro-alloys
@@ -124,11 +124,11 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1229124;2014;Carbon dioxide (CO2);0,311;LATVENERGO AS, TEC-1;R?ga;Latvia;56,989796;24,183068;Production of electricity
 1229130;2014;Carbon dioxide (CO2);0,802;CEMEX SIA, Broc?nu cementa r?pn?ca;Broc?nu nov.;Latvia;56,701943;22,571391;Manufacture of cement
 1229149;2014;Carbon dioxide (CO2);0,627;LATVENERGO AS, R?gas TEC-2;Salaspils nov.;Latvia;56,915549;24,272512;Production of electricity
-1233732;2014;Carbon dioxide (CO2);0,206;System Gazoci?gów Tranzytowych EUROPOL GAZ S.A., T?ocznia i Pomiarownia Kondratki;Kondratki;Poland;53,017778;23,895278;Transport via pipeline
+1233732;2014;Carbon dioxide (CO2);0,206;System Gazoci?gów Tranzytowych `EUROPOL GAZ` S.A., T?ocznia i Pomiarownia Kondratki;Kondratki;Poland;53,017778;23,895278;Transport via pipeline
 1233733;2014;Carbon dioxide (CO2);0,173;Energetyka Cieplna Opolszczyzny S.A., Oddzia? Opole, Ciep?ownia Centralna K-173;Opole;Poland;50,684822;17,921907;Steam and air conditioning supply
 1233734;2014;Carbon dioxide (CO2);0,188;EDF Toru? S.A.;Toru?;Poland;53,047953;18,693303;Production of electricity
 1233735;2014;Carbon dioxide (CO2);0,3;CHP Cz?stochowa;Cz?stochowa;Poland;50,7945;19,144;Production of electricity
-1233738;2014;Carbon dioxide (CO2);0,117;Elektrociep?ownia  Zofiówka Oddzia? Moszczenica;Jastrz?bie Zdrój;Poland;49,942079;18,569813;Production of electricity
+1233738;2014;Carbon dioxide (CO2);0,117;Elektrociep?ownia  `Zofiówka` Oddzia? `Moszczenica`;Jastrz?bie Zdrój;Poland;49,942079;18,569813;Production of electricity
 1233740;2014;Carbon dioxide (CO2);0,205;Fortum Bytom S..A., Elektrociep?ownia Miechowice;Bytom;Poland;50,348664;18,843055;Production of electricity
 1233744;2014;Carbon dioxide (CO2);1,82;Grupa LOTOS S.A.;Gda?sk;Poland;54,345;18,732;Manufacture of refined petroleum products
 1233746;2014;Carbon dioxide (CO2);0,122;Polchar Sp. z o.o.;Kostrzyn nad Odr?;Poland;52,592762;14,629818;Manufacture of coke oven products
@@ -141,7 +141,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1233777;2014;Carbon dioxide (CO2);0,107;FENICE Poland Sp. z o.o., Jednostka Operatywna Rzeszów;Rzeszów;Poland;50,018329;21,993599;Steam and air conditioning supply
 1233779;2014;Carbon dioxide (CO2);0,281;TAURON Wytwarzanie Spó?ka Akcyjna -Oddzia? Elektrownia Blachownia w K?dzierzynie-Ko?lu;K?dzierzyn Ko?le;Poland;50,35;18,283333;Production of electricity
 1233782;2014;Carbon dioxide (CO2);1,31;TAURON Wytwarzanie Spó?ka Akcyjna - Oddzia? Elektrownia Siersza w Trzebini;Trzebinia;Poland;50,206407;19,462967;Production of electricity
-1233783;2014;Carbon dioxide (CO2);0,114;Radomskie Przedsi?biorstwo Energetyki Cieplnej RADPEC S.A., Ciep?ownia PO?UDNIE;Radom;Poland;51,356561;21,106024;Steam and air conditioning supply
+1233783;2014;Carbon dioxide (CO2);0,114;Radomskie Przedsi?biorstwo Energetyki Cieplnej `RADPEC` S.A., Ciep?ownia PO?UDNIE;Radom;Poland;51,356561;21,106024;Steam and air conditioning supply
 1233786;2014;Carbon dioxide (CO2);0,366;TAURON WYTWARZANIE S.A., Oddzia? Zespó? Elektrociep?owni Bielsko-Bia?a, Elektrociep?ownia Bielsko-Pó?noc EC2;Czechowice-Dziedzice;Poland;49,875486;19,028792;Production of electricity
 1233793;2014;Carbon dioxide (CO2);1,86;EDF Polska S.A. Oddzia? nr 1 w Krakowie;Kraków;Poland;50,054166;20,006944;Steam and air conditioning supply
 1233794;2014;Carbon dioxide (CO2);1,52;Elektrownia Skawina S.A.;Skawina;Poland;49,975669;19,801072;Production of electricity
@@ -159,12 +159,12 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1233830;2014;Carbon dioxide (CO2);3,44;TAURON Wytwarzanie Spó?ka Akcyjna-Oddzia? Elektrownia ?aziska;?aziska Górne;Poland;50,133694;18,846472;Production of electricity
 1233834;2014;Carbon dioxide (CO2);0,725;PGE Górnictwo i Energetyka Konwencjonalna S.A., Oddzia? Zespó? Elektrociep?owni Bydgoszcz, ELEKTROCIEP?OWNA BYDGOSZCZ II;BYDGOSZCZ;Poland;53,099167;18,0875;Steam and air conditioning supply
 1233835;2014;Carbon dioxide (CO2);0,1;Miejskie Przedsi?biorstwo Energetyki Cieplnej Sp. z o.o., Wydzia? Ciep?owni Kortowo;Olsztyn;Poland;53,746835;20,449138;Steam and air conditioning supply
-1233836;2014;Carbon dioxide (CO2);11,4;Elektrownia KOZIENICE S.A.;?wier?e Górne;Poland;51,664722;21,466666;Production of electricity
+1233836;2014;Carbon dioxide (CO2);11,4;Elektrownia `KOZIENICE` S.A.;?wier?e Górne;Poland;51,664722;21,466666;Production of electricity
 1233840;2014;Carbon dioxide (CO2);0,697;Zespó? Elektrowni P?tnów-Adamów -Konin S.A., Elektrownia Konin;Konin;Poland;52,284166;18,271111;Production of electricity
-1233841;2014;Carbon dioxide (CO2);0,177;SYSTEM GAZOCI?GÓW TRANZYTOWYCH EUROPOL GAZ S.A., T?ocznia Szamotu?y;Emilianowo;Poland;52,565278;16,5575;Transport via pipeline
+1233841;2014;Carbon dioxide (CO2);0,177;SYSTEM GAZOCI?GÓW TRANZYTOWYCH `EUROPOL GAZ` S.A., T?ocznia Szamotu?y;Emilianowo;Poland;52,565278;16,5575;Transport via pipeline
 1233843;2014;Carbon dioxide (CO2);0,184;Kompania W?glowa S.A., Oddzia? Zak?ad Elektrociep?ownie, Elektrociep?ownia Chwa?owice;Rybnik;Poland;50,069918;18,552176;Steam and air conditioning supply
-1233844;2014;Carbon dioxide (CO2);1,36;Elektrociep?ownia Chorzów ELCHO Sp. z o.o.;Chorzów;Poland;50,307771;18,968576;Production of electricity
-1233845;2014;Carbon dioxide (CO2);0,132;Elektrociep?ownia Marcel Sp. z o.o., Elektrociep?ownia Marcel;Radlin;Poland;50,043415;18,484539;Production of electricity
+1233844;2014;Carbon dioxide (CO2);1,36;Elektrociep?ownia Chorzów `ELCHO` Sp. z o.o.;Chorzów;Poland;50,307771;18,968576;Production of electricity
+1233845;2014;Carbon dioxide (CO2);0,132;`Elektrociep?ownia Marcel` Sp. z o.o., Elektrociep?ownia Marcel;Radlin;Poland;50,043415;18,484539;Production of electricity
 1233847;2014;Carbon dioxide (CO2);0,247;Zespó? Elektrociep?owni Wroc?awskich KOGENERACJA S.A., Elektrociep?ownia Czechnica;Siechnice;Poland;51,038055;17,150278;Steam and air conditioning supply
 1233849;2014;Carbon dioxide (CO2);1,26;ArcelorMittal Poland S.A. Oddzia? w Zdzieszowicach;Zdzieszowice;Poland;50,419128;18,142548;Manufacture of coke oven products
 1233856;2014;Carbon dioxide (CO2);0,109;SW-SOLAR Czarna Woda Sp. z o.o.;Czarnków;Poland;52,892842;16,539799;Steam and air conditioning supply
@@ -180,18 +180,18 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1233897;2014;Carbon dioxide (CO2);1,29;Veolia Energia Pozna? ZEC S.A., Elektrociep?ownia EC II Karolin;Pozna?;Poland;52,436111;16,988888;Production of electricity
 1233902;2014;Carbon dioxide (CO2);4,76;ArcelorMittal Poland S.A., Oddzia? w D?browie Górniczej;D?browa Górnicza;Poland;50,343379;19,281864;Manufacture of basic iron and steel and of ferro-alloys
 1233918;2014;Carbon dioxide (CO2);1,21;KGHM POLSKA MIED? S.A., Huta Miedzi G?OGÓW;G?ogów;Poland;51,68625;15,9769;Copper production
-1233923;2014;Carbon dioxide (CO2);0,368;Huta Cynku Miasteczko ?l?skie S.A.;Miasteczko ?l?skie;Poland;50,503983;18,920345;Lead, zinc and tin production
+1233923;2014;Carbon dioxide (CO2);0,368;Huta Cynku `Miasteczko ?l?skie` S.A.;Miasteczko ?l?skie;Poland;50,503983;18,920345;Lead, zinc and tin production
 1233938;2014;Carbon dioxide (CO2);5,26;Zespól Elektrowni P?tnów-Adamów -Konin S.A., Elektrownia P?tnów;Konin;Poland;52,305487;18,231726;Production of electricity
 1233939;2014;Carbon dioxide (CO2);0,267;Fortum Zabrze S.A.;Zabrze;Poland;50,299154;18,812284;Steam and air conditioning supply
-1233940;2014;Carbon dioxide (CO2);0,313;Spó?ka Energetyczna Jastrz?bie S.A., Elektrociep?ownia Zofiówka;Jastrz?bie Zdrój;Poland;49,964307;18,626783;Production of electricity
+1233940;2014;Carbon dioxide (CO2);0,313;Spó?ka Energetyczna `Jastrz?bie` S.A., Elektrociep?ownia `Zofiówka`;Jastrz?bie Zdrój;Poland;49,964307;18,626783;Production of electricity
 1233941;2014;Carbon dioxide (CO2);0,416;Tauron Ciep?o S.A. Zak?ad Wytwarzania Tychy;Tychy;Poland;50,106333;19,014333;Steam and air conditioning supply
 1233943;2014;Carbon dioxide (CO2);1,07;Zespó? Elektrociep?owni Wroc?awskich KOGENERACJA S.A., Elektrociep?ownia Wroc?aw;Wroc?aw;Poland;51,123888;17,024444;Steam and air conditioning supply
 1233944;2014;Carbon dioxide (CO2);0,784;Energetyka sp. z o.o.,  Wydzia? EC-3 G?ogów;G?ogów;Poland;51,683466;15,989227;Steam and air conditioning supply
 1233947;2014;Carbon dioxide (CO2);0,167;CMC Poland Sp. z o. o.;Zawiercie;Poland;50,494444;19,457222;Manufacture of basic iron and steel and of ferro-alloys
-1233966;2014;Carbon dioxide (CO2);0,194;Celsa Huta Ostrowiec Sp. z o.o.;Ostrowiec ?wi?tokrzyski;Poland;50,94671;21,4481;Manufacture of basic iron and steel and of ferro-alloys
-1233994;2014;Carbon dioxide (CO2);0,24;Huta ?aziska S.A.w upad?o?ci uk?adowej;?aziska Górne;Poland;50,133469;18,831242;Manufacture of basic iron and steel and of ferro-alloys
+1233966;2014;Carbon dioxide (CO2);0,194;Celsa `Huta Ostrowiec` Sp. z o.o.;Ostrowiec ?wi?tokrzyski;Poland;50,94671;21,4481;Manufacture of basic iron and steel and of ferro-alloys
+1233994;2014;Carbon dioxide (CO2);0,24;Huta `?aziska` S.A.w upad?o?ci uk?adowej;?aziska Górne;Poland;50,133469;18,831242;Manufacture of basic iron and steel and of ferro-alloys
 1234038;2014;Carbon dioxide (CO2);0,119;BOLES?AW RECYCLING Sp. z o.o.;Bukowno;Poland;50,277054;19,474039;Lead, zinc and tin production
-1234052;2014;Carbon dioxide (CO2);0,506;Zak?ady Przemys?u Wapienniczego Trzuskawica S.A.;Sitkówka;Poland;50,806308;20,562687;Manufacture of lime and plaster
+1234052;2014;Carbon dioxide (CO2);0,506;Zak?ady Przemys?u Wapienniczego `Trzuskawica` S.A.;Sitkówka;Poland;50,806308;20,562687;Manufacture of lime and plaster
 1234070;2014;Carbon dioxide (CO2);1,22;CEMEX Polska Sp. z o.o.,Zak?ad Cementownia Che?m;Che?m;Poland;51,138611;23,553889;Manufacture of cement
 1234071;2014;Carbon dioxide (CO2);2,2;Góra?d?e Cement S.A., Cementownia Góra?d?e;Chorula;Poland;50,533722;17,9775;Manufacture of cement
 1234072;2014;Carbon dioxide (CO2);1,02;Lafarge Cement S.A., Cementownia Ma?ogoszcz;Ma?ogoszcz;Poland;50,828385;20,273724;Manufacture of cement
@@ -202,10 +202,10 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1234135;2014;Carbon dioxide (CO2);0,913;ANWIL S.A.;W?oc?awek;Poland;52,706191;18,965406;Manufacture of fertilisers and nitrogen compounds
 1234191;2014;Carbon dioxide (CO2);0,248;KGHM POLSKA MIED? S.A., Huta Miedzi LEGNICA;Legnica;Poland;51,18405;16,11369;Copper production
 1234247;2014;Carbon dioxide (CO2);0,128;KRONOSPAN Szczecinek Sp. z o. o.;Szczecinek;Poland;53,691549;16,711645;Manufacture of veneer sheets and wood-based panels
-1234279;2014;Carbon dioxide (CO2);0,187;Grupa O?arów S.A. Zak?ad Cementownia Rejowiec;Rejowiec Fabryczny;Poland;51,121376;23,225262;Manufacture of cement
-1234280;2014;Carbon dioxide (CO2);0,334;Cementownia Odra S.A.;Opole;Poland;50,679329;17,913222;Manufacture of cement
+1234279;2014;Carbon dioxide (CO2);0,187;Grupa O?arów S.A. Zak?ad Cementownia `Rejowiec`;Rejowiec Fabryczny;Poland;51,121376;23,225262;Manufacture of cement
+1234280;2014;Carbon dioxide (CO2);0,334;Cementownia `Odra` S.A.;Opole;Poland;50,679329;17,913222;Manufacture of cement
 1234281;2014;Carbon dioxide (CO2);0,375;Lhoist Bukowa Sp. z o.o.;Bukowa;Poland;50,858083;20,208925;Manufacture of lime and plaster
-1234282;2014;Carbon dioxide (CO2);1,19;LAFARGE CEMENT S.A., Cementownia Kujawy w Bielawach;Piechcin;Poland;52,73621;17,506502;Manufacture of cement
+1234282;2014;Carbon dioxide (CO2);1,19;LAFARGE CEMENT S.A., Cementownia `Kujawy` w Bielawach;Piechcin;Poland;52,73621;17,506502;Manufacture of cement
 1234297;2014;Carbon dioxide (CO2);0,106;DSO Sp. z o.o.;Strzelce Opolskie;Poland;50;18;Manufacture of veneer sheets and wood-based panels
 1234417;2014;Carbon dioxide (CO2);0,201;Zak?ady Wapiennicze Lhoist S.A, Jednostka  Produkcyjna w Góra?d?ach;Góra?d?e;Poland;50,526364;18,026177;Manufacture of lime and plaster
 1234418;2014;Carbon dioxide (CO2);0,155;Trzuskawica S.A., Zak?ad Kujawy;Bielawy;Poland;52,826106;18,009768;Manufacture of lime and plaster
@@ -214,7 +214,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1234466;2014;Carbon dioxide (CO2);0,248;Kronopol Sp. z o.o.;?ary;Poland;51,634167;15,10008;Manufacture of veneer sheets and wood-based panels
 1234498;2014;Carbon dioxide (CO2);0,967;Grupa Azoty Zak?ady Azotowe K?dzierzyn Spó?ka Akcyjna;K?dzierzyn-Ko?le;Poland;50,304717;18,257825;Manufacture of other organic basic chemicals
 1234507;2014;Carbon dioxide (CO2);1,06;Soda Polska CIECH Sp. z o.o., Zak?ad Produkcyjny JANIKOSODA  w Janikowie;Janikowo;Poland;52,764444;18,110833;Manufacture of other inorganic basic chemicals
-1234508;2014;Carbon dioxide (CO2);1,44;Zak?ady Chemiczne POLICE S.A.;Police;Poland;53,575283;14,541092;Manufacture of fertilisers and nitrogen compounds
+1234508;2014;Carbon dioxide (CO2);1,44;Zak?ady Chemiczne `POLICE` S.A.;Police;Poland;53,575283;14,541092;Manufacture of fertilisers and nitrogen compounds
 1234569;2014;Carbon dioxide (CO2);1,68;Mondi ?wiecie S.A.;?wiecie;Poland;53,398541;18,397101;Manufacture of paper and paperboard
 1234576;2014;Carbon dioxide (CO2);0,85;INTERNATIONAL  PAPER  - KWIDZYN  SP. Z O.O.;KWIDZYN;Poland;53,703109;18,919358;Manufacture of paper and paperboard
 1234577;2014;Carbon dioxide (CO2);0,148;ARCTIC PAPER KOSTRZYN S.A;Kostrzyn nad Odr?;Poland;52,593782;14,626912;Manufacture of paper and paperboard
@@ -225,7 +225,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1234753;2014;Carbon dioxide (CO2);0,303;Elektrociep?ownia Nowa Sarzyna Sp. z o.o.;Nowa Sarzyna;Poland;50,317472;22,323611;Production of electricity
 1234754;2014;Carbon dioxide (CO2);0,238;PGE Górnictwo i Energetyka Konwencjonalna S.A., Oddzia? Elektrociep?owania Rzeszów;Rzeszów;Poland;50,061441;22,027189;Production of electricity
 1234755;2014;Carbon dioxide (CO2);0,423;TAURON Wytwarzanie Spó?ka Akcyjna – Oddzia? Elektrownia Stalowa Wola w Stalowej Woli;Stalowa Wola;Poland;50,55;22,06667;Production of electricity
-1234756;2014;Carbon dioxide (CO2);0,181;System Gazoci?gów Tranzytowych EUROPOL GAZ S.A., T?ocznia Zambrów;Grzyma?y;Poland;52,939167;22,181667;Transport via pipeline
+1234756;2014;Carbon dioxide (CO2);0,181;System Gazoci?gów Tranzytowych `EUROPOL GAZ` S.A., T?ocznia Zambrów;Grzyma?y;Poland;52,939167;22,181667;Transport via pipeline
 1234757;2014;Carbon dioxide (CO2);0,123;Przedsi?biorstwo Energetyki Cieplnej w Suwa?kach Sp. z o.o., Ciep?ownia G?ówna;Suwa?ki;Poland;54,104444;22,967222;Steam and air conditioning supply
 1234758;2014;Carbon dioxide (CO2);0,365;PGE Górnictwo i Energetyka Konwencjonalna S.A., Oddzia? Elektrociep?ownia Lublin Wrotków;Lublin;Poland;51,215833;22,557777;Production of electricity
 1234760;2014;Carbon dioxide (CO2);0,13;Energetyka Sp. z o.o., Wydzia? EC-1;Lubin;Poland;51,43205;16,15565;Steam and air conditioning supply
@@ -233,10 +233,10 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1234771;2014;Carbon dioxide (CO2);36,8;PGE Górnictwo i Energetyka Konwencjonalna S.A., Oddzia? Elektrownia Be?chatów;Rogowiec;Poland;51,265782;19,315338;Production of electricity
 1234772;2014;Carbon dioxide (CO2);2,5;Tauron Wytwarzanie S.A., Oddzia? Elektrownia ?agisza w B?dzinie;B?dzin;Poland;50,348856;19,144535;Production of electricity
 1234773;2014;Carbon dioxide (CO2);0,193;Przedsi?biorstwo Energetyki Cieplnej - Gliwice Sp. z o.o.;Gliwice;Poland;50,292222;18,710833;Production of electricity
-1234774;2014;Carbon dioxide (CO2);0,558;Elektrociep?ownia Zielona Góra S.A.;Zielona Góra;Poland;51,95;15,483333;Production of electricity
+1234774;2014;Carbon dioxide (CO2);0,558;Elektrociep?ownia `Zielona Góra` S.A.;Zielona Góra;Poland;51,95;15,483333;Production of electricity
 1234777;2014;Carbon dioxide (CO2);0,278;ENERGA Kogeneracja Sp. z o.o.;Elbl?g;Poland;54,181721;19,389308;Steam and air conditioning supply
-1234779;2014;Carbon dioxide (CO2);0,196;System Gazoci?gów Tranzytowych EUROPOL GAZ S.A., T?ocznia Gazu i SSRP W?oc?awek;G?binek;Poland;52,739167;18,953333;Transport via pipeline
-1234780;2014;Carbon dioxide (CO2);0,269;MICHELIN POLSKA S.A.;Olsztyn;Poland;53,775;20,51944;Manufacture of rubber tyres and tubes; retreading and rebuilding of rubber tyres
+1234779;2014;Carbon dioxide (CO2);0,196;System Gazoci?gów Tranzytowych `EUROPOL GAZ` S.A., T?ocznia Gazu i SSRP W?oc?awek;G?binek;Poland;52,739167;18,953333;Transport via pipeline
+1234780;2014;Carbon dioxide (CO2);0,269;`MICHELIN POLSKA` S.A.;Olsztyn;Poland;53,775;20,51944;Manufacture of rubber tyres and tubes, retreading and rebuilding of rubber tyres
 1234781;2014;Carbon dioxide (CO2);0,13;OPEC -INEKO Sp. z o.o.;Grudzi?dz;Poland;53,480277;18,773333;Steam and air conditioning supply
 1234782;2014;Carbon dioxide (CO2);0,113;Miejskie Przedsi?biorstwo Energetyki Cieplnej  Sp. z o.o., Ciep?ownia Wschód;W?oc?awek;Poland;52,654772;19,098787;Steam and air conditioning supply
 1234785;2014;Carbon dioxide (CO2);0,881;Tauron Wytwarzanie Spó?ka Akcyjna-Oddzia? Elektrownia Jaworzno II w Jaworznie;Jaworzno;Poland;50,212222;19,228889;Production of electricity
@@ -251,10 +251,10 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1234907;2014;Carbon dioxide (CO2);0,188;Saint-Gobain Glass Polska Sp. z o.o.;D?browa Górnicza;Poland;50,305651;19,299331;Manufacture of flat glass
 1234908;2014;Carbon dioxide (CO2);0,18;Euroglas Polska Sp. z.o.o.;Ujazd;Poland;51,619722;19,934722;Manufacture of flat glass
 1234923;2014;Carbon dioxide (CO2);0,416;Synthos Dwory  7 Spó?ka z  Ograniczon? Odpowiedzialno?ci? Spó?ka Jawna;O?wi?cim;Poland;50,04;19,273889;Manufacture of synthetic rubber in primary forms
-1234930;2014;Carbon dioxide (CO2);0,17;BIOAGRA S.A., Zak?ad Produkcji Etanolu Go?winowice;G??binów 30;Poland;50,464336;17,26746;Manufacture of other organic basic chemicals
-1234938;2014;Carbon dioxide (CO2);1,89;Zak?ady Azotowe Pu?awy S.A.;Pu?awy;Poland;51,45975;21,97791;Manufacture of fertilisers and nitrogen compounds
+1234930;2014;Carbon dioxide (CO2);0,17;BIOAGRA S.A., Zak?ad Produkcji Etanolu `Go?winowice`;G??binów 30;Poland;50,464336;17,26746;Manufacture of other organic basic chemicals
+1234938;2014;Carbon dioxide (CO2);1,89;Zak?ady Azotowe `Pu?awy` S.A.;Pu?awy;Poland;51,45975;21,97791;Manufacture of fertilisers and nitrogen compounds
 1235024;2014;Carbon dioxide (CO2);0,143;Kronospan Mielec Sp. z o.o.;Mielec;Poland;50,305227;21,46461;Manufacture of veneer sheets and wood-based panels
-1235026;2014;Carbon dioxide (CO2);0,117;HOMANIT POLSKA SPÓ?KA Z OGRANICZON? ODPOWIEDZIALNO?CI? I SPÓ?KA SPÓ?KA KOMANDYTOWA;Karlino;Poland;54,059722;15,878889;Manufacture of veneer sheets and wood-based panels
+1235026;2014;Carbon dioxide (CO2);0,117;`HOMANIT POLSKA SPÓ?KA Z OGRANICZON? ODPOWIEDZIALNO?CI? I SPÓ?KA` SPÓ?KA KOMANDYTOWA;Karlino;Poland;54,059722;15,878889;Manufacture of veneer sheets and wood-based panels
 1236230;2014;Carbon dioxide (CO2);0,149;SC AMURCO  SRL BACAU;Bacau;Romania;46,5142777;26,9433055;Manufacture of fertilisers and nitrogen compounds
 1236251;2014;Carbon dioxide (CO2);0,333;SC DALKIA  TERMO  IASI SA - CET II;Holboca;Romania;47,1472274;27,7177038;Production of electricity
 1236272;2014;Carbon dioxide (CO2);0,125;SC GA PRO CO CHEMICALS SA;Savinesti;Romania;46,87346666;26,47386388;Manufacture of fertilisers and nitrogen compounds
@@ -507,32 +507,32 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1290730;2014;Carbon dioxide (CO2);0,77;Devnya Tsiment;Devnya;Bulgaria;43,235107;27,594131;Manufacture of cement
 1290734;2014;Carbon dioxide (CO2);0,437;Agropolihim AD;Devnya;Bulgaria;43,20079;27,660154;Manufacture of fertilisers and nitrogen compounds
 1290740;2014;Carbon dioxide (CO2);1,18;Gorivna instalatsia s nominalna toplinna moshtnost 510 MWt;Galabovo;Bulgaria;42,154472;25,90614;Steam and air conditioning supply
-1290747;2014;Carbon dioxide (CO2);1,69;Deven AD;Devnya;Bulgaria;43,2028;27,613583;Steam and air conditioning supply
+1290747;2014;Carbon dioxide (CO2);1,69;`Deven` AD;Devnya;Bulgaria;43,2028;27,613583;Steam and air conditioning supply
 1290749;2014;Carbon dioxide (CO2);3,03;TETs Ey I Es - Galabovo;Galabovo;Bulgaria;42,159083;25,908917;Production of electricity
 1290773;2014;Carbon dioxide (CO2);0,398;Zlatna Panega Tsiment AD;Zlatna Panega;Bulgaria;43,088184;24,170937;Manufacture of cement
-1290777;2014;Carbon dioxide (CO2);4,11;TETs Kontur Global Maritsa Iztok 3;Mednikarovo;Bulgaria;42,144905;26,002517;Production of electricity
+1290777;2014;Carbon dioxide (CO2);4,11;TETs `Kontur Global Maritsa Iztok 3`;Mednikarovo;Bulgaria;42,144905;26,002517;Production of electricity
 1290781;2014;Carbon dioxide (CO2);0,504;MONDI STAMBOLIYSKI EAD;Stamboliyski;Bulgaria;42,134639;24,522258;Manufacture of paper and paperboard
 1290792;2014;Carbon dioxide (CO2);1,02;Lukoyl Neftohim Burgas AD, gr Burgas;Burgas;Bulgaria;42,54544;27,336508;Manufacture of refined petroleum products
-1290811;2014;Carbon dioxide (CO2);0,208;Lukoyl Energia i Gaz BalgariaEOOD;Burgas;Bulgaria;42,543333;27,316667;Production of electricity
+1290811;2014;Carbon dioxide (CO2);0,208;`Lukoyl Energia i Gaz Balgaria`EOOD;Burgas;Bulgaria;42,543333;27,316667;Production of electricity
 1290830;2014;Carbon dioxide (CO2);0,118;Ploshtadka Plovdiv;Severen;Bulgaria;42,169785;24,739872;Manufacture of hollow glass
 1290844;2014;Carbon dioxide (CO2);0,968;TETs Varna;Ezerovo;Bulgaria;43,19477;27,765472;Production of electricity
-1290845;2014;Carbon dioxide (CO2);0,48;TETs Maritsa AD Dimitrovgrad;Dimitrovgrad;Bulgaria;42,051971;25,62324;Production of electricity
-1290846;2014;Carbon dioxide (CO2);0,131;OTsZemlyane;Krasno selo;Bulgaria;42,68682;23,28439;Steam and air conditioning supply
-1290847;2014;Carbon dioxide (CO2);0,429;TETs Sofia;Serdika;Bulgaria;42,719167;23,3225;Steam and air conditioning supply
-1290857;2014;Carbon dioxide (CO2);10,3;TETs Maritsa iztok 2 EAD;Kovachevo;Bulgaria;42,25642;26,132015;Production of electricity
-1290859;2014;Carbon dioxide (CO2);0,554;TR Sofia-Iztok;Sofia;Bulgaria;42,65044;23,41428;Steam and air conditioning supply
+1290845;2014;Carbon dioxide (CO2);0,48;TETs `Maritsa` AD Dimitrovgrad;Dimitrovgrad;Bulgaria;42,051971;25,62324;Production of electricity
+1290846;2014;Carbon dioxide (CO2);0,131;OTs`Zemlyane`;Krasno selo;Bulgaria;42,68682;23,28439;Steam and air conditioning supply
+1290847;2014;Carbon dioxide (CO2);0,429;TETs `Sofia`;Serdika;Bulgaria;42,719167;23,3225;Steam and air conditioning supply
+1290857;2014;Carbon dioxide (CO2);10,3;`TETs Maritsa iztok 2` EAD;Kovachevo;Bulgaria;42,25642;26,132015;Production of electricity
+1290859;2014;Carbon dioxide (CO2);0,554;TR `Sofia-Iztok`;Sofia;Bulgaria;42,65044;23,41428;Steam and air conditioning supply
 1290868;2014;Carbon dioxide (CO2);0,141;TETs;Severen;Bulgaria;42,183807;24,740973;Production of electricity
-1290892;2014;Carbon dioxide (CO2);0,558;Solvey Sodi  AD;Devnya;Bulgaria;43,263611;27,708887;Manufacture of other inorganic basic chemicals
+1290892;2014;Carbon dioxide (CO2);0,558;`Solvey Sodi ` AD;Devnya;Bulgaria;43,263611;27,708887;Manufacture of other inorganic basic chemicals
 1290894;2014;Carbon dioxide (CO2);0,272;Gorivna instalatsia za proizvodstvo na toplinna energia - parogeneratori tip TP 47 - 2br s edinichna toplinna moshtnost 165 MW.AD;Svishtov;Bulgaria;43,641945;25,304722;Steam and air conditioning supply
-1290897;2014;Carbon dioxide (CO2);0,588;Toplofikatsia- Ruse AD, TETs Ruse-Iztok;Ruse;Bulgaria;43,86639;26,009167;Production of electricity
+1290897;2014;Carbon dioxide (CO2);0,588;`Toplofikatsia- Ruse` AD, TETs `Ruse-Iztok`;Ruse;Bulgaria;43,86639;26,009167;Production of electricity
 1290899;2014;Carbon dioxide (CO2);0,437;Ploshtadka Beli Izvor;Beli izvor;Bulgaria;43,28318;23,463966;Manufacture of cement
 1290907;2014;Carbon dioxide (CO2);0,132;ZNHV;Golemo Malovo;Bulgaria;42,90878;22,976383;Manufacture of lime and plaster
 1290910;2014;Carbon dioxide (CO2);0,471;Instalatsia za proizvodstvo na sulfatno izbelena tseluloza ot shirokolistna darvesina (Zavod za tseluloza), Elektrolizna instalatsia za proizvodstvo na natriev hlorat;Svishtov;Bulgaria;43,639465;25,305538;Manufacture of pulp
 1290913;2014;Carbon dioxide (CO2);0,116;Stomana Indastri AD;Pernik;Bulgaria;42,593002;23,10493;Casting of steel
-1290916;2014;Carbon dioxide (CO2);2,3;TETs Bobov dol;Golemo selo;Bulgaria;42,285164;23,0344;Production of electricity
-1290917;2014;Carbon dioxide (CO2);0,605;TETs Republika;Pernik;Bulgaria;42,606667;23,078333;Steam and air conditioning supply
+1290916;2014;Carbon dioxide (CO2);2,3;TETs `Bobov dol`;Golemo selo;Bulgaria;42,285164;23,0344;Production of electricity
+1290917;2014;Carbon dioxide (CO2);0,605;TETs `Republika`;Pernik;Bulgaria;42,606667;23,078333;Steam and air conditioning supply
 1290918;2014;Carbon dioxide (CO2);0,254;Toplofikatsia  Sliven;Sliven;Bulgaria;42,654762;26,325853;Steam and air conditioning supply
-1290919;2014;Carbon dioxide (CO2);0,231;Trakia Glas Balgaria EAD;Targovishte;Bulgaria;43,275276;26,519583;Manufacture of flat glass
+1290919;2014;Carbon dioxide (CO2);0,231;`Trakia Glas Balgaria` EAD;Targovishte;Bulgaria;43,275276;26,519583;Manufacture of flat glass
 1291016;2014;Carbon dioxide (CO2);0,232;Alpiq Zlín s.r.o. - Teplárna Zlín;Zlín;Czech Republic;49,22539815;17,65382956;Steam and air conditioning supply
 1291034;2014;Carbon dioxide (CO2);0,266;Spalovna Malešice;Praha 10;Czech Republic;50,07892459;14,54113899;Treatment and disposal of non-hazardous waste
 1291046;2014;Carbon dioxide (CO2);0,151;Teplárna Strakonice, a.s.;Strakonice;Czech Republic;49,25536759;13,90696928;Steam and air conditioning supply
@@ -805,12 +805,12 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1308451;2014;Carbon dioxide (CO2);0,539;London Waste Ltd, Edmonton Efw;London;United Kingdom;51,6162;-0,040539;Collection of non-hazardous waste
 1308458;2014;Carbon dioxide (CO2);1,27;Rugby Works;Rugby;United Kingdom;52,3763;-1,28604;Manufacture of cement
 1308459;2014;Carbon dioxide (CO2);1,01;Spalding Energy Co Ltd, Spalding Energy Project;Spalding;United Kingdom;52,8078;-0,132192;Production of electricity
-1308513;2014;Carbon dioxide (CO2);0,344;TVORNICA CEMENTA SVETI KAJO;Solin;Croatia;43,54236133;16,44268304;Manufacture of cement
+1308513;2014;Carbon dioxide (CO2);0,344;TVORNICA CEMENTA `SVETI KAJO`;Solin;Croatia;43,54236133;16,44268304;Manufacture of cement
 1308535;2014;Carbon dioxide (CO2);0,248;Proizvodnja cementa Koroma?no;Koroma?no;Croatia;44,96822319;14,12687968;Manufacture of cement
 1308536;2014;Carbon dioxide (CO2);0,896;Rafinerija nafte Rijeka;Kostrena;Croatia;45,28563497;14,53381065;Manufacture of refined petroleum products
 1308537;2014;Carbon dioxide (CO2);0,427;CPS I, II, III;Virje;Croatia;46,10866943;17,00197591;Extraction of natural gas
 1308544;2014;Carbon dioxide (CO2);0,258;Rafinerija nafte Sisak;Sisak;Croatia;45,46280472;16,38717229;Manufacture of refined petroleum products
-1308548;2014;Carbon dioxide (CO2);0,525;TVORNICA CEMENTA SVETI JURAJ;Kaštel Su?urac;Croatia;43,54236133;16,44268304;Manufacture of cement
+1308548;2014;Carbon dioxide (CO2);0,525;TVORNICA CEMENTA `SVETI JURAJ`;Kaštel Su?urac;Croatia;43,54236133;16,44268304;Manufacture of cement
 1308550;2014;Carbon dioxide (CO2);0,802;Proizvodnja gnojiva;Kutina;Croatia;45,46646904;16,79739147;Manufacture of fertilisers and nitrogen compounds
 1308557;2014;Carbon dioxide (CO2);0,103;Proizvodnja aluminatnog cementa;Pula (Pola);Croatia;44,86381948;13,82689223;Manufacture of cement
 1308578;2014;Carbon dioxide (CO2);0,369;Pogon TE-TO Zagreb;Zagreb;Croatia;45,78358936;16,01130107;Production of electricity
@@ -1387,7 +1387,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1380069;2014;Carbon dioxide (CO2);0,319;Schaefer Kalk  GmbH & Co. KG Werk Hahnstätten;Hahnstätten;Germany;50,31748025;8,052328226;Manufacture of lime and plaster
 1380083;2014;Carbon dioxide (CO2);0,178;IHKW Industrieheizkraftwerk Andernach GmbH c/o ThyssenKrupp Rasselstein GmbH;Andernach;Germany;50,4320179;7,408163248;Treatment and disposal of non-hazardous waste
 1380085;2014;Carbon dioxide (CO2);0,122;Biomasse Heizkraftwerk Siegerl GmbH;Liebenscheid;Germany;50,70241658;8,073182102;Production of electricity
-1380096;2014;Carbon dioxide (CO2);0,165;Portlandzementwerk  Wotan,, H. Schneider KG;Üxheim;Germany;50,33399006;6,766828137;Manufacture of cement
+1380096;2014;Carbon dioxide (CO2);0,165;Portlandzementwerk ` Wotan`,, H. Schneider KG;Üxheim;Germany;50,33399006;6,766828137;Manufacture of cement
 1380104;2014;Carbon dioxide (CO2);0,125;TEAtherm GmbH;Dinkelsbühl;Germany;49,09964008;10,25019706;Treatment and disposal of non-hazardous waste
 1380124;2014;Carbon dioxide (CO2);0,362;Solnhofer Portland-Zementwerke GmbH & Co. KG;Solnhofen;Germany;48,88491246;10,99769729;Manufacture of cement
 1380126;2014;Carbon dioxide (CO2);0,251;GKS Müllheizkraftwerk;Schweinfurt;Germany;50,03011251;10,22362943;Steam and air conditioning supply
@@ -1439,7 +1439,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1380662;2014;Carbon dioxide (CO2);0,363;EGK Entsorgungsgesellschaft Krefeld GmbH & Co. KG;Krefeld;Germany;51,37890653;6,634403817;Remediation activities and other waste management services
 1380672;2014;Carbon dioxide (CO2);4,58;Kraftwerk Voerde beschränkt haftende OHG Kraftwerk Voerde, Blöcke A und B;Voerde;Germany;51,57850292;6,681916481;Production of electricity
 1380675;2014;Carbon dioxide (CO2);0,219;Kreis Weseler Abfallgesellschaft mbH & Co. KG Abfallentsorgungszentrum Asdonkshof;Kamp-Lintfort;Germany;51,51888436;6,576413074;Treatment and disposal of non-hazardous waste
-1380680;2014;Carbon dioxide (CO2);1,88;GbR der STEAG GmbH Gemeinschaftskraftwerk West STEAG Kraftwerk West;Voerde;Germany;51,57616339;6,684128391;Production of electricity
+1380680;2014;Carbon dioxide (CO2);1,88;GbR der STEAG GmbH `Gemeinschaftskraftwerk West` STEAG Kraftwerk West;Voerde;Germany;51,57616339;6,684128391;Production of electricity
 1380681;2014;Carbon dioxide (CO2);0,105;Verallia Saint-Gobain Oberland AG;Essen;Germany;51,5300371;6,995643748;Manufacture of hollow glass
 1380713;2014;Carbon dioxide (CO2);0,166;LANXESS Deutschland GmbH CHEMPARK Krefeld-Uerdingen;Krefeld;Germany;51,36819042;6,662384532;Manufacture of other organic basic chemicals
 1380731;2014;Carbon dioxide (CO2);0,143;Heizkraftwerk Südstadt;Köln;Germany;50,91736378;6,956612594;Production of electricity
@@ -1574,7 +1574,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1382257;2014;Carbon dioxide (CO2);0,107;SAINT-GOBAIN GLASS DEUTSCHLAND GMBH;Stolberg;Germany;50,78483857;6,220041688;Manufacture of flat glass
 1382258;2014;Carbon dioxide (CO2);18,8;RWE Power AG;Eschweiler;Germany;50,83316205;6,314578115;Production of electricity
 1382261;2014;Carbon dioxide (CO2);2,84;INEOS Köln GmbH;Köln;Germany;51,06763602;6,846742503;Manufacture of other organic basic chemicals
-1382270;2014;Carbon dioxide (CO2);1,1;RWE Generation SE; Region Kundenkraftwerke GuD-Anlage Dormagen;Dormagen;Germany;51,08052095;6,82762554;Production of electricity
+1382270;2014;Carbon dioxide (CO2);1,1;RWE Generation SE, Region Kundenkraftwerke GuD-Anlage Dormagen;Dormagen;Germany;51,08052095;6,82762554;Production of electricity
 1382278;2014;Carbon dioxide (CO2);0,836;CURRENTA GmbH & Co. OHG (CHEMPARK);Leverkusen;Germany;51,02220868;6,9859009;Steam and air conditioning supply
 1382297;2014;Carbon dioxide (CO2);1,14;Dyckerhoff Werksgruppe Nord, Werk Lengerich;Lengerich;Germany;52,17498589;7,887827641;Manufacture of cement
 1382311;2014;Carbon dioxide (CO2);0,172;Aurubis AG;Lünen;Germany;51,60659082;7,508034454;Copper production
@@ -2057,7 +2057,7 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1559282;2014;Carbon dioxide (CO2);0,11;LKAB - Svappavaaragruvan Leveäniemi;Kiruna;Sweden;67,64091138;21,01365888;Mining of iron ores
 1559290;2014;Carbon dioxide (CO2);0,128;LKAB - Malmbergsgruvan;Malmberget;Sweden;67,19643636;20,708692;Mining of iron ores
 1559292;2014;Carbon dioxide (CO2);0,226;Stora Enso Hylte AB;HYLTEBRUK;Sweden;56,99926015;13,23513094;Manufacture of paper and paperboard
-1559294;2014;Carbon dioxide (CO2);0,213;HEDENSBYNS KRAFTVÄRMEVERK;SKELLEFTEÅ;Sweden;64,74415164;21,04405525;Manufacture of other products of wood; manufacture of articles of cork, straw and plaiting
+1559294;2014;Carbon dioxide (CO2);0,213;HEDENSBYNS KRAFTVÄRMEVERK;SKELLEFTEÅ;Sweden;64,74415164;21,04405525;Manufacture of other products of wood, manufacture of articles of cork, straw and plaiting
 1565013;2014;Carbon dioxide (CO2);0,204;Draugen;Oslo;Norway;64,3529358;7,780844;Wholesale of solid, liquid and gaseous fuels and related products
 1565014;2014;Carbon dioxide (CO2);0,827;Statfjord;Stavanger;Norway;61,2551537;1,852061;Extraction of crude petroleum
 1565015;2014;Carbon dioxide (CO2);0,276;Sleipner Vest;Stavanger;Norway;58,417244;1,716314;Extraction of natural gas
