@@ -64,6 +64,12 @@
 
   <!-- Create the map content with JavaScript (.js) -->
   <script>
+jQuery.propHooks.checked = {
+    set: function (el, value) {
+        el.checked = value;
+        $(el).trigger('change');
+    }
+};
 /* Set up the map with initial center and zoom level */
 var map = L.map('map', {
     center: [50.1218292, 8.5995234], // EDIT latitude, longitude to re-center map
