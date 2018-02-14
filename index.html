@@ -124,7 +124,6 @@
         };
 
         function convertCSV(myBlob) {
-		console.log(myBlob);
 		return new Promise(function(resolve, reject) {
 			csv2geojson.csv2geojson(myBlob, {
 				latfield: 'latitude',
@@ -135,7 +134,6 @@
 					console.error(err);
 				}
 				else {
-					console.log(geojson);
 					resolve(geojson);
 				}
 			});
@@ -150,7 +148,6 @@
             var min = Math.min.apply(Math, geojson.features.map(function(o) {
                 return o.properties.MTonnes;
             }));
-            console.log(min, max);
 
             var dataLayer = L.geoJSON(geojson, {
                 pointToLayer: function(feature, latlon) {
@@ -177,35 +174,24 @@
                     layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
                 }
             });
-            console.log(layers);
             addSelectorPane(layers, emName, file);
         }
 
         function addSelectorPane(layers, emName, file) {
             $('div#layercontrol')
                 .append($('<span id="' + emName + 'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
-            $('#' + emName + 'togglebutton')
-                .on('click', function() {
-                    if ($(this)
-                        .hasClass('icon-folder-plus')) {
-                        $(this)
-                            .removeClass('icon-folder-plus')
-                            .addClass('icon-folder-minus');
-                        $('div#layercontrol-' + emName)
-                            .show();
+            $('#' + emName + 'togglebutton').on('click', function() {
+                    if ($(this).hasClass('icon-folder-plus')) {
+                        $(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
+                        $('div#layercontrol-' + emName).show();
                     } else {
-                        $(this)
-                            .removeClass('icon-folder-minus')
-                            .addClass('icon-folder-plus');
-                        $('div#layercontrol-' + emName)
-                            .hide();
+                        $(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
+                        $('div#layercontrol-' + emName).hide();
                     }
                 });
-            $('div#layercontrol')
-                .append($('<div id="layercontrol-' + emName + '">'));
+            $('div#layercontrol').append($('<div id="layercontrol-' + emName + '">'));
             var i = 1;
-            var keysSorted = Object.keys(layers)
-                .sort(function(a, b) {
+            var keysSorted = Object.keys(layers).sort(function(a, b) {
                     return layers[b].total - layers[a].total
                 });
             for (layerName in keysSorted) {
@@ -215,23 +201,17 @@
             }
             $('div#layercontrol input[type="checkbox"].' + emName)
                 .on('change', function() {
-                    console.log($(this), this);
-                    if ($(this)
-                        .is(':checked')) {
+                    if ($(this).is(':checked')) {
                         if (this.id == emName + "checkbAll") {
-                            $('div#layercontrol-' + emName + ' input[type="checkbox"]')
-                                .prop("checked", true);
+                            $('div#layercontrol-' + emName + ' input[type="checkbox"]').prop("checked", true);
                         } else {
-                            map.addLayer(layers[$(this)
-                                .attr('data-layer').replace("'", "&#39;")].layer);
+                            map.addLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
                         }
                     } else {
                         if (this.id == emName + "checkbAll") {
-                            $('div#layercontrol-' + emName + ' input[type="checkbox"]')
-                                .prop("checked", false);
+                            $('div#layercontrol-' + emName + ' input[type="checkbox"]').prop("checked", false);
                         } else {
-                            map.removeLayer(layers[$(this)
-                                .attr('data-layer').replace("'", "&#39;")].layer);
+                            map.removeLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
                         }
                     }
                 });
