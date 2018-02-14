@@ -162,7 +162,7 @@
                     });
                 },
                 onEachFeature: function(feature, layer) {
-                    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&quot;");
+                    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
                     if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
                         layers[feature.properties.NACEMainEconomicActivityName] = {
                             layer: new L.LayerGroup(),
