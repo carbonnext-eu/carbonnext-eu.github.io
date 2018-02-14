@@ -115,104 +115,117 @@
         getEmissionData('CO2', 'CO2.csv');
 
         function getEmissionData(emName, file) {
-            var dataLayer;
-            var layers = {};
             fetch(file)
-                .then(function(data) {
-                    csv2geojson.csv2geojson(data, {
-                        latfield: 'latitude',
-                        lonfield: 'longitude',
-                        delimiter: ';',
-                    }, function(err, geojson) {
-                        var max = Math.max.apply(Math, geojson.features.map(function(o) {
-                            return o.properties.MTonnes;
-                        }));
-                        var min = Math.min.apply(Math, geojson.features.map(function(o) {
-                            return o.properties.MTonnes;
-                        }));
-                        console.log(min, max);
+                .then(function(response) {
+                    return response.blob();
+                })
+                .then(function(myBlob) {
+                    convertCSV(myBlob);
+                });
+        };
 
-                        dataLayer = L.geoJSON(geojson, {
-                            pointToLayer: function(feature, latlon) {
-                                // L.circleMarker() draws a circle with fixed radius in pixels.
-                                // To draw a circle overlay with a radius in meters, use L.circle()
-                                return L.circleMarker(latlon, {
-                                    weight: 0,
-                                    radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
-                                });
-                            },
-                            onEachFeature: function(feature, layer) {
-                                feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&quot;");
-                                if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
-                                    layers[feature.properties.NACEMainEconomicActivityName] = {
-                                        layer: new L.LayerGroup(),
-                                        total: 0,
-                                        count: 0
-                                    };
-                                }
-                                layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
-                                layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
-                                layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-                                layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
-                            }
-                        });
-                        console.log(layers);
-                        $('div#layercontrol')
-                            .append($('<span id="' + emName + 'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
-                        $('#' + emName + 'togglebutton')
-                            .on('click', function() {
-                                if ($(this)
-                                    .hasClass('icon-folder-plus')) {
-                                    $(this)
-                                        .removeClass('icon-folder-plus')
-                                        .addClass('icon-folder-minus');
-                                    $('div#layercontrol-' + emName)
-                                        .show();
-                                } else {
-                                    $(this)
-                                        .removeClass('icon-folder-minus')
-                                        .addClass('icon-folder-plus');
-                                    $('div#layercontrol-' + emName)
-                                        .hide();
-                                }
-                            });
-                        $('div#layercontrol')
-                            .append($('<div id="layercontrol-' + emName + '">'));
-                        var i = 1;
-                        var keysSorted = Object.keys(layers)
-                            .sort(function(a, b) {
-                                return layers[b].total - layers[a].total
-                            });
-                        for (layerName in keysSorted) {
-                            $('div#layercontrol-' + emName)
-                                .append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')</label><br>'));
-                            i = i + 1;
-                        }
-                        $('div#layercontrol input[type="checkbox"].' + emName)
-                            .on('change', function() {
-                                console.log($(this), this);
-                                if ($(this)
-                                    .is(':checked')) {
-                                    if (this.id == emName + "checkbAll") {
-                                        $('div#layercontrol-' + emName + ' input[type="checkbox"]')
-                                            .prop("checked", true);
-                                    } else {
-                                        map.addLayer(layers[$(this)
-                                            .attr('data-layer')].layer);
-                                    }
-                                } else {
-                                    if (this.id == emName + "checkbAll") {
-                                        $('div#layercontrol-' + emName + ' input[type="checkbox"]')
-                                            .prop("checked", false);
-                                    } else {
-                                        map.removeLayer(layers[$(this)
-                                            .attr('data-layer')].layer);
-                                    }
-                                }
-                            });
+        function convertCSV(myBlob) {
+            csv2geojson.csv2geojson(myBlob, {
+                latfield: 'latitude',
+                lonfield: 'longitude',
+                delimiter: ';',
+            }, mangleGeoJSON);
+        };
+
+        function mangleGeoJSON(err, geojson) {
+            var layers = {};
+            var max = Math.max.apply(Math, geojson.features.map(function(o) {
+                return o.properties.MTonnes;
+            }));
+            var min = Math.min.apply(Math, geojson.features.map(function(o) {
+                return o.properties.MTonnes;
+            }));
+            console.log(min, max);
+
+            var dataLayer = L.geoJSON(geojson, {
+                pointToLayer: function(feature, latlon) {
+                    // L.circleMarker() draws a circle with fixed radius in pixels.
+                    // To draw a circle overlay with a radius in meters, use L.circle()
+                    return L.circleMarker(latlon, {
+                        weight: 0,
+                        radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
                     });
+                },
+                onEachFeature: function(feature, layer) {
+                    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&quot;");
+                    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
+                        layers[feature.properties.NACEMainEconomicActivityName] = {
+                            layer: new L.LayerGroup(),
+                            total: 0,
+                            count: 0
+                        };
+                    }
+                    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+                    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
+                    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
+                    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
+                }
+            });
+            console.log(layers);
+            addSelectorPane(layers);
+        }
+
+        function addSelectorPane(layers) {
+            $('div#layercontrol')
+                .append($('<span id="' + emName + 'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
+            $('#' + emName + 'togglebutton')
+                .on('click', function() {
+                    if ($(this)
+                        .hasClass('icon-folder-plus')) {
+                        $(this)
+                            .removeClass('icon-folder-plus')
+                            .addClass('icon-folder-minus');
+                        $('div#layercontrol-' + emName)
+                            .show();
+                    } else {
+                        $(this)
+                            .removeClass('icon-folder-minus')
+                            .addClass('icon-folder-plus');
+                        $('div#layercontrol-' + emName)
+                            .hide();
+                    }
+                });
+            $('div#layercontrol')
+                .append($('<div id="layercontrol-' + emName + '">'));
+            var i = 1;
+            var keysSorted = Object.keys(layers)
+                .sort(function(a, b) {
+                    return layers[b].total - layers[a].total
+                });
+            for (layerName in keysSorted) {
+                $('div#layercontrol-' + emName)
+                    .append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')</label><br>'));
+                i = i + 1;
+            }
+            $('div#layercontrol input[type="checkbox"].' + emName)
+                .on('change', function() {
+                    console.log($(this), this);
+                    if ($(this)
+                        .is(':checked')) {
+                        if (this.id == emName + "checkbAll") {
+                            $('div#layercontrol-' + emName + ' input[type="checkbox"]')
+                                .prop("checked", true);
+                        } else {
+                            map.addLayer(layers[$(this)
+                                .attr('data-layer')].layer);
+                        }
+                    } else {
+                        if (this.id == emName + "checkbAll") {
+                            $('div#layercontrol-' + emName + ' input[type="checkbox"]')
+                                .prop("checked", false);
+                        } else {
+                            map.removeLayer(layers[$(this)
+                                .attr('data-layer')].layer);
+                        }
+                    }
                 });
         }
+
         map.on('focus', () => {
             map.scrollWheelZoom.enable();
         });
