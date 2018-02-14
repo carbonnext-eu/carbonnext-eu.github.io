@@ -112,9 +112,10 @@ $.ajax('CO.csv', {
 		    },
 		    onEachFeature: function(feature, layer) {
 			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined){
-				  layers[feature.properties.NACEMainEconomicActivityName] = new L.LayerGroup();				  
+				  layers[feature.properties.NACEMainEconomicActivityName] = {layer: new L.LayerGroup(), total: 0};				  
 			    }
-			    layers[feature.properties.NACEMainEconomicActivityName].addLayer(layer);
+			    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+			    layers[feature.properties.NACEMainEconomicActivityName].total += feature.properties.MTonnes;
 		    }
 		});
 		console.log(layers);
@@ -132,22 +133,21 @@ $.ajax('CO.csv', {
 		$('div#layercontrol').append($('<div id="layercontrolCO">'));
 		var i = 1;
 		var numberedLayers = [];
-		for(layer in layers){
-			$('div#layercontrolCO').append($('<label><input type="checkbox" id="COcheckb'+i+'">'+layer+'</label><br>'));
-			numberedLayers[i] = layers[layer];
+		for(obj in layers){
+			var layer = obj.layer;
+			$('div#layercontrolCO').append($('<label><input type="checkbox" data-layer='+layer+' id="COcheckb'+i+'">'+layer+'</label><br>'));
 			i = i + 1;
 		}
 		console.log(numberedLayers);
 		$('div#layercontrol input[type="checkbox"]').on('change', function() {
-			    var checkbox = $(this);
-			    console.log(checkbox, this);			
-			    console.log(this.id, numberedLayers[this.id.replace('COcheckb','')]);			
+			    var checkbox = $(this);			
+			    console.log(this.attr('data-layer'), layers[this.attr('data-layer')]);			
 			    if (checkbox.is(':checked')) {
 				    if(this.id == "COcheckbAll"){
 				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", true);
 				    }
 				    else {
-					map.addLayer(numberedLayers[this.id.replace('COcheckb','')]);
+					map.addLayer(layers[this.attr('data-layer')].layer);
 				    }
 			    }
 			    else {
@@ -155,7 +155,7 @@ $.ajax('CO.csv', {
 				    	$('div#layercontrolCO input[type="checkbox"]').prop("checked", false);
 				    }
 				    else {
-					map.removeLayer(numberedLayers[this.id.replace('COcheckb','')]);
+					map.removeLayer(layers[this.attr('data-layer')].layer);
 				    }
 			    }
 			});
