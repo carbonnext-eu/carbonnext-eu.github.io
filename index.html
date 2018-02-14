@@ -144,7 +144,7 @@ function getEmissionData(emName, file){
 				i = i + 1;
 			}
 			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {			
-				    if (checkbox.is(':checked')) {
+				    if ($(this).is(':checked')) {
 					    if(this.id == emName+"checkbAll"){
 						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", true);
 					    }
