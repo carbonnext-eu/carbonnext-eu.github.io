@@ -55,7 +55,7 @@
   body { margin:0; padding:0; }
   #map { position: absolute; top:0; bottom:0; right:250px; left:0; }
   div#layercontrol {position: absolute;top: 0; right: 0; width:250px; overflow-y: overlay;}
-  div#layercontrolCO {padding-left:12px; font-size: small; display: none;}
+  div[id*="layercontrol-"] {padding-left:12px; font-size: small; display: none;}
   </style>
 </head>
 <body>
@@ -125,23 +125,23 @@ function getEmissionData(emName, file){
 			    }
 			});
 			console.log(layers);
-			$('div#layercontrol').append($('<span id="'+emName+'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="'+emName+' id="'+emName+'checkbAll">'+emName+'</label><br>'));
+			$('div#layercontrol').append($('<span id="'+emName+'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="'+emName+'" id="'+emName+'checkbAll">'+emName+'</label><br>'));
 			$('#'+emName+'togglebutton').on('click', function() {
 				if($(this).hasClass('icon-folder-plus')){
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
-					$('div#layercontrol'+emName).show();
+					$('div#layercontrol-'+emName).show();
 				}
 				else {
 					$(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
-					$('div#layercontrol'+emName).hide();
+					$('div#layercontrol-'+emName).hide();
 				}
 			});
-			$('div#layercontrol').append($('<div id="layercontrol'+emName+'">'));
+			$('div#layercontrol').append($('<div id="layercontrol-'+emName+'">'));
 			var i = 1;
 			var keysSorted = Object.keys(layers).sort(function(a,b){return layers[b].total-layers[a].total});
 			console.log(keysSorted);
 			for(layerName in keysSorted){
-				$('div#layercontrol'+emName).append($('<label><input type="checkbox" data-layer=\''+keysSorted[layerName]+'\' class="'+emName+'">'+keysSorted[layerName]+' ('+layers[keysSorted[layerName]].total.toFixed(2)+'&nbsp;Mt, '+layers[keysSorted[layerName]].count+')</label><br>'));
+				$('div#layercontrol-'+emName).append($('<label><input type="checkbox" data-layer=\''+keysSorted[layerName]+'\' class="'+emName+'">'+keysSorted[layerName]+' ('+layers[keysSorted[layerName]].total.toFixed(2)+'&nbsp;Mt, '+layers[keysSorted[layerName]].count+')</label><br>'));
 				i = i + 1;
 			}
 			$('div#layercontrol input[type="checkbox"].'+emName).on('change', function() {
@@ -149,7 +149,7 @@ function getEmissionData(emName, file){
 				    console.log($(this).attr('data-layer'), layers[$(this).attr('data-layer')]);			
 				    if (checkbox.is(':checked')) {
 					    if(this.id == "'+emName+'checkbAll"){
-						$('div#layercontrol'+emName+' input[type="checkbox"]').prop("checked", true);
+						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", true);
 					    }
 					    else {
 						map.addLayer(layers[$(this).attr('data-layer')].layer);
@@ -157,7 +157,7 @@ function getEmissionData(emName, file){
 				    }
 				    else {
 					    if(this.id == "'+emName+'checkbAll"){
-						$('div#layercontrol'+emName+' input[type="checkbox"]').prop("checked", false);
+						$('div#layercontrol-'+emName+' input[type="checkbox"]').prop("checked", false);
 					    }
 					    else {
 						map.removeLayer(layers[$(this).attr('data-layer')].layer);
