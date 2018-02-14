@@ -111,16 +111,16 @@
             })
             .addTo(map);
 
-        getEmissionData('CO', 'CO.csv');
-        getEmissionData('CO2', 'CO2.csv');
+        getEmissionData('CO', 'CO.csv', "#004e83");
+        getEmissionData('CO2', 'CO2.csv', "#2D7DC3");
 
-        function getEmissionData(emName, file) {
+        function getEmissionData(emName, file, color) {
             fetch(file)
                 .then(function(response) {
                     return response.text();
                 })
                 .then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSON(geojson, emName, file));
+		.then(geojson => mangleGeoJSON(geojson, emName, file, color));
         };
 
         function convertCSV(myBlob) {
@@ -142,7 +142,7 @@
 		});
 	};
 
-        function mangleGeoJSON(geojson, emName, file) {
+        function mangleGeoJSON(geojson, emName, file, color) {
             var layers = {};
             var max = Math.max.apply(Math, geojson.features.map(function(o) {
                 return o.properties.MTonnes;
@@ -157,6 +157,7 @@
                     // L.circleMarker() draws a circle with fixed radius in pixels.
                     // To draw a circle overlay with a radius in meters, use L.circle()
                     return L.circleMarker(latlon, {
+			color: color,
                         weight: 0,
                         radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
                     });
