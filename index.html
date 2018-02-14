@@ -93,8 +93,8 @@
         };
         /* Set up the map with initial center and zoom level */
         var map = L.map('map', {
-            center: [50.1218292, 8.5995234], // EDIT latitude, longitude to re-center map
-            zoom: 6, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+            center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
+            zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
             scrollWheelZoom: false
         });
 
@@ -111,16 +111,19 @@
             })
             .addTo(map);
 
-        getEmissionData('CO', 'CO.csv', "#004e83");
-        getEmissionData('CO2', 'CO2.csv', "#008D4D");
+        getEmissionData('CO', 'CO.csv', "#004e83")
+        .then(getEmissionData('CO2', 'CO2.csv', "#008D4D"));
 
         function getEmissionData(emName, file, color) {
-            fetch(file)
-                .then(function(response) {
-                    return response.text();
-                })
-                .then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSON(geojson, emName, file, color));
+	    return new Promise(function(resolve, reject) {
+		    fetch(file)
+			.then(function(response) {
+			    return response.text();
+			})
+			.then(myBlob => convertCSV(myBlob))
+			.then(geojson => mangleGeoJSON(geojson, emName, file, color))
+		        .then(resolve);
+	    });
         };
 
         function convertCSV(myBlob) {
