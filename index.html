@@ -138,7 +138,6 @@ $.ajax('CO.csv', {
 			$('div#layercontrolCO').append($('<label><input type="checkbox" data-layer='+keysSorted[layerName]+' id="COcheckb'+i+'">'+keysSorted[layerName]+' ('+layers[keysSorted[layerName]].total.toFixed(2)+'&nbsp;Mt)</label><br>'));
 			i = i + 1;
 		}
-		console.log(numberedLayers);
 		$('div#layercontrol input[type="checkbox"]').on('change', function() {
 			    var checkbox = $(this);			
 			    console.log($(this).attr('data-layer'), layers[$(this).attr('data-layer')]);			
