@@ -1,4 +1,4 @@
-FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryName;Lat;Long;NACEMainEconomicActivityName
+FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryName;latitude;longitude;NACEMainEconomicActivityName
 1113729;2014;Carbon dioxide (CO2);0.349;Varo Refining Cressier SA / Raffinerie de Cressier;Cressier;Switzerland;47.04003782;7.035794988;Manufacture of refined petroleum products
 1113730;2014;Carbon dioxide (CO2);0.283;KEBAG AG;Zuchwil;Switzerland;47.2152774;7.570646783;Treatment and disposal of non-hazardous waste
 1113734;2014;Carbon dioxide (CO2);0.125;Cimo SA;Monthey;Switzerland;46.25293905;6.965316545;Treatment and disposal of hazardous waste
