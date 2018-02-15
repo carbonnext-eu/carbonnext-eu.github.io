@@ -105,8 +105,7 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSON(geojson, emName, file, color))
-		.then(resolve);
+		.then(geojson => mangleGeoJSON(geojson, emName, file, color));
         };
 	    
 	function getChemparkData(name, file, color) {
@@ -115,8 +114,7 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSONToParks(geojson, name, file, color))
-		.then(resolve);
+		.then(geojson => mangleGeoJSONToParks(geojson, name, file, color));
         };   
 
         function convertCSV(myBlob) {
