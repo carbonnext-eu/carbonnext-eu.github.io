@@ -237,10 +237,10 @@
             $('#' + emName + 'togglebutton').on('click', function() {
                     if ($(this).hasClass('icon-folder-plus')) {
                         $(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
-                        $('div#layercontrol-' + emName).show();
+                        $('div#layercontrolSub-' + emName).show();
                     } else {
                         $(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
-                        $('div#layercontrol-' + emName).hide();
+                        $('div#layercontrolSub-' + emName).hide();
                     }
                 });
             $('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
@@ -249,7 +249,7 @@
                     return layers[b].total - layers[a].total
                 });
             for (layerName in keysSorted) {
-                $('div#layercontrol-' + emName)
+                $('div#layercontrolSub-' + emName)
                     .append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')</label><br>'));
                 i = i + 1;
             }
