@@ -134,7 +134,7 @@
 			    return response.text();
 			})
 			.then(myBlob => convertCSV(myBlob))
-			.then(geojson => mangleGeoJSONToParks(geojson, emName, file, color))
+			.then(geojson => mangleGeoJSONToParks(geojson, name, file, color))
 		        .then(resolve);
 	    });
         };   
@@ -156,7 +156,7 @@
 		});
 	};
 
-	function mangleGeoJSONToParks(geojson, emName, file, color) {
+	function mangleGeoJSONToParks(geojson, name, file, color) {
             var dataLayer = L.geoJSON(geojson, {
                 pointToLayer: function(feature, latlon) {
                     // L.circleMarker() draws a circle with fixed radius in pixels.
@@ -172,8 +172,8 @@
                 }
             });
             $('div#layercontrol')
-                .append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
-            $('div#layercontrol input[type="checkbox"].' + emName)
+                .append($('<label><input type="checkbox" class="' + name + '" id="' + name + 'checkbAll">' + name + '</label><br>'));
+            $('div#layercontrol input[type="checkbox"].' + name)
                 .on('change', function() {
                     if ($(this).is(':checked')) {
                             map.addLayer(dataLayer);
