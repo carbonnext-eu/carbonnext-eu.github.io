@@ -105,7 +105,8 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSON(geojson, emName, color));
+		.then(geojson => addEmissionsToMap(geojson, color))
+		.then(dataLayer => addEmissionsToMenu(dataLayer, emName));
         };
 	    
 	function getChemparkData(name, file, color) {
@@ -114,7 +115,7 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => addParksToMap(geojson, color)
+		.then(geojson => addParksToMap(geojson, color))
 		.then(dataLayer => addParksToMenu(dataLayer, name));
         };   
 
@@ -170,7 +171,7 @@
                  });	
 	}
 	    
-        function mangleGeoJSON(geojson, emName, color) {
+        function addEmissionsToMap(geojson, color) {
 	    return new Promise(function(resolve, reject) {
 		    var layers = {};
 		    var max = Math.max.apply(Math, geojson.features.map(function(o) {
@@ -205,12 +206,11 @@
 			    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
 			}
 		    });
-		    addSelectorPane(layers, emName, file);
-		    resolve("ok");
+		    resolve(layers);
 	    });
         }
 
-        function addSelectorPane(layers, emName, file) { 
+        function addEmissionsToMenu(layers, emName) { 
 	    $('div#layercontrolSub')
                 .append($('<span id="' + emName + 'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
             $('#' + emName + 'togglebutton').on('click', function() {
