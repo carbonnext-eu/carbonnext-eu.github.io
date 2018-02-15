@@ -133,13 +133,14 @@
 			.then(function(response) {
 			    return response.text();
 			})
-			.then(myBlob => {console.log(myBlob); convertCSV(myBlob)})
-			.then(geojson => {console.log(geojson); mangleGeoJSONToParks(geojson, name, file, color)})
+			.then(myBlob => convertCSV(myBlob))
+			.then(geojson => mangleGeoJSONToParks(geojson, name, file, color))
 		        .then(resolve);
 	    });
         };   
 
         function convertCSV(myBlob) {
+		console.log(myBlob); 
 		return new Promise(function(resolve, reject) {
 			csv2geojson.csv2geojson(myBlob, {
 				latfield: 'latitude',
@@ -157,6 +158,7 @@
 	};
 
 	function mangleGeoJSONToParks(geojson, name, file, color) {
+	    console.log(geojson); 
 	    var escName = name.replace(" ", "_");
             var dataLayer = L.geoJSON(geojson, {
                 pointToLayer: function(feature, latlon) {
