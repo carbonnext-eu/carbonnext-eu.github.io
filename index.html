@@ -116,15 +116,14 @@
             .addTo(map);
 	    
 	$('#layercontrolMinimize').on('click', function() {
-		console.log($(this));
 		if($(this).data("minimized")){
 			$(this).data("minimized", false);
 			$('#layercontrol').css('width', "250px");
-			$("svg", this).css('transform', "rotate(180deg)");
+			$("svg", this).css('transform', "rotate(0deg)");
 		} else {
 			$(this).data("minimized", true);
 			$('#layercontrol').css('width', "20px");
-			$("svg", this).css('transform', "rotate(-180deg)");			
+			$("svg", this).css('transform', "rotate(180deg)");			
 		}
 	});
 
