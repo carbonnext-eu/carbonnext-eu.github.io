@@ -56,6 +56,8 @@
 	    left: -8px;
 	    margin-top: -8px;
 	    z-index: 8000;
+	    width: 16px;
+	    height: 20px;
 	    border: 1px solid rgba(0,78,131,0.9);
 	    background-color: rgb(226, 238, 246);
 	}
@@ -125,11 +127,11 @@
 		if($(this).data("minimized")){
 			$(this).data("minimized", false);
 			$('#layercontrol').css('width', "250px");
-			$(this).css('transform', "rotate(180deg)");
+			$("svg", this).css('transform', "rotate(180deg)");
 		} else {
 			$(this).data("minimized", true);
 			$('#layercontrol').css('width', "20px");
-			$(this).css('transform', "rotate(0deg)");			
+			$("svg", this).css('transform', "rotate(0deg)");			
 		}
 	});
 
