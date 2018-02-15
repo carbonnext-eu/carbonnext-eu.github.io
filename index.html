@@ -105,7 +105,7 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSON(geojson, emName, file, color));
+		.then(geojson => mangleGeoJSON(geojson, emName, color));
         };
 	    
 	function getChemparkData(name, file, color) {
@@ -114,7 +114,8 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => mangleGeoJSONToParks(geojson, name, file, color));
+		.then(geojson => addParksToMap(geojson, color)
+		.then(dataLayer => addParksToMenu(dataLayer, name));
         };   
 
         function convertCSV(myBlob) {
@@ -135,8 +136,7 @@
 		});
 	};
 
-	function mangleGeoJSONToParks(geojson, name, file, color) {
-	    var escName = name.replace(" ", "_");
+	function addParksToMap(geojson, color) {
 	    return new Promise(function(resolve, reject) {
 		    var dataLayer = L.geoJSON(geojson, {
 			pointToLayer: function(feature, latlon) {
@@ -152,7 +152,13 @@
 			    layer.bindPopup(feature.properties.FacilityName);
 			}
 		    });
-		    $('div#layercontrolNoSub')
+		    resolve(dataLayer);
+	    });
+        }
+	    
+	function addParksToMenu(dataLayer, name){
+		var escName = name.replace(" ", "_");
+		$('div#layercontrolNoSub')
 			.append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '</label><br>'));
 		    $('div#layercontrolNoSub input[type="checkbox"].' + escName)
 			.on('change', function() {
@@ -161,12 +167,10 @@
 			    } else {
 				    map.removeLayer(dataLayer);
 			    }
-                    });
-		    resolve("ok");
-	    });
-        }
+                 });	
+	}
 	    
-        function mangleGeoJSON(geojson, emName, file, color) {
+        function mangleGeoJSON(geojson, emName, color) {
 	    return new Promise(function(resolve, reject) {
 		    var layers = {};
 		    var max = Math.max.apply(Math, geojson.features.map(function(o) {
