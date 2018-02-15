@@ -59,6 +59,12 @@
 	    border: 1px solid rgba(0,78,131,0.9);
 	    background-color: rgb(226, 238, 246);
 	}
+	#layercontrolMinimize svg {
+	    position:absolute;
+	    top:50%;
+	    bottom:50%;
+	    transform:translate(-50%, -50%);
+	}
         div[id*="layercontrolSub-"] {
             padding-left: 12px;
             font-size: small;
@@ -89,7 +95,7 @@
     <div id="layercontrol">
 	<div id="layercontrolNoSub"><h3>Consumers</h3></div>
 	<div id="layercontrolSub"><h3>Emitters</h3></div>
-	<span id="layercontrolMinimize">
+	<span id="layercontrolMinimize" data-minimized="false">
 		<svg class="icon icon-play3"><use xlink:href="#icon-play3"></use></svg>
 	</span>
     </div>
@@ -115,7 +121,9 @@
             .addTo(map);
 	    
 	$('#layercontrolMinimize').on('click', function() {
+		console.log($(this));
 		if($(this).data("minimized")){
+			console.log($(this).data());
 			$(this).data("minimized", false);
 			$('#layercontrol').attr('width', "250px");
 		} else {
