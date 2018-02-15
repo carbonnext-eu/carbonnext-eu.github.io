@@ -51,7 +51,7 @@
 	    z-index: 7000;
         }
 	#layercontrolMinimize {
-	    position: absolute;
+	    position: relative;
 	    top: 50%;
 	    left: -8px;
 	    margin-top: -8px;
@@ -124,11 +124,12 @@
 		console.log($(this));
 		if($(this).data("minimized")){
 			$(this).data("minimized", false);
-			$('#layercontrol').css({'width': "250px", transform: "rotate(180deg)"});
+			$('#layercontrol').css('width', "250px");
+			$(this).css('transform', "rotate(180deg)");
 		} else {
 			$(this).data("minimized", true);
-			$('#layercontrol').css({'width': "20px", transform: "rotate(0deg)"});
-			
+			$('#layercontrol').css('width', "20px");
+			$(this).css('transform', "rotate(0deg)");			
 		}
 	});
 
