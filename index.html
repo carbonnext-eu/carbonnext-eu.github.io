@@ -149,6 +149,7 @@
 			}, function(err, geojson){
 				if (err){
 					console.error(err);
+					reject(err);
 				}
 				else {
 					resolve(geojson);
@@ -159,68 +160,74 @@
 
 	function mangleGeoJSONToParks(geojson, name, file, color) {
 	    console.log(geojson); 
-	    var escName = name.replace(" ", "_");
-            var dataLayer = L.geoJSON(geojson, {
-                pointToLayer: function(feature, latlon) {
-                    // L.circleMarker() draws a circle with fixed radius in pixels.
-                    // To draw a circle overlay with a radius in meters, use L.circle()
-                    return L.circleMarker(latlon, {
-			color: color,
-                        weight: 0,
-                        radius: 10
+	    return new Promise(function(resolve, reject) {
+		    var escName = name.replace(" ", "_");
+		    var dataLayer = L.geoJSON(geojson, {
+			pointToLayer: function(feature, latlon) {
+			    // L.circleMarker() draws a circle with fixed radius in pixels.
+			    // To draw a circle overlay with a radius in meters, use L.circle()
+			    return L.circleMarker(latlon, {
+				color: color,
+				weight: 0,
+				radius: 10
+			    });
+			},
+			onEachFeature: function(feature, layer) {
+			    layer.bindPopup(feature.properties.FacilityName);
+			}
+		    });
+		    $('div#layercontrol')
+			.append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '</label><br>'));
+		    $('div#layercontrol input[type="checkbox"].' + escName)
+			.on('change', function() {
+			    if ($(this).is(':checked')) {
+				    map.addLayer(dataLayer);
+			    } else {
+				    map.removeLayer(dataLayer);
+			    }
                     });
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.bindPopup(feature.properties.FacilityName);
-                }
-            });
-            $('div#layercontrol')
-                .append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '</label><br>'));
-            $('div#layercontrol input[type="checkbox"].' + escName)
-                .on('change', function() {
-                    if ($(this).is(':checked')) {
-                            map.addLayer(dataLayer);
-                    } else {
-                            map.removeLayer(dataLayer);
-                    }
-                });
+		    resolve("ok");
+	    });
         }
 	    
         function mangleGeoJSON(geojson, emName, file, color) {
-            var layers = {};
-            var max = Math.max.apply(Math, geojson.features.map(function(o) {
-                return o.properties.MTonnes;
-            }));
-            var min = Math.min.apply(Math, geojson.features.map(function(o) {
-                return o.properties.MTonnes;
-            }));
+	    return new Promise(function(resolve, reject) {
+		    var layers = {};
+		    var max = Math.max.apply(Math, geojson.features.map(function(o) {
+			return o.properties.MTonnes;
+		    }));
+		    var min = Math.min.apply(Math, geojson.features.map(function(o) {
+			return o.properties.MTonnes;
+		    }));
 
-            var dataLayer = L.geoJSON(geojson, {
-                pointToLayer: function(feature, latlon) {
-                    // L.circleMarker() draws a circle with fixed radius in pixels.
-                    // To draw a circle overlay with a radius in meters, use L.circle()
-                    return L.circleMarker(latlon, {
-			color: color,
-                        weight: 0,
-                        radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
-                    });
-                },
-                onEachFeature: function(feature, layer) {
-		    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
-                    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
-                        layers[feature.properties.NACEMainEconomicActivityName] = {
-                            layer: new L.LayerGroup(),
-                            total: 0,
-                            count: 0
-                        };
-                    }
-                    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
-                    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
-                    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-                    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
-                }
-            });
-            addSelectorPane(layers, emName, file);
+		    var dataLayer = L.geoJSON(geojson, {
+			pointToLayer: function(feature, latlon) {
+			    // L.circleMarker() draws a circle with fixed radius in pixels.
+			    // To draw a circle overlay with a radius in meters, use L.circle()
+			    return L.circleMarker(latlon, {
+				color: color,
+				weight: 0,
+				radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
+			    });
+			},
+			onEachFeature: function(feature, layer) {
+			    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
+			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
+				layers[feature.properties.NACEMainEconomicActivityName] = {
+				    layer: new L.LayerGroup(),
+				    total: 0,
+				    count: 0
+				};
+			    }
+			    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+			    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
+			    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
+			    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
+			}
+		    });
+		    addSelectorPane(layers, emName, file);
+		    resolve("ok");
+	    });
         }
 
         function addSelectorPane(layers, emName, file) {
