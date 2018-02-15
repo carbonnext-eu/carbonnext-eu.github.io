@@ -140,7 +140,6 @@
         };   
 
         function convertCSV(myBlob) {
-		console.log(myBlob); 
 		return new Promise(function(resolve, reject) {
 			csv2geojson.csv2geojson(myBlob, {
 				latfield: 'latitude',
