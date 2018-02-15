@@ -51,21 +51,14 @@
 	    z-index: 7000;
         }
 	#layercontrolMinimize {
-	    position: relative;
+	    position: absolute;
 	    top: 50%;
 	    left: -8px;
 	    margin-top: -8px;
+	    height: 16px;
 	    z-index: 8000;
-	    width: 16px;
-	    height: 20px;
 	    border: 1px solid rgba(0,78,131,0.9);
 	    background-color: rgb(226, 238, 246);
-	}
-	#layercontrolMinimize svg {
-	    position:absolute;
-	    top:50%;
-	    bottom:50%;
-	    transform:translate(-50%, -50%);
 	}
         div[id*="layercontrolSub-"] {
             padding-left: 12px;
@@ -131,7 +124,7 @@
 		} else {
 			$(this).data("minimized", true);
 			$('#layercontrol').css('width', "20px");
-			$("svg", this).css('transform', "rotate(0deg)");			
+			$("svg", this).css('transform', "rotate(-180deg)");			
 		}
 	});
 
