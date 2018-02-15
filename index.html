@@ -159,10 +159,10 @@
 	};
 
 	function mangleGeoJSONToParks(geojson, name, file, color) {
+	    var escName = name.replace(" ", "_");
 	    $('div#layercontrol')
 		.append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '</label><br>'));
 	    return new Promise(function(resolve, reject) {
-		    var escName = name.replace(" ", "_");
 		    var dataLayer = L.geoJSON(geojson, {
 			pointToLayer: function(feature, latlon) {
 			    // L.circleMarker() draws a circle with fixed radius in pixels.
