@@ -110,6 +110,16 @@
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
             })
             .addTo(map);
+	    
+	$('#layercontrolMinimize').on('click', function() {
+		if($(this).data("minimized")){
+			$(this).data("minimized", false);
+			$('#layercontrol').attr('width', "250px");
+		} else {
+			$(this).data("minimized", true);
+			$('#layercontrol').attr('width', "20px");
+		}
+	};
 
 	/* Load all csv data files and create menu*/
         getEmissionData('CO', 'CO.csv', "#004e83");
