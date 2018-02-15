@@ -105,7 +105,7 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => addEmissionsToMap(geojson, color))
+		.then(geojson => addEmissionsToMap(geojson, emName, color))
 		.then(dataLayer => addEmissionsToMenu(dataLayer, emName));
         };
 	    
@@ -171,7 +171,7 @@
                  });	
 	}
 	    
-        function addEmissionsToMap(geojson, color) {
+        function addEmissionsToMap(geojson, emName, color) {
 	    return new Promise(function(resolve, reject) {
 		    var layers = {};
 		    var max = Math.max.apply(Math, geojson.features.map(function(o) {
