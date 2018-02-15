@@ -113,7 +113,7 @@
 
         getEmissionData('CO', 'CO.csv', "#004e83")
         .then(getEmissionData('CO2', 'CO2.csv', "#008D4D"))
-	.then(getEmissionData('Chemical parks', 'chemicalparks.csv', "#aaa"));
+	.then(getChemparkData('Chemical parks', 'chemicalparks.csv', "#aaa"));
 
         function getEmissionData(emName, file, color) {
 	    return new Promise(function(resolve, reject) {
@@ -126,6 +126,18 @@
 		        .then(resolve);
 	    });
         };
+	    
+	function getChemparkData(name, file, color) {
+	    return new Promise(function(resolve, reject) {
+		    fetch(file)
+			.then(function(response) {
+			    return response.text();
+			})
+			.then(myBlob => convertCSV(myBlob))
+			.then(geojson => mangleGeoJSONToParks(geojson, emName, file, color))
+		        .then(resolve);
+	    });
+        };   
 
         function convertCSV(myBlob) {
 		return new Promise(function(resolve, reject) {
@@ -144,6 +156,33 @@
 		});
 	};
 
+	function mangleGeoJSONToParks(geojson, emName, file, color) {
+            var dataLayer = L.geoJSON(geojson, {
+                pointToLayer: function(feature, latlon) {
+                    // L.circleMarker() draws a circle with fixed radius in pixels.
+                    // To draw a circle overlay with a radius in meters, use L.circle()
+                    return L.circleMarker(latlon, {
+			color: color,
+                        weight: 0,
+                        radius: 10
+                    });
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup(feature.properties.FacilityName);
+                }
+            });
+            $('div#layercontrol')
+                .append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
+            $('div#layercontrol input[type="checkbox"].' + emName)
+                .on('change', function() {
+                    if ($(this).is(':checked')) {
+                            map.addLayer(dataLayer);
+                    } else {
+                            map.removeLayer(dataLayer);
+                    }
+                });
+        }
+	    
         function mangleGeoJSON(geojson, emName, file, color) {
             var layers = {};
             var max = Math.max.apply(Math, geojson.features.map(function(o) {
