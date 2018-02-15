@@ -13,33 +13,14 @@
     <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <style>
-        @font-face {
-            font-family: 'icomoon';
-            src: url('fonts/icomoon.svg?akaywm#icomoon') format('svg'),
-            url('fonts/icomoon.ttf?akaywm') format('truetype'),
-            url('fonts/icomoon.woff?akaywm') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-        [class^="icon-"],
-        [class*=" icon-"] {
-            /* use !important to prevent issues with browser extensions that change fonts */
-            font-family: 'icomoon' !important;
-            speak: none;
-            font-style: normal;
-            font-weight: normal;
-            font-variant: normal;
-            text-transform: none;
-            line-height: 1;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .icon-folder-plus:before {
-            content: "\e931";
-        }
-        .icon-folder-minus:before {
-            content: "\e932";
-        }
+        .icon {
+	  display: inline-block;
+	  width: 1em;
+	  height: 1em;
+	  stroke-width: 0;
+	  stroke: currentColor;
+	  fill: currentColor;
+	}
 
         body {
             margin: 0;
@@ -68,8 +49,19 @@
 	    border: 1px solid rgba(0,78,131,0.9);
             overflow-y: overlay;
 	    z-index: 7000;
-	    resize: horizontal;
         }
+	div#layercontrol:after {
+	    content:'';
+	    position: absolute;
+	    top: 50%;
+	    left: 0%;
+	    margin-top: -16px;
+	    width: 0;
+	    height: 0;
+	    border-top: solid 16px #e15915;
+	    border-left: solid 16px transparent;
+	    border-right: solid 16px transparent;
+	}
         div[id*="layercontrolSub-"] {
             padding-left: 12px;
             font-size: small;
@@ -79,6 +71,23 @@
 </head>
 
 <body>
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<symbol id="icon-folder-plus" viewBox="0 0 32 32">
+<title>folder-plus</title>
+<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-4v4h-4v-4h-4v-4h4v-4h4v4h4v4z"></path>
+</symbol>
+<symbol id="icon-folder-minus" viewBox="0 0 32 32">
+<title>folder-minus</title>
+<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-12v-4h12v4z"></path>
+</symbol>
+<symbol id="icon-play3" viewBox="0 0 32 32">
+<title>play3</title>
+<path d="M6 4l20 12-20 12z"></path>
+</symbol>
+</defs>
+</svg>
+
     <div id="map"></div>
     <div id="layercontrol">
 	<div id="layercontrolNoSub"><h3>Consumers</h3></div>
@@ -223,13 +232,15 @@
 
         function addEmissionsToMenu(layers, emName) { 
 	    $('div#layercontrolSub')
-                .append($('<span id="' + emName + 'togglebutton" class="icon-folder-plus"></span><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
+                .append($('<svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"></use></svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
             $('#' + emName + 'togglebutton').on('click', function() {
                     if ($(this).hasClass('icon-folder-plus')) {
                         $(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
+			$("use", this).attr("xlink:href", "#icon-folder-minus");
                         $('div#layercontrolSub-' + emName).show();
                     } else {
                         $(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
+			$("use", this).attr("xlink:href", "#icon-folder-plus");
                         $('div#layercontrolSub-' + emName).hide();
                     }
                 });
