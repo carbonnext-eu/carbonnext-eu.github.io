@@ -113,7 +113,7 @@
 
         getEmissionData('CO', 'CO.csv', "#004e83")
         .then(getEmissionData('CO2', 'CO2.csv', "#008D4D"))
-	.then(getChemparkData('Chemical parks', 'chemicalparks.csv', "#aaa"));
+	.then(getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300"));
 
         function getEmissionData(emName, file, color) {
 	    return new Promise(function(resolve, reject) {
