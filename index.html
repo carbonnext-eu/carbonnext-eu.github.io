@@ -123,12 +123,12 @@
 	$('#layercontrolMinimize').on('click', function() {
 		console.log($(this));
 		if($(this).data("minimized")){
-			console.log($(this).data());
 			$(this).data("minimized", false);
-			$('#layercontrol').attr('width', "250px");
+			$('#layercontrol').css({'width': "250px", transform: "rotate(180deg)"});
 		} else {
 			$(this).data("minimized", true);
-			$('#layercontrol').attr('width', "20px");
+			$('#layercontrol').css({'width': "20px", transform: "rotate(0deg)"});
+			
 		}
 	});
 
