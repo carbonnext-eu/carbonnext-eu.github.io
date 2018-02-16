@@ -28,10 +28,11 @@ var query = [
 ].join(" ");
 var queryUrl = url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
 
-var script = document.createElement("script");
-script.setAttribute("src",queryUrl);
-script.setAttribute("type","text/javascript");
-document.body.appendChild(script);
+fetch(queryUrl)
+	.then(function(response) {
+	    return response.text();
+	})
+	.then(myBlob => showEm(myBlob));
 
 function showEm(data){
 	console.log( data );
