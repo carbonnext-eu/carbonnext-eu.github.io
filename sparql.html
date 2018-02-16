@@ -48,13 +48,17 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
 	 "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
 	 "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
-	 "SELECT ?facilityName "+ (latestReport ? "?reportingYear" : "") + " ?quantity ?lat ?long {",
-	 "?facility eprtr:facilityName ?facilityName .",
+	 "SELECT ?FacilityName ?CountryName "+ (latestReport ? "?reportingYear" : "") + " ?kg ?NACEMainEconomicActivityName ?PollutantName ?lat ?long {",
+	 "?facility eprtr:facilityName ?FacilityName .",
+	 "?facility eprtr:inCountry ?country .",
+	 "?country eprtr:name ?CountryName .",
 	 "?facility eprtr:hasReport ?hasReport .",
 	 "?hasReport eprtr:reportingYear "+ (latestReport ? "?reportingYear" : reportingYear) + " .",
+	 "?hasReport eprtr:nACEActivity ?NACEMainEconomicActivityName.",
 	 "?pollutantRelease eprtr:facilityReport ?hasReport .",
 	 "?pollutantRelease rdfs:label \""+emissionName+"\" .",
-	 "?pollutantRelease eprtr:totalQuantity ?quantity .",
+	 "?pollutantRelease rdfs:label ?PollutantName .",
+	 "?pollutantRelease eprtr:totalQuantity ?kg .",
 	 "?facility wgs84:lat ?lat .",
 	 "?facility wgs84:long ?long .",
 	 (latestReport ? "filter not exists {?facility eprtr:hasReport/eprtr:reportingYear ?reportingYear2 filter (?reportingYear2 > ?reportingYear)}" : ""),
@@ -64,13 +68,37 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	query = query.join(" ");	
 	console.log(query);
 	/* Warning: europa.eu is normally limiting results to 512, add nrOfHits to increase */
-	return queryUrl = proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson&nrOfHits=10000';
+	return proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson&nrOfHits=10000';
 }
 
 
 function showEm(data){
+	
 	document.getElementById("result").innerHTML = data.results.bindings.length ;
 	console.log(data.results.bindings);
+}
+	
+function createGeometry(long, lat){
+	return {
+		type: "Point",
+		coordinates: [long, lat]
+	};	
+}
+function createGeometry(obj){
+	return {
+		CountryName: obj.CountryName.value,
+		FacilityName: obj.FacilityName.value,
+		kg: obj.kg.value,
+		NACEMainEconomicActivityName: obj.NACEMainEconomicActivityName.value,
+		PollutantName: obj.PollutantName.value
+	};	
+}
+function createFeatureFromObj(obj){
+	return {
+		geometry: createGeometry(obj.long.value, obj.lat.value),
+		properties: createProperties(obj),
+		type: "Feature"
+	};	
 }
 
 </script>
