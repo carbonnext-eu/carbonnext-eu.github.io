@@ -29,7 +29,6 @@ function firequery(){
 	console.log(emissionName, reportingYear, latestReport);
 	/* query e-prtr with variables */
 	var query = makeQueryEPRTR(emissionName, reportingYear, latestReport);
-	console.log(query);
 	fetch(query)
 		.then(function(response) {
 		    return response.json();
@@ -49,7 +48,7 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
 	 "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
 	 "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
-	 "select ?facilityName ?quantity ?lat ?long {",
+	 "SELECT ?facilityName ?quantity ?lat ?long {",
 	 "?facility eprtr:facilityName ?facilityName ."];
 	/* get the latest values from every facility */
 	if(latestReport){
@@ -70,7 +69,7 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "?pollutantRelease eprtr:totalQuantity ?quantity .",
 	 "?facility wgs84:lat ?lat .",
 	 "?facility wgs84:long ?long .",
-	 "}"
+	 "} ORDER BY ?facilityName"
 	);
 	query = query.join(" ");	
 	console.log(query);
@@ -80,7 +79,7 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 
 
 function showEm(data){
-	console.log( data );
+	document.getElementById("result").innerHTML( data.results.bindings.length + "<br />" + data.results.bindings );
 }
 
 </script>
