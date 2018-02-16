@@ -26,11 +26,13 @@ var query = [
  "?facility wgs84:long ?long .",
  "}"
 ].join(" ");
-var queryUrl = url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
+var queryUrl = "https://cors-anywhere.herokuapp.com/" + url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
 
 fetch(queryUrl)
 	.then(function(response) {
 	    return response.text();
+	}, function(reject){
+		console.log(reject);
 	})
 	.then(myBlob => showEm(myBlob));
 
