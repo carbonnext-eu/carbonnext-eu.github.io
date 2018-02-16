@@ -9,7 +9,8 @@
 <form>	
 <label>emissionName: <input type="text" id="emissionName"></input></label>
 <label>reportingYear: <input type="text" id="reportingYear"></input></label>
-<input type="submit" id="submit">OK</input>
+<label>latestReport: <input type="checkbox" id="latestReport" checked></input></label>
+<input type="submit" id="submit"></input>
 </form>
 <div id="result"></div>
 
@@ -18,12 +19,16 @@
 /* at the end to wait for DOM */
 
 document.getElementById("submit").addEventListener("click", firequery);
+document.getElementById("emissionName").value = "CO2, AIR";
+document.getElementById("emissionName").value = "2014";
 	
 function firequery(){
 	var emissionName = document.getElementById("emissionName").value;
 	var reportingYear = document.getElementById("reportingYear").value;
+	var latestReport = document.getElementById("latestReport").checked;
+	console.log(emissionName, reportingYear);
 	/* query e-prtr with variables */
-	fetch(makeQueryEPRTR(emissionName, reportingYear))
+	fetch(makeQueryEPRTR(emissionName, reportingYear, latestReport))
 		.then(function(response) {
 		    return response.json();
 		}, function(reject){
