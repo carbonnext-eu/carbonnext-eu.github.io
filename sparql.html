@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>leaflet-map-simple</title>
+</head>
+
+<body>
+<div id="result"></div>
+
+
+<script>
+/* at the end to wait for DOM */
+var url = "http://semantic.eea.europa.eu/sparql";
+var query = [
+ "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
+ "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
+ "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
+ "select ?facilityName ?quantity ?lat ?long {",
+ "?facility eprtr:facilityName ?facilityName .",
+ "?facility eprtr:latestReport ?latestReport .",
+ "?pollutantRelease eprtr:facilityReport ?latestReport .",
+ "?pollutantRelease rdfs:label "CO2, AIR" .",
+ "?pollutantRelease eprtr:totalQuantity ?quantity .",
+ "?facility wgs84:lat ?lat .",
+ "?facility wgs84:long ?long .",
+ "}"
+].join(" ");
+var queryUrl = url+"?query="+ encodeURIComponent(query) +"&format=json";
+
+fetch(file)
+		.then(function(response) {
+		    return response.text();
+		}).then(text => {document.getElementById("result").html(text)});
+</script>
+</body>
+</html>
