@@ -75,7 +75,8 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 function showEm(data){
 	
 	document.getElementById("result").innerHTML = data.results.bindings.length ;
-	console.log(createFeatureCollection(data.results.bindings));
+	var r = createFeatureCollection(data.results.bindings);
+	console.log(data.results.bindings, r);
 }
 	
 function createGeometry(long, lat){
@@ -105,8 +106,8 @@ function createFeatureCollection(array){
 		type: "FeatureCollection",
 		features: []
 	};
-	for (var i = 0; i < array; i++) {
-		ft = createFeatureFromObj(array[i]);
+	for (var i = 0; i < array.length; i++) {
+		var ft = createFeatureFromObj(array[i]);
 		console.log(ft);
 		fc.features.push(ft);
 	}
