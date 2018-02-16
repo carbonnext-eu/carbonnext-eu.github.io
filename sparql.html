@@ -26,7 +26,7 @@ var query = [
  "?facility wgs84:long ?long .",
  "}"
 ].join(" ");
-var queryUrl = url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjsonp&callback=showEm';
+var queryUrl = url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
 
 var script = document.createElement("script");
 script.setAttribute("src",queryUrl);
