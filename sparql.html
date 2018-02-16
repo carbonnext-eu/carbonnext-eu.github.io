@@ -106,8 +106,11 @@ function createFeatureCollection(array){
 		features: []
 	};
 	for (var i = 0; i < array; i++) {
-		fc.features.push(createFeatureFromObj(array[i]));
+		ft = createFeatureFromObj(array[i]);
+		console.log(ft);
+		fc.features.push(ft);
 	}
+	console.log(fc);
 	return fc;
 }
 </script>
