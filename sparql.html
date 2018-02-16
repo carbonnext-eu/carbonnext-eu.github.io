@@ -57,7 +57,7 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "?pollutantRelease eprtr:totalQuantity ?quantity .",
 	 "?facility wgs84:lat ?lat .",
 	 "?facility wgs84:long ?long .",
-	 (latestReport ? "filter not exists {?facility eprtr:hasReport/eprtr:reportingYear ?reportingYear2 filter (?reportingYear2}" : ""),
+	 (latestReport ? "filter not exists {?facility eprtr:hasReport/eprtr:reportingYear ?reportingYear2 filter (?reportingYear2 > ?reportingYear)}" : ""),
 	 "} ORDER BY ?facilityName"
 	];
 	
