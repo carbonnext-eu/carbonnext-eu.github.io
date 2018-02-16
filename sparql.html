@@ -26,7 +26,7 @@ function firequery(){
 	var emissionName = document.getElementById("emissionName").value;
 	var reportingYear = document.getElementById("reportingYear").value;
 	var latestReport = document.getElementById("latestReport").checked;
-	console.log(emissionName, reportingYear);
+	console.log(emissionName, reportingYear, latestReport);
 	/* query e-prtr with variables */
 	fetch(makeQueryEPRTR(emissionName, reportingYear, latestReport))
 		.then(function(response) {
