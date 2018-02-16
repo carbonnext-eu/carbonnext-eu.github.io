@@ -72,8 +72,8 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "?facility wgs84:long ?long .",
 	 "}"
 	);
+	query = query.join(" ");	
 	console.log(query);
-	query = query.join(" ");
 	return queryUrl = proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
 }
 
