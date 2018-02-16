@@ -28,7 +28,7 @@ var query = [
 ].join(" ");
 var queryUrl = url+"?query="+ encodeURIComponent(query) +"&format=json";
 
-fetch(file)
+fetch(queryUrl)
 		.then(function(response) {
 		    return response.text();
 		}).then(text => {document.getElementById("result").html(text)});
