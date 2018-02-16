@@ -6,20 +6,31 @@
 </head>
 
 <body>
+<form>	
+<label>emissionName: <input type="text" id="emissionName"></input></label>
+<label>reportingYear: <input type="text" id="reportingYear"></input></label>
+<input type="submit" id="submit">OK</input>
+</form>
 <div id="result"></div>
 
 
 <script>
 /* at the end to wait for DOM */
+
+document.getElementById("submit").addEventListener("click", firequery);
 	
-/* query e-prtr with variables */
-fetch(makeQueryEPRTR())
-	.then(function(response) {
-	    return response.json();
-	}, function(reject){
-		console.log(reject);
-	})
-	.then(myBlob => showEm(myBlob));
+function firequery(){
+	var emissionName = document.getElementById("emissionName").value;
+	var reportingYear = document.getElementById("reportingYear").value;
+	/* query e-prtr with variables */
+	fetch(makeQueryEPRTR(emissionName, reportingYear))
+		.then(function(response) {
+		    return response.json();
+		}, function(reject){
+			console.log(reject);
+		})
+		.then(myBlob => showEm(myBlob));
+}
 	
 /* use http://semantic.eea.europa.eu/sparql online query tool to generate query */
 function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestReport=true){
