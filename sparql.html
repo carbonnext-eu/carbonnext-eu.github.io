@@ -11,30 +11,52 @@
 
 <script>
 /* at the end to wait for DOM */
-var url = "http://semantic.eea.europa.eu/sparql";
-var query = [
- "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
- "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
- "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
- "select ?facilityName ?quantity ?lat ?long {",
- "?facility eprtr:facilityName ?facilityName .",
- "?facility eprtr:latestReport ?latestReport .",
- "?pollutantRelease eprtr:facilityReport ?latestReport .",
- "?pollutantRelease rdfs:label \"CO2, AIR\" .",
- "?pollutantRelease eprtr:totalQuantity ?quantity .",
- "?facility wgs84:lat ?lat .",
- "?facility wgs84:long ?long .",
- "}"
-].join(" ");
-var queryUrl = "https://cors-anywhere.herokuapp.com/" + url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
-
-fetch(queryUrl)
+	
+/* query e-prtr with variables */
+fetch(makeQueryEPRTR())
 	.then(function(response) {
-	    return response.text();
+	    return response.json();
 	}, function(reject){
 		console.log(reject);
 	})
 	.then(myBlob => showEm(myBlob));
+	
+function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestReport=true){
+	/* CORS headers not set by europa.eu, so we use a sparql proxy */
+	var proxy = "https://cors-anywhere.herokuapp.com/";
+	/* easiest sparql endpoint we could find */
+	var url = "http://semantic.eea.europa.eu/sparql";
+	var query = [
+	 "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
+	 "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
+	 "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
+	 "select distinct ?facilityName ?hasReport ?quantity ?lat ?long {",
+	 "?facility eprtr:facilityName ?facilityName ."];
+	/* get the latest values from every facility */
+	if(latestReport){
+		query.push(
+			"?facility eprtr:latestReport ?latestReport .",
+			"?pollutantRelease eprtr:facilityReport ?latestReport ."
+		);
+	/* get the values from facilities for a given year */
+	} else {
+		query.push(
+			"?facility eprtr:hasReport ?hasReport .",
+			"?hasReport eprtr:reportingYear "+reportingYear+" .",
+			"?pollutantRelease eprtr:facilityReport ?hasReport .",
+		);
+	}
+	query.push(		
+	 "?pollutantRelease rdfs:label \""+emissionName+"\" .",
+	 "?pollutantRelease eprtr:totalQuantity ?quantity .",
+	 "?facility wgs84:lat ?lat .",
+	 "?facility wgs84:long ?long .",
+	 "}"
+	);
+	query = query.join(" ");
+	return queryUrl = proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
+}
+
 
 function showEm(data){
 	console.log( data );
