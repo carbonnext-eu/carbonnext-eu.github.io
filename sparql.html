@@ -49,7 +49,7 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
 	 "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
 	 "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
-	 "select distinct ?facilityName ?hasReport ?quantity ?lat ?long {",
+	 "select ?facilityName ?quantity ?lat ?long {",
 	 "?facility eprtr:facilityName ?facilityName ."];
 	/* get the latest values from every facility */
 	if(latestReport){
@@ -74,7 +74,8 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	);
 	query = query.join(" ");	
 	console.log(query);
-	return queryUrl = proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
+	/* Warning: europa.eu is normally limiting results to 512, add nrOfHits to increase */
+	return queryUrl = proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson&nrOfHits=10000';
 }
 
 
