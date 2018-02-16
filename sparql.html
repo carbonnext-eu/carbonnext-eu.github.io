@@ -28,7 +28,9 @@ function firequery(){
 	var latestReport = document.getElementById("latestReport").checked;
 	console.log(emissionName, reportingYear, latestReport);
 	/* query e-prtr with variables */
-	fetch(makeQueryEPRTR(emissionName, reportingYear, latestReport))
+	var query = makeQueryEPRTR(emissionName, reportingYear, latestReport);
+	console.log(query);
+	fetch(query)
 		.then(function(response) {
 		    return response.json();
 		}, function(reject){
@@ -70,6 +72,7 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "?facility wgs84:long ?long .",
 	 "}"
 	);
+	console.log(query);
 	query = query.join(" ");
 	return queryUrl = proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson';
 }
