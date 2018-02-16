@@ -79,7 +79,8 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 
 
 function showEm(data){
-	document.getElementById("result").innerHTML = data.results.bindings.length + "<br />" + data.results.bindings ;
+	document.getElementById("result").innerHTML = data.results.bindings.length ;
+	console.log(data.results.bindings);
 }
 
 </script>
