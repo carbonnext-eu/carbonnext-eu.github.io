@@ -26,12 +26,17 @@ var query = [
  "?facility wgs84:long ?long .",
  "}"
 ].join(" ");
-var queryUrl = url+"?query="+ encodeURIComponent(query) +"&format=json";
+var queryUrl = url+"?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjsonp&callback=showEm';
 
-fetch(queryUrl)
-		.then(function(response) {
-		    return response.text();
-		}).then(text => {document.getElementById("result").html(text)});
+var script = document.createElement("script");
+script.setAttribute("src",queryUrl);
+script.setAttribute("type","text/javascript");
+document.body.appendChild(script);
+
+function showEm(data){
+	console.log( data );
+}
+
 </script>
 </body>
 </html>
