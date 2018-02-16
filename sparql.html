@@ -21,6 +21,7 @@ fetch(makeQueryEPRTR())
 	})
 	.then(myBlob => showEm(myBlob));
 	
+/* use http://semantic.eea.europa.eu/sparql online query tool to generate query */
 function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestReport=true){
 	/* CORS headers not set by europa.eu, so we use a sparql proxy */
 	var proxy = "https://cors-anywhere.herokuapp.com/";
