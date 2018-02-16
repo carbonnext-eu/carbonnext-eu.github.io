@@ -48,29 +48,22 @@ function makeQueryEPRTR(emissionName = "CO2, AIR", reportingYear = 2014, latestR
 	 "PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>",
 	 "PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>",
 	 "PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>",
-	 "SELECT ?facilityName ?quantity ?lat ?long {",
-	 "?facility eprtr:facilityName ?facilityName ."];
-	/* get the latest values from every facility */
-	if(latestReport){
-		query.push(
-			"?facility eprtr:latestReport ?latestReport .",
-			"?pollutantRelease eprtr:facilityReport ?latestReport ."
-		);
-	/* get the values from facilities for a given year */
-	} else {
-		query.push(
-			"?facility eprtr:hasReport ?hasReport .",
-			"?hasReport eprtr:reportingYear "+reportingYear+" .",
-			"?pollutantRelease eprtr:facilityReport ?hasReport .",
-		);
-	}
-	query.push(		
+	 "SELECT ?facilityName "+ (latestReport ? "?reportingYear" : "") + " ?quantity ?lat ?long {",
+	 "?facility eprtr:facilityName ?facilityName .",
+	 "?facility eprtr:hasReport ?hasReport .",
+	 "?hasReport eprtr:reportingYear "+ (latestReport ? "?reportingYear" : reportingYear) + " .",
+	 "?pollutantRelease eprtr:facilityReport ?hasReport .",
 	 "?pollutantRelease rdfs:label \""+emissionName+"\" .",
 	 "?pollutantRelease eprtr:totalQuantity ?quantity .",
 	 "?facility wgs84:lat ?lat .",
 	 "?facility wgs84:long ?long .",
+	 (latestReport ? "filter not exists {",
+  		"?facility eprtr:hasReport/eprtr:reportingYear ?reportingYear2",
+  		"filter (?reportingYear2 > ?reportingYear)"
+		"}" : "",
 	 "} ORDER BY ?facilityName"
-	);
+	];
+	
 	query = query.join(" ");	
 	console.log(query);
 	/* Warning: europa.eu is normally limiting results to 512, add nrOfHits to increase */
