@@ -116,6 +116,8 @@
             })
             .addTo(map);
 	    
+	var stats = {totalMax:0};
+	    
 	$('#layercontrolMinimize').on('click', function() {
 		if($(this).data("minimized")){
 			$(this).data("minimized", false);
@@ -129,8 +131,13 @@
 	});
 
 	/* Load all csv data files and create menu*/
-        getEmissionData('CO', 'CO.csv', "#004e83");
-        getEmissionData('CO2', 'CO2.csv', "#008D4D");
+	Promise.all([
+		getEmissionData('CO', 'CO.csv', "#004e83"),
+		getEmissionData('CO2', 'CO2.csv', "#008D4D")
+	]).then(resultObj => doStats(resultObj))
+	    .then(resultObj => addEmissionsToMap(resultObj))
+	    .then(resultObj => addEmissionsToMenu(resultObj));
+	    
 	getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300");
 
         function getEmissionData(emName, file, color) {
@@ -139,9 +146,22 @@
 		    return response.text();
 		})
 		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => addEmissionsToMap(geojson, emName, color))
-		.then(dataLayer => addEmissionsToMenu(dataLayer, emName));
+		.then(geojson => {console.log({emName: emName, color: color, geojson: geojson}); resolve({emName: emName, color: color, geojson: geojson})});
         };
+
+	function doStats(resultObj){
+		for (var i = 0; i < resultObj.length; i++) {
+		    var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
+			return o.properties.MTonnes;
+		    }));
+		    stats.totalMax = Math.max(stats.totalMax, max);
+		    /*var min = Math.min.apply(Math, resultObj[i].geojson.features.map(function(o) {
+			return o.properties.MTonnes;
+		    }));
+		    stats.totalMin = Math.min(stats.totalMin, min);*/
+		}
+		resolve(resultObj);
+	}
 	    
 	function getChemparkData(name, file, color) {
 	    fetch(file)
@@ -205,47 +225,51 @@
 			    }
                  });	
 	}
-	    
-        function addEmissionsToMap(geojson, emName, color) {
+	
+	function addEmissionsToMap(resultObj){
 	    return new Promise(function(resolve, reject) {
-		    var layers = {};
-		    var max = Math.max.apply(Math, geojson.features.map(function(o) {
-			return o.properties.MTonnes;
-		    }));
-		    var min = Math.min.apply(Math, geojson.features.map(function(o) {
-			return o.properties.MTonnes;
-		    }));
-
-		    var dataLayer = L.geoJSON(geojson, {
-			pointToLayer: function(feature, latlon) {
-			    // L.circleMarker() draws a circle with fixed radius in pixels.
-			    // To draw a circle overlay with a radius in meters, use L.circle()
-			    return L.circleMarker(latlon, {
-				color: color,
-				weight: 0,
-				radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
-			    });
-			},
-			onEachFeature: function(feature, layer) {
-			    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
-			    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
-				layers[feature.properties.NACEMainEconomicActivityName] = {
-				    layer: new L.LayerGroup(),
-				    total: 0,
-				    count: 0
-				};
-			    }
-			    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
-			    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
-			    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-			    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
-			}
-		    });
-		    resolve(layers);
+		for (var i = 0; i < resultObj.length; i++) {
+			layers[emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
+		}
+		resolve(layers);
 	    });
+	}
+        function addEmissionToMap(geojson, emName, color) {
+	    var layers = {};		    
+	    var dataLayer = L.geoJSON(geojson, {
+		pointToLayer: function(feature, latlon) {
+		    // L.circleMarker() draws a circle with fixed radius in pixels.
+		    // To draw a circle overlay with a radius in meters, use L.circle()
+		    return L.circleMarker(latlon, {
+			color: color,
+			weight: 0,
+			radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
+		    });
+		},
+		onEachFeature: function(feature, layer) {
+		    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
+		    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
+			layers[feature.properties.NACEMainEconomicActivityName] = {
+			    layer: new L.LayerGroup(),
+			    total: 0,
+			    count: 0
+			};
+		    }
+		    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+		    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
+		    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
+		    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
+		}
+	    });
+	    return(layers);
         }
-
-        function addEmissionsToMenu(layers, emName) { 
+	function addEmissionsToMenu(resultObj) { 
+		for (var i = 0; i < resultObj.length; i++) {
+			addEmissionToMenu(resultObj[i], i);
+		}
+	}
+	
+        function addEmissionToMenu(layers, emName) { 
 	    $('div#layercontrolSub')
                 .append($('<svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"></use></svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
             $('#' + emName + 'togglebutton').on('click', function() {
