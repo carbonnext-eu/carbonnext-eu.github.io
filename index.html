@@ -254,7 +254,7 @@
 		    return L.circleMarker(latlon, {
 			color: color,
 			weight: 0,
-			radius: (Math.sqrt((feature.properties.MTonnes - min) / (max - min)) * 50 + 1)
+			radius: (Math.sqrt(feature.properties.MTonnes/stats.totalMax) * 50)
 		    });
 		},
 		onEachFeature: function(feature, layer) {
