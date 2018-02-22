@@ -47,9 +47,11 @@
 	    background-color: rgba(226, 238, 246,0.7);
 	    border-radius: 5px;
 	    border: 1px solid rgba(0,78,131,0.9);
-            overflow-y: auto;
 	    z-index: 7000;
         }
+	#layercontrolCont {
+            overflow-y: auto;
+	}
 	#layercontrolMinimize {
 	    position: absolute;
 	    display: block;
@@ -89,8 +91,10 @@
 
     <div id="map"></div>
     <div id="layercontrol">
-	<div id="layercontrolNoSub"><h3>Consumers</h3></div>
-	<div id="layercontrolSub"><h3>Emitters</h3></div>
+	<div id="layercontrolCont">
+		<div id="layercontrolNoSub"><h3>Consumers</h3></div>
+		<div id="layercontrolSub"><h3>Emitters</h3></div>
+	</div>
 	<span id="layercontrolMinimize" data-minimized="false">
 		<svg class="icon icon-play3"><use xlink:href="#icon-play3"></use></svg>
 	</span>
