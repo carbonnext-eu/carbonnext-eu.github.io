@@ -237,11 +237,12 @@
 	
 	function addEmissionsToMap(resultObj){
 	    return new Promise(function(resolve, reject) {
-		var layers = {};
+		var emLayers = {};
 		for (var i = 0; i < resultObj.length; i++) {
-			layers[resultObj.emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
+			emLayers[resultObj.emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
 		}
-		resolve(layers);
+		console.log(emLayers);
+		resolve(emLayers);
 	    });
 	}
         function addEmissionToMap(geojson, emName, color) {
@@ -271,6 +272,7 @@
 		    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
 		}
 	    });
+	    console.log(layers);
 	    return(layers);
         }
 	    
