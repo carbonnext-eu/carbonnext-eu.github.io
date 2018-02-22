@@ -207,7 +207,7 @@
 	}
 	    
 	function createScale(){
-		var svg = d3.select('scale').append('svg').attr('width', 200).attr('height', 200);
+		var svg = d3.select('#scale').append('svg').attr('width', 200).attr('height', 200);
 		svg = svg.append('g').attr('transform', 'translate(5,5)');
     		var scale = d3.scale.sqrt().domain([0, stats.totalMax]).range([0, 50]);
 		var formatSI = d3.format('s');
