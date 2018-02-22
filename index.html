@@ -195,7 +195,6 @@
 					reject(err);
 				}
 				else {
-					console.log(geojson);
 					resolve(geojson);
 				}
 			});
@@ -280,7 +279,8 @@
 		}
 	}
 	
-        function addEmissionToMenu(layers, emName) { 
+        function addEmissionToMenu(layers, emName) {
+	    console.log(layers, emName);
 	    $('div#layercontrolSub')
                 .append($('<svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"></use></svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
             $('#' + emName + 'togglebutton').on('click', function() {
