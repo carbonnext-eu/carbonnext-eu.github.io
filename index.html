@@ -273,8 +273,10 @@
 	    });
 	    return(layers);
         }
-	function addEmissionsToMenu(resultObj) { 
-		for (var i = 0; i < resultObj.length; i++) {
+	    
+	function addEmissionsToMenu(resultObj) {
+		console.log(resultObj);
+		for (var i in resultObj) {
 			addEmissionToMenu(resultObj[i], i);
 		}
 	}
