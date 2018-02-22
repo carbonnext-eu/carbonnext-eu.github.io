@@ -207,7 +207,7 @@
 	}
 	    
 	function createScale(){
-		var svg = d3.select('#scale').append('svg').attr('width', 200).attr('height', 200);
+		var svg = d3.select('#scale').append('svg').attr('width', 180).attr('height', 150);
 		svg = svg.append('g').attr('transform', 'translate(5,5)');
     		var scale = d3.scale.sqrt().domain([0, stats.totalMax]).range([0, 50]);
 		var formatSI = d3.format('s');
@@ -220,7 +220,7 @@
 			.tickPadding(10)
 			.orient("left"); //default
 		svg.append('g')
-		      .attr('transform', 'translate(75, 75)')
+		      .attr('transform', 'translate(100, 100)')
 		      .call(circleKey);
 	}
 	    
