@@ -150,6 +150,8 @@
         };
 
 	function doStats(resultObj){
+	    return new Promise(function(resolve, reject) {
+		console.log(resultObj);
 		for (var i = 0; i < resultObj.length; i++) {
 		    var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
 			return o.properties.MTonnes;
@@ -161,6 +163,7 @@
 		    stats.totalMin = Math.min(stats.totalMin, min);*/
 		}
 		resolve(resultObj);
+	    });
 	}
 	    
 	function getChemparkData(name, file, color) {
