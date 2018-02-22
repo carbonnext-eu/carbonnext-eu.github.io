@@ -215,7 +215,7 @@
 		var max = Math.round(stats.totalMax * 10) / 10;
 		var circleKey = circleLegend()
 			.scale(scale)
-			.tickValues([Math.round(stats.totalMax * 100) / 1000, Math.round(stats.totalMax * 10) / 100, Math.round(stats.totalMax * 10) / 10])
+			.tickValues([Math.round(stats.totalMax * 100) / 10000, Math.round(stats.totalMax * 10) / 100, Math.round(stats.totalMax * 10) / 10])
 			.tickFormat(formatCurrencySI)
 			.tickPadding(10)
 			.orient("left"); //default
