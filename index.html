@@ -235,12 +235,11 @@
                  });	
 	}
 	
-	function addEmissionsToMap(resultObj){
-	     console.log(resultObj);
+	function addEmissionsToMap(resultArr){
 	    return new Promise(function(resolve, reject) {
 		var emLayers = {};
-		for (var i = 0; i < resultObj.length; i++) {
-			emLayers[resultObj.emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
+		for (var i = 0; i < resultArr.length; i++) {
+			emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emName, resultArr[i].color);
 		}
 		console.log(emLayers);
 		resolve(emLayers);
