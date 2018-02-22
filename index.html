@@ -141,12 +141,14 @@
 	getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300");
 
         function getEmissionData(emName, file, color) {
-	    fetch(file)
-		.then(function(response) {
-		    return response.text();
-		})
-		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => {console.log({emName: emName, color: color, geojson: geojson}); resolve({emName: emName, color: color, geojson: geojson})});
+	    return new Promise(function(resolve, reject) {
+		    fetch(file)
+			.then(function(response) {
+			    return response.text();
+			})
+			.then(myBlob => convertCSV(myBlob))
+			.then(geojson => {console.log({emName: emName, color: color, geojson: geojson}); resolve({emName: emName, color: color, geojson: geojson})});
+	    });
         };
 
 	function doStats(resultObj){
