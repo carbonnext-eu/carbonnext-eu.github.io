@@ -233,6 +233,7 @@
 	
 	function addEmissionsToMap(resultObj){
 	    return new Promise(function(resolve, reject) {
+		var layers = {};
 		for (var i = 0; i < resultObj.length; i++) {
 			layers[emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
 		}
