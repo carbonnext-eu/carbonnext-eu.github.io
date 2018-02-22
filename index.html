@@ -147,13 +147,18 @@
 			    return response.text();
 			})
 			.then(myBlob => convertCSV(myBlob))
-			.then(geojson => {console.log({emName: emName, color: color, geojson: geojson}); resolve({emName: emName, color: color, geojson: geojson})});
+			.then(geojson => resolve(
+			    {
+				emName: emName,
+			     	color: color,
+			     	geojson: geojson
+			    }
+		    	));
 	    });
         };
 
 	function doStats(resultObj){
 	    return new Promise(function(resolve, reject) {
-		console.log(resultObj);
 		for (var i = 0; i < resultObj.length; i++) {
 		    var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
 			return o.properties.MTonnes;
@@ -235,7 +240,7 @@
 	    return new Promise(function(resolve, reject) {
 		var layers = {};
 		for (var i = 0; i < resultObj.length; i++) {
-			layers[emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
+			layers[resultObj.emName] = addEmissionToMap(resultObj.geojson, resultObj.emName, resultObj.color);
 		}
 		resolve(layers);
 	    });
@@ -294,7 +299,7 @@
             var keysSorted = Object.keys(layers).sort(function(a, b) {
                     return layers[b].total - layers[a].total
                 });
-            for (layerName in keysSorted) {
+            for (var layerName in keysSorted) {
                 $('div#layercontrolSub-' + emName)
                     .append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')</label><br>'));
                 i = i + 1;
