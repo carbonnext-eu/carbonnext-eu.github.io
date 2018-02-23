@@ -276,7 +276,7 @@
 		function createPotential(emissionLayers, feature, radius=2000) {					  
 			var distance, potentials = {};
 			for(var em in emissionLayers){
-				for(var nace in em){
+				for(var nace in emissionLayers[em]){
 					var curLayer = emissionLayers[em][nace].layer.layers;
 					for (var i = 0, n = curLayer.length; i < n; i++) {
 						var layer = curLayer[i];
