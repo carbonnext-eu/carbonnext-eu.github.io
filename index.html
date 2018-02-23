@@ -315,9 +315,9 @@
 			return function(){
 				var potentials = createPotential(emissionLayers, feature);
 				console.log(potentials);
-				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10km radius:<br />';
+				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10 km radius:<br />';
 				for (em in potentials){
-					htmlstring += em + ": " + potentials[em] + 'MT<br />';
+					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
 				}
 				return htmlstring;
 				
