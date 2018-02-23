@@ -312,16 +312,20 @@
 						});
 					},
 					onEachFeature: function(feature, layer) {
-						layer.bindPopup(function(feature, layer){
-							var potentials = createPotential(emissionLayers, feature);
-							console.log(potentials);
-							return feature.properties.FacilityName;
-						});					
+						layer.bindPopup(addPopupHandler(emissionLayers, feature));					
 					}
 				});
 				resolve(dataLayer);
 			});
-		}
+		};
+		
+		function addPopupHandler(emissionLayers, feature){
+			return function(e){
+				var potentials = createPotential(emissionLayers, feature);
+				console.log(potentials);
+				return feature.properties.FacilityName;
+			}
+		};
 
 		function addParksToMenu(dataLayer, name) {
 			var escName = name.replace(" ", "_");
