@@ -17,9 +17,6 @@
 	<!-- Load d3: only for size legend for now -->
 	<script src="//d3js.org/d3.v3.min.js">
 	</script>
-	<!-- Load geometryutil for distance and within operations, https://github.com/makinacorpus/Leaflet.GeometryUtil -->
-	<script src="leaflet.geometryutil.js">
-	</script>
 	<style>
 		.icon {
 			display: inline-block;
@@ -285,7 +282,8 @@
 						console.log(layer);
 						if (typeof layer.getLatLng == 'function') {
 							ll = layer.getLatLng();
-							distance = feature.geometry.distanceTo(ll);
+							console.log(feature);
+							distance = ll.distanceTo(L.latLng(feature.geometry.coordinates[0], feature.geometry.coordinates[1]));
 							console.log(ll, distance);
 						}
 						if (ll && distance < radius) {
