@@ -279,7 +279,7 @@
 			for(var em in emissionLayers){
 				for(var nace in emissionLayers[em]){
 					console.log(nace, em);
-					var curLayer = emissionLayers[em][nace].layer.layers;
+					var curLayer = emissionLayers[em][nace].layer._layers;
 					for (var i = 0, n = curLayer.length; i < n; i++) {
 						var layer = curLayer[i];
 						if (typeof layer.getLatLng == 'function') {
