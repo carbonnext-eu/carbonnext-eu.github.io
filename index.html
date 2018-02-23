@@ -253,6 +253,7 @@
 				.then(myBlob => convertCSV(myBlob))
 				.then(geojson => addParksToMap(geojson, color, emissionLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
+		};
 
 		function convertCSV(myBlob) {
 			return new Promise(function(resolve, reject) {
@@ -292,7 +293,7 @@
 				}
 			}
 			return potentials;
-		}
+		};
 
 		function addParksToMap(geojson, color, emissionLayers) {
 			return new Promise(function(resolve, reject) {
