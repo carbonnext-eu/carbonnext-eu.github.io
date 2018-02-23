@@ -170,6 +170,8 @@
 		var stats = {
 			totalMax: 0
 		};
+		
+		var emissionLayers;
 
 		$('#layercontrolMinimize').on('click', function() {
 			if ($(this).data("minimized")) {
@@ -189,9 +191,8 @@
 				getEmissionData('CO2', 'CO2.csv', "#008D4D")
 			]).then(resultObj => doStats(resultObj))
 			.then(resultObj => addEmissionsToMap(resultObj))
-			.then(resultObj => addEmissionsToMenu(resultObj));
-
-		getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300");
+			.then(resultObj => addEmissionsToMenu(resultObj))
+			.then(resultObj => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", resultObj));
 
 		function getEmissionData(emName, file, color) {
 			return new Promise(function(resolve, reject) {
@@ -244,15 +245,14 @@
 				.call(circleKey);
 		}
 
-		function getChemparkData(name, file, color) {
+		function getChemparkData(name, file, color, emissionLayers) {
 			fetch(file)
 				.then(function(response) {
 					return response.text();
 				})
 				.then(myBlob => convertCSV(myBlob))
-				.then(geojson => addParksToMap(geojson, color))
+				.then(geojson => addParksToMap(geojson, color, emissionLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
-		};
 
 		function convertCSV(myBlob) {
 			return new Promise(function(resolve, reject) {
@@ -270,8 +270,31 @@
 				});
 			});
 		};
+		
+		// get potential sources in a radius of 2000 m
+		function createPotential(emissionLayers, feature, radius=2000) {					  
+			var distance, potentials = {};
+			for(var em in emissionLayers){
+				for(var nace in em){
+					var curLayer = emissionLayers[em][nace].layer.layers;
+					for (var i = 0, n = curLayer.length; i < n; i++) {
+						var layer = curLayer[i];
+						if (typeof layer.getLatLng == 'function') {
+							ll = layer.getLatLng();
+							distance = feature.geometry.distanceTo(ll);
+						}
+						if (ll && distance < radius) {
+							if(potentials[em] == undefined) potentials[em] = 0;
+							console.log(layer.feature.properties.MTonnes);
+							potentials[em] += layer.feature.properties.MTonnes;
+						}
+					}
+				}
+			}
+			return potentials;
+		}
 
-		function addParksToMap(geojson, color) {
+		function addParksToMap(geojson, color, emissionLayers) {
 			return new Promise(function(resolve, reject) {
 				var dataLayer = L.geoJSON(geojson, {
 					pointToLayer: function(feature, latlon) {
@@ -284,6 +307,8 @@
 						});
 					},
 					onEachFeature: function(feature, layer) {
+						var potentials = createPotential(emissionLayers, feature);
+						console.log(potentials);
 						layer.bindPopup(feature.properties.FacilityName);
 					}
 				});
@@ -311,7 +336,6 @@
 				for (var i = 0; i < resultArr.length; i++) {
 					emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emName, resultArr[i].color);
 				}
-				console.log(emLayers);
 				resolve(emLayers);
 			});
 		}
@@ -343,15 +367,16 @@
 					layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
 				}
 			});
-			console.log(layers);
 			return (layers);
 		}
 
 		function addEmissionsToMenu(resultObj) {
-			console.log(resultObj);
-			for (var i in resultObj) {
-				addEmissionToMenu(resultObj[i], i);
-			}
+			return new Promise(function(resolve, reject) {
+				for (var i in resultObj) {
+					addEmissionToMenu(resultObj[i], i);
+				}
+				resolve(resultObj);
+			});
 		}
 
 		function addEmissionToMenu(layers, emName) {
