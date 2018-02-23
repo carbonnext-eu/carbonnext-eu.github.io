@@ -225,8 +225,8 @@
 		}
 
 		function createScale() {
-			var svg = d3.select('#scale').append('svg').attr('width', 200).attr('height', 120);
-			svg = svg.append('g').attr('transform', 'translate(5,25)');
+			var svg = d3.select('#scale').append('svg').attr('width', 185).attr('height', 120);
+			svg = svg.append('g').attr('transform', 'translate(0,5)');
 			var scale = d3.scale.sqrt().domain([0, stats.totalMax]).range([0, 50]);
 			var formatSI = d3.format('.1f');
 			var formatCurrencySI = function(d) {
@@ -239,7 +239,7 @@
 				.tickPadding(10)
 				.orient("left"); //default
 			svg.append('g')
-				.attr('transform', 'translate(130, 100)')
+				.attr('transform', 'translate(116, 100)')
 				.call(circleKey);
 		}
 
