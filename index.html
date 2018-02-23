@@ -280,6 +280,7 @@
 						if (typeof layer.getLatLng == 'function') {
 							ll = layer.getLatLng();
 							distance = ll.distanceTo(L.latLng(feature.geometry.coordinates[0], feature.geometry.coordinates[1]));
+							console.log(distance);
 						}
 						if (ll && distance < radius) {
 							if(potentials[em] == undefined) potentials[em] = 0;
@@ -314,12 +315,10 @@
 		
 		function addPopupHandler(emissionLayers, feature){
 			return function(){
-				if(feature.potential == undefined){
-					var potentials = createPotential(emissionLayers, feature);
-					console.log(potentials);
-					feature.potential = "";
-					return JSON.stringify(potentials);
-				}
+				var potentials = createPotential(emissionLayers, feature);
+				console.log(potentials);
+				feature.potential = "";
+				return JSON.stringify(potentials);
 				
 			}
 		};
