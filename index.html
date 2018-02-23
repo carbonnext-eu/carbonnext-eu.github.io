@@ -313,11 +313,11 @@
 		};
 		
 		function addPopupHandler(emissionLayers, feature){
-			return function(e){
-				if(e.target.dataset.potential !== undefined){
+			return function(){
+				if(feature.potential == undefined){
 					var potentials = createPotential(emissionLayers, feature);
 					console.log(potentials);
-					e.target.dataset.potential = "";
+					feature.potential = "";
 					return JSON.stringify(potentials);
 				}
 				
