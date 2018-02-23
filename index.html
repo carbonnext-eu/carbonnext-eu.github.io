@@ -275,11 +275,11 @@
 		// get potential sources in a radius of 2000 m
 		function createPotential(emissionLayers, feature, radius=2000) {					  
 			var distance, potentials = {};
-			console.log(emissionLayers);
+			console.log(emissionLayers, radius);
 			for(var em in emissionLayers){
 				for(var nace in emissionLayers[em]){
-					console.log(nace, em);
 					var curLayer = emissionLayers[em][nace].layer._layers;
+					console.log(emissionLayers[em][nace], curLayer);
 					for (var i = 0, n = curLayer.length; i < n; i++) {
 						var layer = curLayer[i];
 						console.log(layer);
@@ -312,11 +312,11 @@
 						});
 					},
 					onEachFeature: function(feature, layer) {
-						layer.on({
-							click: function(){
-								var potentials = createPotential(emissionLayers, feature);
-								console.log(potentials);
-								layer.bindPopup(feature.properties.FacilityName);
+								layer.bindPopup(function(feature, layer){
+									var potentials = createPotential(emissionLayers, feature);
+									console.log(potentials);
+									return feature.properties.FacilityName;
+								});
 							}
 						});						
 					}
