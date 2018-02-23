@@ -282,9 +282,11 @@
 					var curLayer = emissionLayers[em][nace].layer._layers;
 					for (var i = 0, n = curLayer.length; i < n; i++) {
 						var layer = curLayer[i];
+						console.log(layer);
 						if (typeof layer.getLatLng == 'function') {
 							ll = layer.getLatLng();
 							distance = feature.geometry.distanceTo(ll);
+							console.log(ll, distance);
 						}
 						if (ll && distance < radius) {
 							if(potentials[em] == undefined) potentials[em] = 0;
@@ -310,9 +312,13 @@
 						});
 					},
 					onEachFeature: function(feature, layer) {
-						var potentials = createPotential(emissionLayers, feature);
-						console.log(potentials);
-						layer.bindPopup(feature.properties.FacilityName);
+						layer.on({
+							click: function(){
+								var potentials = createPotential(emissionLayers, feature);
+								console.log(potentials);
+								layer.bindPopup(feature.properties.FacilityName);
+							}
+						});						
 					}
 				});
 				resolve(dataLayer);
