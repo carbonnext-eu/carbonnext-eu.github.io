@@ -2,534 +2,553 @@
 <html>
 
 <head>
-    <title>leaflet-map-simple</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
+	<title>leaflet-map-simple</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta charset="utf-8">
+	<!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
+	<link href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" rel="stylesheet">
+	<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js">
+	</script>
+	<!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
+	<script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'>
+	</script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js">
+	</script>
+	<!-- Load d3: only for size legend for now -->
+	<script src="//d3js.org/d3.v3.min.js">
+	</script>
+	<!-- Load geometryutil for distance and within operations, https://github.com/makinacorpus/Leaflet.GeometryUtil -->
+	<script src="leaflet.geometryutil.js">
+	</script>
+	<style>
+		.icon {
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			stroke-width: 0;
+			stroke: currentColor;
+			fill: currentColor;
+		}
 
-    <!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" integrity="sha384-Zh+y1U8o6/7ni8Mp8szvUfZjGeKKS10CGH3IlD6L1X+XwzYgQ1llOjw/Wslc0cma" crossorigin="anonymous">
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-    <!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
-    <script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <!-- Load d3: only for size legend for now -->
-    <script src="//d3js.org/d3.v3.min.js"></script>
-    <!-- Load geometryutil for distance and within operations, https://github.com/makinacorpus/Leaflet.GeometryUtil -->
-    <script src="leaflet.geometryutil.js"></script>
-    <style>
-        .icon {
-	  display: inline-block;
-	  width: 1em;
-	  height: 1em;
-	  stroke-width: 0;
-	  stroke: currentColor;
-	  fill: currentColor;
-	}
+		body {
+			margin: 0;
+			padding: 0;
+		}
 
-        body {
-            margin: 0;
-            padding: 0;
-        }
-	h3 {
-		margin-bottom:2px;
-		padding-bottom:0px;
-	}
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-        div#layercontrol {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-	    bottom: 15px;
-            width: 250px;
-	    padding: 3px;
-	    background-color: rgba(226, 238, 246,0.7);
-	    border-radius: 5px;
-	    border: 1px solid rgba(0,78,131,0.9);
-	    z-index: 7000;
-        }
-	#layercontrolCont {
-            overflow-y: auto;
-	    height: 100%;
-	    width: 100%;
-	}
-	#layercontrolMinimize {
-	    position: absolute;
-	    display: block;
-	    top: 50%;
-	    left: -8px;
-	    margin-top: -8px;
-	    height: 16px;
-	    z-index: 8000;
-	    border: 1px solid rgba(0,78,131,0.9);
-	    background-color: rgb(226, 238, 246);
-	}
-        div[id*="layercontrolSub-"] {
-            padding-left: 12px;
-            font-size: small;
-            display: none;
-        }
-	#scale {
-		position: absolute;
-		background-color: rgba(226, 238, 246,0.7);
-		border-radius: 5px;
-		border: 1px solid rgba(0,78,131,0.9);
-		z-index: 8000;
-		left: 5px;
-		bottom: 15px;
-		font: 10px sans-serif;
-	}
-	.legend path,
-	  .legend line {
-	    fill: none;
-	    stroke: #000;
-	    shape-rendering: crispEdges;
-	    opacity: 1;
-	  }
+		h3 {
+			margin-bottom: 2px;
+			padding-bottom: 0px;
+		}
 
-	  .circle-legend line {
-	    stroke: #000;
-	    shape-rendering: crispEdges;
-	  }
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+		}
 
-	  .circle-legend circle {
-	    stroke: #ccc;
-	    stroke-dasharray: 4, 2;
-	    fill: none;
-	  }
-    </style>
+		div#layercontrol {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			bottom: 15px;
+			width: 250px;
+			padding: 3px;
+			background-color: rgba(226, 238, 246, 0.7);
+			border-radius: 5px;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			z-index: 7000;
+		}
+
+		#layercontrolCont {
+			overflow-y: auto;
+			height: 100%;
+			width: 100%;
+		}
+
+		#layercontrolMinimize {
+			position: absolute;
+			display: block;
+			top: 50%;
+			left: -8px;
+			margin-top: -8px;
+			height: 16px;
+			z-index: 8000;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			background-color: rgb(226, 238, 246);
+		}
+
+		div[id*="layercontrolSub-"] {
+			padding-left: 12px;
+			font-size: small;
+			display: none;
+		}
+
+		#scale {
+			position: absolute;
+			background-color: rgba(226, 238, 246, 0.7);
+			border-radius: 5px;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			z-index: 8000;
+			left: 5px;
+			bottom: 15px;
+			font: 10px sans-serif;
+		}
+
+		.legend path,
+		.legend line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+			opacity: 1;
+		}
+
+		.circle-legend line {
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+
+		.circle-legend circle {
+			stroke: #ccc;
+			stroke-dasharray: 4, 2;
+			fill: none;
+		}
+	</style>
 </head>
 
 <body>
-<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs>
-<symbol id="icon-folder-plus" viewBox="0 0 32 32">
-<title>folder-plus</title>
-<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-4v4h-4v-4h-4v-4h4v-4h4v4h4v4z"></path>
-</symbol>
-<symbol id="icon-folder-minus" viewBox="0 0 32 32">
-<title>folder-minus</title>
-<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-12v-4h12v4z"></path>
-</symbol>
-<symbol id="icon-play3" viewBox="0 0 32 32">
-<title>play3</title>
-<path d="M6 4l20 12-20 12z"></path>
-</symbol>
-</defs>
-</svg>
-
-    <div id="map"></div>
-    <div id="scale"></div>
-    <div id="layercontrol">
-	<div id="layercontrolCont">
-		<div id="layercontrolNoSub"><h3>Consumers</h3></div>
-		<div id="layercontrolSub"><h3>Emitters</h3></div>
+	<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<symbol id="icon-folder-plus" viewbox="0 0 32 32">
+			<title>folder-plus</title>
+			<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-4v4h-4v-4h-4v-4h4v-4h4v4h4v4z"></path>
+		</symbol>
+		<symbol id="icon-folder-minus" viewbox="0 0 32 32">
+			<title>folder-minus</title>
+			<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-12v-4h12v4z"></path>
+		</symbol>
+		<symbol id="icon-play3" viewbox="0 0 32 32">
+			<title>play3</title>
+			<path d="M6 4l20 12-20 12z"></path>
+		</symbol>
+	</defs></svg>
+	<div id="map"></div>
+	<div id="scale"></div>
+	<div id="layercontrol">
+		<div id="layercontrolCont">
+			<div id="layercontrolNoSub">
+				<h3>Consumers</h3>
+			</div>
+			<div id="layercontrolSub">
+				<h3>Emitters</h3>
+			</div>
+		</div><span data-minimized="false" id="layercontrolMinimize"><svg class="icon icon-play3">
+		<use xlink:href="#icon-play3"></use></svg></span>
 	</div>
-	<span id="layercontrolMinimize" data-minimized="false">
-		<svg class="icon icon-play3"><use xlink:href="#icon-play3"></use></svg>
-	</span>
-    </div>
-
-    <script>
-        jQuery.propHooks.checked = {
-            set: function(el, value) {
-                el.checked = value;
-                $(el)
-                    .trigger('change');
-            }
-        };
-        /* Set up the map with initial center and zoom level */
-        var map = L.map('map', {
-            center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
-            zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
-            scrollWheelZoom: false
-        });
-        /* Carto light-gray basemap tiles with labels */
-        var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
-            })
-            .addTo(map);
-	    
-	var stats = {totalMax:0};
-	    
-	$('#layercontrolMinimize').on('click', function() {
-		if($(this).data("minimized")){
-			$(this).data("minimized", false);
-			$('#layercontrol').css('width', "250px");
-			$("svg", this).css('transform', "rotate(0deg)");
-		} else {
-			$(this).data("minimized", true);
-			$('#layercontrol').css('width', "20px");
-			$("svg", this).css('transform', "rotate(180deg)");			
-		}
-	});
-
-	/* Load all csv data files and create menu*/
-	Promise.all([
-		getEmissionData('CO', 'CO.csv', "#004e83"),
-		getEmissionData('CO2', 'CO2.csv', "#008D4D")
-	]).then(resultObj => doStats(resultObj))
-	    .then(resultObj => addEmissionsToMap(resultObj))
-	    .then(resultObj => addEmissionsToMenu(resultObj));
-	    
-	getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300");
-
-        function getEmissionData(emName, file, color) {
-	    return new Promise(function(resolve, reject) {
-		    fetch(file)
-			.then(function(response) {
-			    return response.text();
+	<script>
+		jQuery.propHooks.checked = {
+			set: function(el, value) {
+				el.checked = value;
+				$(el)
+					.trigger('change');
+			}
+		};
+		/* Set up the map with initial center and zoom level */
+		var map = L.map('map', {
+			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
+			zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+			scrollWheelZoom: false
+		});
+		/* Carto light-gray basemap tiles with labels */
+		var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>'
 			})
-			.then(myBlob => convertCSV(myBlob))
-			.then(geojson => resolve(
-			    {
-				emName: emName,
-			     	color: color,
-			     	geojson: geojson
-			    }
-		    	));
-	    });
-        };
+			.addTo(map);
 
-	function doStats(resultObj){
-	    return new Promise(function(resolve, reject) {
-		for (var i = 0; i < resultObj.length; i++) {
-		    var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
-			return o.properties.MTonnes;
-		    }));
-		    stats.totalMax = Math.max(stats.totalMax, max);
-		    /*var min = Math.min.apply(Math, resultObj[i].geojson.features.map(function(o) {
-			return o.properties.MTonnes;
-		    }));
-		    stats.totalMin = Math.min(stats.totalMin, min);*/
-		}
-		createScale();
-		resolve(resultObj);
-	    });
-	}
-	    
-	function createScale(){
-		var svg = d3.select('#scale').append('svg').attr('width', 200).attr('height', 120);
-		svg = svg.append('g').attr('transform', 'translate(5,5)');
-    		var scale = d3.scale.sqrt().domain([0, stats.totalMax]).range([0, 50]);
-		var formatSI = d3.format('.1f');
-    		var formatCurrencySI = function(d) { return formatSI(d) + ' MT'}
-		var circleKey = circleLegend()
-			.scale(scale)
-			.tickValues([stats.totalMax/100, stats.totalMax/10, stats.totalMax])
-			.tickFormat(formatCurrencySI)
-			.tickPadding(10)
-			.orient("left"); //default
-		svg.append('g')
-		      .attr('transform', 'translate(130, 100)')
-		      .call(circleKey);
-	}
-	    
-	function getChemparkData(name, file, color) {
-	    fetch(file)
-		.then(function(response) {
-		    return response.text();
-		})
-		.then(myBlob => convertCSV(myBlob))
-		.then(geojson => addParksToMap(geojson, color))
-		.then(dataLayer => addParksToMenu(dataLayer, name));
-        };   
+		var stats = {
+			totalMax: 0
+		};
 
-        function convertCSV(myBlob) {
-		return new Promise(function(resolve, reject) {
-			csv2geojson.csv2geojson(myBlob, {
-				latfield: 'latitude',
-				lonfield: 'longitude',
-				delimiter: ';',
-			}, function(err, geojson){
-				if (err){
-					console.error(err);
-					reject(err);
+		$('#layercontrolMinimize').on('click', function() {
+			if ($(this).data("minimized")) {
+				$(this).data("minimized", false);
+				$('#layercontrol').css('width', "250px");
+				$("svg", this).css('transform', "rotate(0deg)");
+			} else {
+				$(this).data("minimized", true);
+				$('#layercontrol').css('width', "20px");
+				$("svg", this).css('transform', "rotate(180deg)");
+			}
+		});
+
+		/* Load all csv data files and create menu*/
+		Promise.all([
+				getEmissionData('CO', 'CO.csv', "#004e83"),
+				getEmissionData('CO2', 'CO2.csv', "#008D4D")
+			]).then(resultObj => doStats(resultObj))
+			.then(resultObj => addEmissionsToMap(resultObj))
+			.then(resultObj => addEmissionsToMenu(resultObj));
+
+		getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300");
+
+		function getEmissionData(emName, file, color) {
+			return new Promise(function(resolve, reject) {
+				fetch(file)
+					.then(function(response) {
+						return response.text();
+					})
+					.then(myBlob => convertCSV(myBlob))
+					.then(geojson => resolve({
+						emName: emName,
+						color: color,
+						geojson: geojson
+					}));
+			});
+		};
+
+		function doStats(resultObj) {
+			return new Promise(function(resolve, reject) {
+				for (var i = 0; i < resultObj.length; i++) {
+					var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
+						return o.properties.MTonnes;
+					}));
+					stats.totalMax = Math.max(stats.totalMax, max);
+					/*var min = Math.min.apply(Math, resultObj[i].geojson.features.map(function(o) {
+					return o.properties.MTonnes;
+					}));
+					stats.totalMin = Math.min(stats.totalMin, min);*/
 				}
-				else {
-					resolve(geojson);
+				createScale();
+				resolve(resultObj);
+			});
+		}
+
+		function createScale() {
+			var svg = d3.select('#scale').append('svg').attr('width', 200).attr('height', 120);
+			svg = svg.append('g').attr('transform', 'translate(5,5)');
+			var scale = d3.scale.sqrt().domain([0, stats.totalMax]).range([0, 50]);
+			var formatSI = d3.format('.1f');
+			var formatCurrencySI = function(d) {
+				return formatSI(d) + ' MT'
+			}
+			var circleKey = circleLegend()
+				.scale(scale)
+				.tickValues([stats.totalMax / 100, stats.totalMax / 10, stats.totalMax])
+				.tickFormat(formatCurrencySI)
+				.tickPadding(10)
+				.orient("left"); //default
+			svg.append('g')
+				.attr('transform', 'translate(130, 100)')
+				.call(circleKey);
+		}
+
+		function getChemparkData(name, file, color) {
+			fetch(file)
+				.then(function(response) {
+					return response.text();
+				})
+				.then(myBlob => convertCSV(myBlob))
+				.then(geojson => addParksToMap(geojson, color))
+				.then(dataLayer => addParksToMenu(dataLayer, name));
+		};
+
+		function convertCSV(myBlob) {
+			return new Promise(function(resolve, reject) {
+				csv2geojson.csv2geojson(myBlob, {
+					latfield: 'latitude',
+					lonfield: 'longitude',
+					delimiter: ';',
+				}, function(err, geojson) {
+					if (err) {
+						console.error(err);
+						reject(err);
+					} else {
+						resolve(geojson);
+					}
+				});
+			});
+		};
+
+		function addParksToMap(geojson, color) {
+			return new Promise(function(resolve, reject) {
+				var dataLayer = L.geoJSON(geojson, {
+					pointToLayer: function(feature, latlon) {
+						// L.circleMarker() draws a circle with fixed radius in pixels.
+						// To draw a circle overlay with a radius in meters, use L.circle()
+						return L.circleMarker(latlon, {
+							color: color,
+							weight: 0,
+							radius: 10
+						});
+					},
+					onEachFeature: function(feature, layer) {
+						layer.bindPopup(feature.properties.FacilityName);
+					}
+				});
+				resolve(dataLayer);
+			});
+		}
+
+		function addParksToMenu(dataLayer, name) {
+			var escName = name.replace(" ", "_");
+			$('div#layercontrolNoSub')
+				.append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '<\/label><br>'));
+			$('div#layercontrolNoSub input[type="checkbox"].' + escName)
+				.on('change', function() {
+					if ($(this).is(':checked')) {
+						map.addLayer(dataLayer);
+					} else {
+						map.removeLayer(dataLayer);
+					}
+				});
+		}
+
+		function addEmissionsToMap(resultArr) {
+			return new Promise(function(resolve, reject) {
+				var emLayers = {};
+				for (var i = 0; i < resultArr.length; i++) {
+					emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emName, resultArr[i].color);
+				}
+				console.log(emLayers);
+				resolve(emLayers);
+			});
+		}
+
+		function addEmissionToMap(geojson, emName, color) {
+			var layers = {};
+			var dataLayer = L.geoJSON(geojson, {
+				pointToLayer: function(feature, latlon) {
+					// L.circleMarker() draws a circle with fixed radius in pixels.
+					// To draw a circle overlay with a radius in meters, use L.circle()
+					return L.circleMarker(latlon, {
+						color: color,
+						weight: 0,
+						radius: (Math.sqrt(feature.properties.MTonnes / stats.totalMax) * 50)
+					});
+				},
+				onEachFeature: function(feature, layer) {
+					feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
+					if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
+						layers[feature.properties.NACEMainEconomicActivityName] = {
+							layer: new L.LayerGroup(),
+							total: 0,
+							count: 0
+						};
+					}
+					layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+					layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
+					layers[feature.properties.NACEMainEconomicActivityName].count += 1;
+					layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
 				}
 			});
-		});
-	};
+			console.log(layers);
+			return (layers);
+		}
 
-	function addParksToMap(geojson, color) {
-	    return new Promise(function(resolve, reject) {
-		    var dataLayer = L.geoJSON(geojson, {
-			pointToLayer: function(feature, latlon) {
-			    // L.circleMarker() draws a circle with fixed radius in pixels.
-			    // To draw a circle overlay with a radius in meters, use L.circle()
-			    return L.circleMarker(latlon, {
-				color: color,
-				weight: 0,
-				radius: 10
-			    });
-			},
-			onEachFeature: function(feature, layer) {
-			    layer.bindPopup(feature.properties.FacilityName);
+		function addEmissionsToMenu(resultObj) {
+			console.log(resultObj);
+			for (var i in resultObj) {
+				addEmissionToMenu(resultObj[i], i);
 			}
-		    });
-		    resolve(dataLayer);
-	    });
-        }
-	    
-	function addParksToMenu(dataLayer, name){
-		var escName = name.replace(" ", "_");
-		$('div#layercontrolNoSub')
-			.append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '</label><br>'));
-		    $('div#layercontrolNoSub input[type="checkbox"].' + escName)
-			.on('change', function() {
-			    if ($(this).is(':checked')) {
-				    map.addLayer(dataLayer);
-			    } else {
-				    map.removeLayer(dataLayer);
-			    }
-                 });	
-	}
-	
-	function addEmissionsToMap(resultArr){
-	    return new Promise(function(resolve, reject) {
-		var emLayers = {};
-		for (var i = 0; i < resultArr.length; i++) {
-			emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emName, resultArr[i].color);
 		}
-		console.log(emLayers);
-		resolve(emLayers);
-	    });
-	}
-        function addEmissionToMap(geojson, emName, color) {
-	    var layers = {};		    
-	    var dataLayer = L.geoJSON(geojson, {
-		pointToLayer: function(feature, latlon) {
-		    // L.circleMarker() draws a circle with fixed radius in pixels.
-		    // To draw a circle overlay with a radius in meters, use L.circle()
-		    return L.circleMarker(latlon, {
-			color: color,
-			weight: 0,
-			radius: (Math.sqrt(feature.properties.MTonnes/stats.totalMax) * 50)
-		    });
-		},
-		onEachFeature: function(feature, layer) {
-		    feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
-		    if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
-			layers[feature.properties.NACEMainEconomicActivityName] = {
-			    layer: new L.LayerGroup(),
-			    total: 0,
-			    count: 0
+
+		function addEmissionToMenu(layers, emName) {
+			console.log(layers, emName);
+			$('div#layercontrolSub')
+				.append($('<svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br>'));
+			$('#' + emName + 'togglebutton').on('click', function() {
+				if ($(this).hasClass('icon-folder-plus')) {
+					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
+					$("use", this).attr("xlink:href", "#icon-folder-minus");
+					$('div#layercontrolSub-' + emName).show();
+				} else {
+					$(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
+					$("use", this).attr("xlink:href", "#icon-folder-plus");
+					$('div#layercontrolSub-' + emName).hide();
+				}
+			});
+			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
+			var i = 1;
+			var keysSorted = Object.keys(layers).sort(function(a, b) {
+				return layers[b].total - layers[a].total
+			});
+			for (var layerName in keysSorted) {
+				$('div#layercontrolSub-' + emName)
+					.append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')<\/label><br>'));
+				i = i + 1;
+			}
+			$('div#layercontrolSub input[type="checkbox"].' + emName)
+				.on('change', function() {
+					if ($(this).is(':checked')) {
+						if (this.id == emName + "checkbAll") {
+							$('div#layercontrolSub-' + emName + ' input[type="checkbox"]').prop("checked", true);
+						} else {
+							map.addLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
+						}
+					} else {
+						if (this.id == emName + "checkbAll") {
+							$('div#layercontrolSub-' + emName + ' input[type="checkbox"]').prop("checked", false);
+						} else {
+							map.removeLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
+						}
+					}
+				});
+		}
+
+		map.on('focus', () => {
+			map.scrollWheelZoom.enable();
+		});
+		map.on('blur', () => {
+			map.scrollWheelZoom.disable();
+		});
+
+		// Adapted from https://github.com/mbostock/d3/blob/master/src/svg/axis.js
+		// forked from http://bl.ocks.org/aubergene/4723857
+		var circleLegend = function() {
+			'use strict';
+
+			var scale,
+				orient = 'left',
+				tickPadding = 3,
+				tickExtend = 5,
+				tickArguments_ = [10],
+				tickValues = null,
+				tickFormat_,
+				ε = 1e-6;
+
+
+			function key(selection) {
+				selection.each(function() {
+					var g = d3.select(this);
+
+					g.attr('class', 'circle-legend');
+
+					// Stash a snapshot of the new scale, and retrieve the old snapshot.
+					var scale0 = this.__chart__ || scale,
+						scale1 = this.__chart__ = scale.copy();
+
+					// Ticks, or domain values for ordinal scales.
+					var ticks = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments_) : scale.domain()) : tickValues,
+						ticks = ticks.slice().filter(function(d) {
+							return d > 0
+						}).sort(d3.descending),
+						tickFormat = tickFormat_ == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments_) : String) : tickFormat_,
+						tick = g.selectAll('.tick').data(ticks, scale1),
+						tickEnter = tick.enter().insert('g', '.tick').attr('class', 'tick').style('opacity', ε),
+						tickExit = d3.transition(tick.exit()).style('opacity', ε).remove(),
+						tickUpdate = d3.transition(tick.order()).style('opacity', 1),
+						tickTransform;
+
+					tickEnter.each(function(tick) {
+						var gg = d3.select(this);
+
+						var tickText = tickFormat(tick);
+
+						if (!tickText) return;
+
+						gg.append('circle')
+							.attr('cx', 0)
+							.attr('cy', 0)
+							.attr('r', scale(tick));
+
+						gg.append('line')
+							.attr('y1', 0)
+							.attr('y2', 0)
+							.attr('stroke', '#000')
+							.text(tick);
+
+						gg.append('text')
+							.attr('dy', '.35em')
+							.style('text-anchor', 'left' == orient ? 'end' : 'start')
+							.text(tickText);
+
+					});
+					tickEnter.call(d3_svg_legend, scale0);
+					tickUpdate.call(d3_svg_legend, scale1);
+					tickExit.call(d3_svg_legend, scale1);
+
+					function d3_svg_legend(selection, scale) {
+						selection.select('circle')
+							.attr('r', scale);
+
+						var x2 = scale(ticks[0]) + tickExtend;
+						var sign = 'left' == orient ? -1 : 1;
+
+						selection.select('text')
+							.attr('transform', 'translate(' + (x2 + tickPadding) * sign + ', 0)');
+
+						selection.select('line')
+							.attr('x1', function(d) {
+								return scale(d) * sign
+							})
+							.attr('x2', x2 * sign);
+
+						selection.attr('transform', function(d) {
+							return 'translate(0,' + -scale(d) + ')';
+						});
+					}
+
+				});
+			}
+
+			key.scale = function(value) {
+				if (!arguments.length) return scale;
+				scale = value;
+				return key;
 			};
-		    }
-		    layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
-		    layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
-		    layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-		    layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
-		}
-	    });
-	    console.log(layers);
-	    return(layers);
-        }
-	    
-	function addEmissionsToMenu(resultObj) {
-		console.log(resultObj);
-		for (var i in resultObj) {
-			addEmissionToMenu(resultObj[i], i);
-		}
-	}
-	
-        function addEmissionToMenu(layers, emName) {
-	    console.log(layers, emName);
-	    $('div#layercontrolSub')
-                .append($('<svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"></use></svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '</label><br>'));
-            $('#' + emName + 'togglebutton').on('click', function() {
-                    if ($(this).hasClass('icon-folder-plus')) {
-                        $(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
-			$("use", this).attr("xlink:href", "#icon-folder-minus");
-                        $('div#layercontrolSub-' + emName).show();
-                    } else {
-                        $(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
-			$("use", this).attr("xlink:href", "#icon-folder-plus");
-                        $('div#layercontrolSub-' + emName).hide();
-                    }
-                });
-            $('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
-            var i = 1;
-            var keysSorted = Object.keys(layers).sort(function(a, b) {
-                    return layers[b].total - layers[a].total
-                });
-            for (var layerName in keysSorted) {
-                $('div#layercontrolSub-' + emName)
-                    .append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')</label><br>'));
-                i = i + 1;
-            }
-            $('div#layercontrolSub input[type="checkbox"].' + emName)
-                .on('change', function() {
-                    if ($(this).is(':checked')) {
-                        if (this.id == emName + "checkbAll") {
-                            $('div#layercontrolSub-' + emName + ' input[type="checkbox"]').prop("checked", true);
-                        } else {
-                            map.addLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
-                        }
-                    } else {
-                        if (this.id == emName + "checkbAll") {
-                            $('div#layercontrolSub-' + emName + ' input[type="checkbox"]').prop("checked", false);
-                        } else {
-                            map.removeLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
-                        }
-                    }
-                });
-        }
 
-        map.on('focus', () => {
-            map.scrollWheelZoom.enable();
-        });
-        map.on('blur', () => {
-            map.scrollWheelZoom.disable();
-        });
-	    
-// Adapted from https://github.com/mbostock/d3/blob/master/src/svg/axis.js
-// forked from http://bl.ocks.org/aubergene/4723857
-var circleLegend = function() {
-  'use strict';
+			key.orient = function(value) {
+				if (!arguments.length) return orient;
+				orient = value;
+				return key;
+			};
 
-  var scale,
-      orient = 'left',
-      tickPadding = 3,
-      tickExtend = 5,
-      tickArguments_ = [10],
-      tickValues = null,
-      tickFormat_,
-      ε = 1e-6;
+			key.ticks = function() {
+				if (!arguments.length) return tickArguments_;
+				tickArguments_ = arguments;
+				return key;
+			};
 
+			key.tickFormat = function(x) {
+				if (!arguments.length) return tickFormat_;
+				tickFormat_ = x;
+				return key;
+			};
 
-  function key(selection) {
-    selection.each(function() {
-      var g = d3.select(this);
+			key.tickValues = function(x) {
+				if (!arguments.length) return tickValues;
+				tickValues = x;
+				return key;
+			};
 
-      g.attr('class', 'circle-legend');
+			key.tickPadding = function(x) {
+				if (!arguments.length) return tickPadding;
+				tickPadding = +x;
+				return key;
+			};
 
-      // Stash a snapshot of the new scale, and retrieve the old snapshot.
-      var scale0 = this.__chart__ || scale,
-          scale1 = this.__chart__ = scale.copy();
+			key.tickExtend = function(x) {
+				if (!arguments.length) return tickExtend;
+				tickExtend = +x;
+				return key;
+			};
 
-      // Ticks, or domain values for ordinal scales.
-      var ticks = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments_) : scale.domain()) : tickValues,
-          ticks = ticks.slice().filter(function(d) { return d > 0 }).sort(d3.descending),
-          tickFormat = tickFormat_ == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments_) : String) : tickFormat_,
-          tick = g.selectAll('.tick').data(ticks, scale1),
-          tickEnter = tick.enter().insert('g', '.tick').attr('class', 'tick').style('opacity', ε),
-          tickExit = d3.transition(tick.exit()).style('opacity', ε).remove(),
-          tickUpdate = d3.transition(tick.order()).style('opacity', 1),
-          tickTransform;
+			key.width = function(value) {
+				if (!arguments.length) return width;
+				width = value;
+				return key;
+			};
 
-      tickEnter.each(function(tick) {
-        var gg = d3.select(this);
+			key.height = function(value) {
+				if (!arguments.length) return height;
+				height = value;
+				return key;
+			};
 
-        var tickText = tickFormat(tick);
-
-        if (!tickText) return;
-
-        gg.append('circle')
-          .attr('cx', 0)
-          .attr('cy', 0)
-          .attr('r', scale(tick));
-
-        gg.append('line')
-          .attr('y1', 0)
-          .attr('y2', 0)
-          .attr('stroke', '#000')
-          .text(tick);
-
-        gg.append('text')
-          .attr('dy', '.35em')
-          .style('text-anchor', 'left' == orient ? 'end' : 'start')
-          .text(tickText);
-
-      });
-      tickEnter.call(d3_svg_legend, scale0);
-      tickUpdate.call(d3_svg_legend, scale1);
-      tickExit.call(d3_svg_legend, scale1);
-
-      function d3_svg_legend(selection, scale) {
-        selection.select('circle')
-          .attr('r', scale);
-
-        var x2 = scale(ticks[0]) + tickExtend;
-        var sign = 'left' == orient ? -1 : 1;
-
-        selection.select('text')
-          .attr('transform', 'translate(' + (x2 + tickPadding) * sign + ', 0)');
-
-        selection.select('line')
-          .attr('x1', function(d) { return scale(d) * sign })
-          .attr('x2', x2 * sign);
-
-        selection.attr('transform', function(d) { return 'translate(0,' + -scale(d) + ')'; });
-      }
-
-    });
-  }
-
-  key.scale = function(value) {
-    if (!arguments.length) return scale;
-    scale = value;
-    return key;
-  };
-
-  key.orient = function(value) {
-    if (!arguments.length) return orient;
-    orient = value;
-    return key;
-  };
-
-  key.ticks = function() {
-    if (!arguments.length) return tickArguments_;
-    tickArguments_ = arguments;
-    return key;
-  };
-
-  key.tickFormat = function(x) {
-    if (!arguments.length) return tickFormat_;
-    tickFormat_ = x;
-    return key;
-  };
-
-  key.tickValues = function(x) {
-    if (!arguments.length) return tickValues;
-    tickValues = x;
-    return key;
-  };
-
-  key.tickPadding = function(x) {
-    if (!arguments.length) return tickPadding;
-    tickPadding = +x;
-    return key;
-  };
-
-  key.tickExtend = function(x) {
-    if (!arguments.length) return tickExtend;
-    tickExtend = +x;
-    return key;
-  };
-
-  key.width = function(value) {
-    if (!arguments.length) return width;
-    width = value;
-    return key;
-  };
-
-  key.height = function(value) {
-    if (!arguments.length) return height;
-    height = value;
-    return key;
-  };
-
-  return key;
-};
-    </script>
+			return key;
+		};
+	</script>
 </body>
 
 </html>
