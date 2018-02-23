@@ -269,22 +269,17 @@
 			});
 		};
 		
-		// get potential sources in a radius of 2000 m
-		function createPotential(emissionLayers, feature, radius=2000) {					  
+		// get potential sources in a radius of 10000 m
+		function createPotential(emissionLayers, feature, radius=10000) {					  
 			var distance, potentials = {};
-			console.log(emissionLayers, radius);
 			for(var em in emissionLayers){
 				for(var nace in emissionLayers[em]){
 					var curLayer = emissionLayers[em][nace].layer._layers;
-					console.log(emissionLayers[em][nace], curLayer);
 					for (var point in curLayer) {
 						var layer = curLayer[point];
-						console.log(layer);
 						if (typeof layer.getLatLng == 'function') {
 							ll = layer.getLatLng();
-							console.log(feature);
 							distance = ll.distanceTo(L.latLng(feature.geometry.coordinates[0], feature.geometry.coordinates[1]));
-							console.log(ll, distance);
 						}
 						if (ll && distance < radius) {
 							if(potentials[em] == undefined) potentials[em] = 0;
@@ -319,9 +314,13 @@
 		
 		function addPopupHandler(emissionLayers, feature){
 			return function(e){
-				var potentials = createPotential(emissionLayers, feature);
-				console.log(potentials);
-				return feature.properties.FacilityName;
+				if(e.target.dataset.potential !== undefined){
+					var potentials = createPotential(emissionLayers, feature);
+					console.log(potentials);
+					e.target.dataset.potential = "";
+					return JSON.stringify(potentials);
+				}
+				
 			}
 		};
 
