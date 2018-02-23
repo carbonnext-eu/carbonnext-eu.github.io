@@ -278,6 +278,7 @@
 			console.log(emissionLayers);
 			for(var em in emissionLayers){
 				for(var nace in emissionLayers[em]){
+					console.log(nace, em);
 					var curLayer = emissionLayers[em][nace].layer.layers;
 					for (var i = 0, n = curLayer.length; i < n; i++) {
 						var layer = curLayer[i];
