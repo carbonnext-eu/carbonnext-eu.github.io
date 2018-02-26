@@ -188,15 +188,20 @@
 			});
 		};
 
-		function doStats(resultArray) {
+		function doStats(resultObj) {
 			return new Promise((resolve, reject) => {
-				console.log(resultArray);
-				stats.totalMax = Math.max(...resultArray.map(emObj => emObj.map(o => {					
-					console.log(o);
-					return o.geojson.features.properties.MTonnes;
-				})));
+				for (var i = 0; i < resultObj.length; i++) {
+					var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
+						return o.properties.MTonnes;
+					}));
+					stats.totalMax = Math.max(stats.totalMax, max);
+					/*var min = Math.min.apply(Math, resultObj[i].geojson.features.map(function(o) {
+					return o.properties.MTonnes;
+					}));
+					stats.totalMin = Math.min(stats.totalMin, min);*/
+				}
 				createScale();
-				resolve(resultArray);
+				resolve(resultObj);
 			});
 		}
 
