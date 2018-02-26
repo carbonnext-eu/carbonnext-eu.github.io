@@ -144,42 +144,25 @@
 		</div><span data-minimized="false" id="layercontrolMinimize"><svg class="icon icon-play3">
 		<use xlink:href="#icon-play3"></use></svg></span>
 	</div>
-	<script>
-		/*jQuery.propHooks.checked = {
-			set: function(el, value) {
-				el.checked = value;
-				$(el).trigger('change');
-			}
-		};*/
+	<script>		
 		/* Set up the map with initial center and zoom level */
-		var map = L.map('map', {
+		let map = L.map('map', {
 			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
 			zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
 			scrollWheelZoom: false
 		});
 		/* Carto light-gray basemap tiles with labels */
-		var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+		let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>'
 			})
 			.addTo(map);
 
-		var stats = {
+		let stats = {
 			totalMax: 0
 		};
 		
-		var emissionLayers;
+		let emissionLayers;
 
-		$('#layercontrolMinimize').on('click', function() {
-			if ($(this).data("minimized")) {
-				$(this).data("minimized", false);
-				$('#layercontrol').css('width', "250px");
-				$("svg", this).css('transform', "rotate(0deg)");
-			} else {
-				$(this).data("minimized", true);
-				$('#layercontrol').css('width', "20px");
-				$("svg", this).css('transform', "rotate(180deg)");
-			}
-		});
 
 		/* Load all csv data files and create menu*/
 		Promise.all([
@@ -191,7 +174,7 @@
 			.then(resultObj => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", resultObj));
 
 		function getEmissionData(emName, file, color) {
-			return new Promise(function(resolve, reject) {
+			return new Promise((resolve, reject) => {
 				fetch(file)
 					.then(function(response) {
 						return response.text();
@@ -206,7 +189,7 @@
 		};
 
 		function doStats(resultObj) {
-			return new Promise(function(resolve, reject) {
+			return new Promise((resolve, reject) => {
 				for (var i = 0; i < resultObj.length; i++) {
 					var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
 						return o.properties.MTonnes;
@@ -243,21 +226,19 @@
 
 		function getChemparkData(name, file, color, emissionLayers) {
 			fetch(file)
-				.then(function(response) {
-					return response.text();
-				})
+				.then(response => response.text())
 				.then(myBlob => convertCSV(myBlob))
 				.then(geojson => addParksToMap(geojson, color, emissionLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
 		};
 
 		function convertCSV(myBlob) {
-			return new Promise(function(resolve, reject) {
+			return new Promise((resolve, reject) => {
 				csv2geojson.csv2geojson(myBlob, {
 					latfield: 'latitude',
 					lonfield: 'longitude',
 					delimiter: ';',
-				}, function(err, geojson) {
+				}, (err, geojson) => {
 					if (err) {
 						console.error(err);
 						reject(err);
@@ -291,7 +272,7 @@
 		};
 
 		function addParksToMap(geojson, color, emissionLayers) {
-			return new Promise(function(resolve, reject) {
+			return new Promise((resolve, reject) => {
 				var dataLayer = L.geoJSON(geojson, {
 					pointToLayer: function(feature, latlon) {
 						// L.circleMarker() draws a circle with fixed radius in pixels.
@@ -319,7 +300,6 @@
 					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
 				}
 				return htmlstring;
-				
 			}
 		};
 
@@ -338,7 +318,7 @@
 		}
 
 		function addEmissionsToMap(resultArr) {
-			return new Promise(function(resolve, reject) {
+			return new Promise((resolve, reject) => {
 				var emLayers = {};
 				for (var i = 0; i < resultArr.length; i++) {
 					emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emName, resultArr[i].color);
@@ -378,16 +358,23 @@
 		}
 
 		function addEmissionsToMenu(resultObj) {
-			return new Promise(function(resolve, reject) {
+			return new Promise((resolve, reject) => {
 				for (var i in resultObj) {
 					addEmissionToMenu(resultObj[i], i);
 				}
 				resolve(resultObj);
 			});
 		}
+		
+		/* Enables parent emission class toggle to trigger all children */
+		jQuery.propHooks.checked = {
+			set: function(el, value) {
+				el.checked = value;
+				$(el).trigger('change');
+			}
+		};
 
 		function addEmissionToMenu(layers, emName) {
-			console.log(layers, emName);
 			$('div#layercontrolSub')
 				.append($('<svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
@@ -403,7 +390,7 @@
 			});
 			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
 			var i = 1;
-			var keysSorted = Object.keys(layers).sort(function(a, b) {
+			var keysSorted = Object.keys(layers).sort((a, b) => {
 				return layers[b].total - layers[a].total
 			});
 			for (var layerName in keysSorted) {
@@ -435,10 +422,23 @@
 		map.on('blur', () => {
 			map.scrollWheelZoom.disable();
 		});
+		
+		
+		$('#layercontrolMinimize').on('click', function() {
+			if ($(this).data("minimized")) {
+				$(this).data("minimized", false);
+				$('#layercontrol').css('width', "250px");
+				$("svg", this).css('transform', "rotate(0deg)");
+			} else {
+				$(this).data("minimized", true);
+				$('#layercontrol').css('width', "20px");
+				$("svg", this).css('transform', "rotate(180deg)");
+			}
+		});
 
 		// Adapted from https://github.com/mbostock/d3/blob/master/src/svg/axis.js
 		// forked from http://bl.ocks.org/aubergene/4723857
-		var circleLegend = function() {
+		var circleLegend = function circleLegend() {
 			'use strict';
 
 			var scale,
