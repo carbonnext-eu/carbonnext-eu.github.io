@@ -18,6 +18,21 @@
 	<script src="//d3js.org/d3.v3.min.js">
 	</script>
 	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		h3 {
+			margin-bottom: 2px;
+			padding-bottom: 0px;
+		}
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+		}
 		.icon {
 			display: inline-block;
 			width: 1em;
@@ -26,25 +41,8 @@
 			stroke: currentColor;
 			fill: currentColor;
 		}
-
-		body {
-			margin: 0;
-			padding: 0;
-		}
-
-		h3 {
-			margin-bottom: 2px;
-			padding-bottom: 0px;
-		}
-
-		#map {
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			right: 0;
-			left: 0;
-		}
-
+		
+		/* legend styling */
 		div#layercontrol {
 			position: absolute;
 			top: 5px;
@@ -57,13 +55,11 @@
 			border: 1px solid rgba(0, 78, 131, 0.9);
 			z-index: 7000;
 		}
-
 		#layercontrolCont {
 			overflow-y: auto;
 			height: 100%;
 			width: 100%;
 		}
-
 		#layercontrolMinimize {
 			position: absolute;
 			display: block;
@@ -75,13 +71,13 @@
 			border: 1px solid rgba(0, 78, 131, 0.9);
 			background-color: rgb(226, 238, 246);
 		}
-
 		div[id*="layercontrolSub-"] {
 			padding-left: 12px;
 			font-size: small;
 			display: none;
 		}
-
+		
+		/* Size legend styling */
 		#scale {
 			position: absolute;
 			background-color: rgba(226, 238, 246, 0.7);
@@ -93,7 +89,6 @@
 			padding: 3px;
 			font: 10px sans-serif;
 		}
-
 		.legend path,
 		.legend line {
 			fill: none;
@@ -101,12 +96,10 @@
 			shape-rendering: crispEdges;
 			opacity: 1;
 		}
-
 		.circle-legend line {
 			stroke: #000;
 			shape-rendering: crispEdges;
 		}
-
 		.circle-legend circle {
 			stroke: #ccc;
 			stroke-dasharray: 4, 2;
@@ -116,23 +109,30 @@
 </head>
 
 <body>
+	<!-- Symbol definition -->
 	<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
-	<defs>
-		<symbol id="icon-folder-plus" viewbox="0 0 32 32">
-			<title>folder-plus</title>
-			<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-4v4h-4v-4h-4v-4h4v-4h4v4h4v4z"></path>
-		</symbol>
-		<symbol id="icon-folder-minus" viewbox="0 0 32 32">
-			<title>folder-minus</title>
-			<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-12v-4h12v4z"></path>
-		</symbol>
-		<symbol id="icon-play3" viewbox="0 0 32 32">
-			<title>play3</title>
-			<path d="M6 4l20 12-20 12z"></path>
-		</symbol>
-	</defs></svg>
+		<defs>
+			<symbol id="icon-folder-plus" viewbox="0 0 32 32">
+				<title>folder-plus</title>
+				<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-4v4h-4v-4h-4v-4h4v-4h4v4h4v4z"></path>
+			</symbol>
+			<symbol id="icon-folder-minus" viewbox="0 0 32 32">
+				<title>folder-minus</title>
+				<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-12v-4h12v4z"></path>
+			</symbol>
+			<symbol id="icon-play3" viewbox="0 0 32 32">
+				<title>play3</title>
+				<path d="M6 4l20 12-20 12z"></path>
+			</symbol>
+		</defs>
+	</svg>
+	<!-- Map takes whole screen -->
 	<div id="map"></div>
-	<div id="scale"><h3>Emissions in Megatonnes</h3></div>
+	<!-- Size legen -->
+	<div id="scale">
+		<h3>Emissions in Megatonnes</h3>
+	</div>
+	<!-- Legend and control -->
 	<div id="layercontrol">
 		<div id="layercontrolCont">
 			<div id="layercontrolNoSub">
@@ -145,13 +145,12 @@
 		<use xlink:href="#icon-play3"></use></svg></span>
 	</div>
 	<script>
-		jQuery.propHooks.checked = {
+		/*jQuery.propHooks.checked = {
 			set: function(el, value) {
 				el.checked = value;
-				$(el)
-					.trigger('change');
+				$(el).trigger('change');
 			}
-		};
+		};*/
 		/* Set up the map with initial center and zoom level */
 		var map = L.map('map', {
 			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
