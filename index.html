@@ -188,12 +188,15 @@
 			});
 		};
 
-		function doStats(resultObj) {
+		function doStats(resultArray) {
 			return new Promise((resolve, reject) => {
-				console.log(resultObj);
-				stats.totalMax = Math.max(...resultObj.map(o => o.geojson.features.properties.MTonnes));
+				console.log(resultArray);
+				stats.totalMax = Math.max(...resultArray.map(emObj => emObj.map(o => {					
+					console.log(o);
+					return o.geojson.features.properties.MTonnes;
+				})));
 				createScale();
-				resolve(resultObj);
+				resolve(resultArray);
 			});
 		}
 
