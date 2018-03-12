@@ -77,6 +77,19 @@
 			display: none;
 		}
 		
+		/* Title */
+		#mapTitle {
+			position: absolute;
+			background-color: rgba(0, 78, 131, 0.3);
+			border-radius: 5px;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			z-index: 8009;
+			left: 46px;
+			top: 5px;
+			padding: 3px;
+			font: 10px sans-serif;	
+		}
+		
 		/* Size legend styling */
 		#scale {
 			position: absolute;
@@ -128,7 +141,11 @@
 	</svg>
 	<!-- Map takes whole screen -->
 	<div id="map"></div>
-	<!-- Size legen -->
+	<!-- Size legend -->
+	<div id="mapTitle">
+		<h3>CarbonNext</h3>
+	</div>
+	<!-- Size legend -->
 	<div id="scale">
 		<h3>Emissions in Megatonnes</h3>
 	</div>
