@@ -331,7 +331,7 @@
 			input.attr("type","checkbox")
 				.attr("class", escName)
 				.attr("id", escName + 'checkbAll')
-			label.text(name);
+			label.append("p").text(name);
 			layercontrolNoSub.append("br");
 			input.on('change', function() {
 					if (this.property("checked")) {
