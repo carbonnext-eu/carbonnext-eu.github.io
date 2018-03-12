@@ -25,7 +25,7 @@
 		h2 {
 			margin: 0;
 			padding: 0;
-			font: 10px sans-serif;	
+			font: 12px bold sans-serif;	
 		}
 		h3 {
 			margin-bottom: 2px;
@@ -91,8 +91,7 @@
 			z-index: 8009;
 			left: 46px;
 			top: 10px;
-			padding: 3px;
-			font: 10px sans-serif;	
+			padding: 3px;	
 		}
 		
 		/* Size legend styling */
@@ -316,7 +315,6 @@
 		function addPopupHandler(emissionLayers, feature){
 			return function(){
 				var potentials = createPotential(emissionLayers, feature);
-				console.log(potentials);
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10 km radius:<br />';
 				for (em in potentials){
 					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
@@ -327,8 +325,14 @@
 
 		function addParksToMenu(dataLayer, name) {
 			var escName = name.replace(" ", "_");
-			$('div#layercontrolNoSub')
-				.append($('<label><input type="checkbox" class="' + escName + '" id="' + escName + 'checkbAll">' + name + '<\/label><br>'));
+			d3.select('div#layercontrolNoSub')
+				.append('label')
+				.append('input')
+					.attr("type","checkbox")
+					.attr("class", escName)
+					.attr("id", escName + 'checkbAll')
+					.text(name);
+			d3.select('div#layercontrolNoSub').append("br");
 			$('div#layercontrolNoSub input[type="checkbox"].' + escName)
 				.on('change', function() {
 					if ($(this).is(':checked')) {
