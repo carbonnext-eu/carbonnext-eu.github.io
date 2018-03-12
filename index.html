@@ -324,18 +324,17 @@
 		};
 
 		function addParksToMenu(dataLayer, name) {
-			var escName = name.replace(" ", "_");
-			d3.select('div#layercontrolNoSub')
-				.append('label')
-				.append('input')
-					.attr("type","checkbox")
-					.attr("class", escName)
-					.attr("id", escName + 'checkbAll')
-					.text(name);
-			d3.select('div#layercontrolNoSub').append("br");
-			$('div#layercontrolNoSub input[type="checkbox"].' + escName)
-				.on('change', function() {
-					if ($(this).is(':checked')) {
+			let escName = name.replace(" ", "_");
+			let layercontrolNoSub = d3.select('div#layercontrolNoSub');
+			let label = layercontrolNoSub.append('label');
+			let input = label.append('input');
+			input.attr("type","checkbox")
+				.attr("class", escName)
+				.attr("id", escName + 'checkbAll')
+			label.text(name);
+			layercontrolNoSub.append("br");
+			input.on('change', function() {
+					if (this.property("checked")) {
 						map.addLayer(dataLayer);
 					} else {
 						map.removeLayer(dataLayer);
