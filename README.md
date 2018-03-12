@@ -1,6 +1,6 @@
-## Link to my live map
+## Link to the website
 
-https://oh-dechema.github.io/leaflet-map-simple/
+https://carbonnext-eu.github.io/
 
-## A very crude version of EU emissions and chemical parks
+## EU CO and CO2 emissions and chemical parks
 Data based on [CarbonNext](http://carbonnext.eu/) project.
