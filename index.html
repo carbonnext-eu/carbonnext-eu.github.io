@@ -331,10 +331,10 @@
 			input.attr("type","checkbox")
 				.attr("class", escName)
 				.attr("id", escName + 'checkbAll')
-			label.append("p").text(name);
+			label.append("div").text(name);
 			layercontrolNoSub.append("br");
 			input.on('change', function() {
-					if (this.property("checked")) {
+					if (input.property("checked")) {
 						map.addLayer(dataLayer);
 					} else {
 						map.removeLayer(dataLayer);
