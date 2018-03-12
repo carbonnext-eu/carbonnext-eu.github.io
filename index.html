@@ -330,8 +330,8 @@
 			let input = label.append('input');
 			input.attr("type","checkbox")
 				.attr("class", escName)
-				.attr("id", escName + 'checkbAll')
-			label.append("div").text(name);
+				.attr("id", escName + 'checkbAll');
+			label.append("div").attr("style","display:inline;").text(name);
 			layercontrolNoSub.append("br");
 			input.on('change', function() {
 					if (input.property("checked")) {
