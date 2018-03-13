@@ -25,11 +25,14 @@
 		h2 {
 			margin: 0;
 			padding: 0;
-			font: 12px bold sans-serif;	
+			font: bold 12px sans-serif;	
 		}
 		h3 {
 			margin-bottom: 2px;
 			padding-bottom: 0px;
+		}
+		#hiddenPartners {
+			display: none;
 		}
 		#map {
 			position: absolute;
@@ -148,6 +151,10 @@
 	<!-- Size legend -->
 	<div id="mapTitle">
 		<h2>CarbonNext</h2>
+		<div id="hiddenPartners">
+			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
+			<p>This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678&nbsp;</p>
+		</div>
 	</div>
 	<!-- Size legend -->
 	<div id="scale">
@@ -446,6 +453,12 @@
 		});
 		map.on('blur', () => {
 			map.scrollWheelZoom.disable();
+		});
+		
+		$('#mapTitle').on('mouseover', function() {
+			$('#hiddenPartners').show();
+		}).on('mouseout', function() {
+			$('#hiddenPartners').hide();
 		});
 		
 		
