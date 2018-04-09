@@ -196,9 +196,9 @@
 		Promise.all([
 				getEmissionData('CO', 'CO', 'CO.csv', "#004e83"),
 				getEmissionData('CO2', 'CO<sub>2</sub>', 'CO2.csv', "#008D4D")
-			]).then(resultObj => doStats(resultObj))
-			.then(resultObj => addEmissionsToMap(resultObj))
-			.then(resultObj => addEmissionsToMenu(resultObj))
+			]).then(loadedData => doStats(loadedData))
+			.then(loadedData => addEmissionsToMap(loadedData))
+			.then(emLayers => addEmissionsToMenu(emLayers))
 			.then(resultObj => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", resultObj));
 
 		function getEmissionData(emName, emDisplayName, file, color) {
@@ -217,10 +217,10 @@
 			});
 		};
 
-		function doStats(resultObj) {
+		function doStats(loadedData) {
 			return new Promise((resolve, reject) => {
-				for (var i = 0; i < resultObj.length; i++) {
-					var max = Math.max.apply(Math, resultObj[i].geojson.features.map(function(o) {
+				for (var i = 0; i < loadedData.length; i++) {
+					var max = Math.max.apply(Math, loadedData[i].geojson.features.map(function(o) {
 						return o.properties.MTonnes;
 					}));
 					stats.totalMax = Math.max(stats.totalMax, max);
@@ -230,7 +230,7 @@
 					stats.totalMin = Math.min(stats.totalMin, min);*/
 				}
 				createScale();
-				resolve(resultObj);
+				resolve(loadedData);
 			});
 		}
 
@@ -350,11 +350,11 @@
 				});
 		}
 
-		function addEmissionsToMap(resultArr) {
+		function addEmissionsToMap(loadedData) {
 			return new Promise((resolve, reject) => {
 				var emLayers = {};
-				for (var i = 0; i < resultArr.length; i++) {
-					emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emDisplayName, resultArr[i].color);
+				for (var i = 0; i < loadedData.length; i++) {
+					emLayers[loadedData[i].emName] = addEmissionToMap(loadedData[i].geojson, loadedData[i].emDisplayName, loadedData[i].color);
 				}
 				resolve(emLayers);
 			});
@@ -391,12 +391,12 @@
 			return (layers);
 		}
 
-		function addEmissionsToMenu(resultObj) {
+		function addEmissionsToMenu(emLayers) {
 			return new Promise((resolve, reject) => {
-				for (var i in resultObj) {
-					addEmissionToMenu(resultObj[i], i);
+				for (var i in emLayers) {
+					addEmissionToMenu(emLayers[i], i);
 				}
-				resolve(resultObj);
+				resolve(emLayers);
 			});
 		}
 		
