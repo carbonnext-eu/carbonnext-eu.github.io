@@ -194,7 +194,7 @@
 
 		/* Load all csv data files and create menu*/
 		Promise.all([
-				getEmissionData('CO', 'CO.csv', "#004e83"),
+				getEmissionData('CO', 'CO', 'CO.csv', "#004e83"),
 				getEmissionData('CO2', 'CO<sub>2</sub>', 'CO2.csv', "#008D4D")
 			]).then(resultObj => doStats(resultObj))
 			.then(resultObj => addEmissionsToMap(resultObj))
@@ -361,6 +361,7 @@
 		}
 
 		function addEmissionToMap(geojson, emDisplayName, color) {
+			console.log(geojson, emDisplayName, color);
 			var layers = {};
 			var dataLayer = L.geoJSON(geojson, {
 				pointToLayer: function(feature, latlon) {
@@ -390,12 +391,12 @@
 			return (layers);
 		}
 
-		function addEmissionsToMenu(resultArr) {
+		function addEmissionsToMenu(resultObj) {
 			return new Promise((resolve, reject) => {
-				for (var i = 0; i < resultArr.length; i++) {
-					addEmissionToMenu(resultArr[i], resultArr[i].emName, resultArr[i].emDisplayName);
+				for (var i in resultObj) {
+					addEmissionToMenu(resultObj[i], i);
 				}
-				resolve(resultArr);
+				resolve(resultObj);
 			});
 		}
 		
@@ -407,10 +408,10 @@
 			}
 		};
 
-		function addEmissionToMenu(layers, emName, emDisplayName) {			
+		function addEmissionToMenu(layers, emName) {			
 			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
 			$('div#layercontrolSub')
-				.append($('<br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br>'));
+				.append($('<br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
 				if ($(this).hasClass('icon-folder-plus')) {
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
