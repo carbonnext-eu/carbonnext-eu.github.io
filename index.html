@@ -195,13 +195,13 @@
 		/* Load all csv data files and create menu*/
 		Promise.all([
 				getEmissionData('CO', 'CO.csv', "#004e83"),
-				getEmissionData('CO<sub>2</sub>', 'CO2.csv', "#008D4D")
+				getEmissionData('CO2', 'CO<sub>2</sub>', 'CO2.csv', "#008D4D")
 			]).then(resultObj => doStats(resultObj))
 			.then(resultObj => addEmissionsToMap(resultObj))
 			.then(resultObj => addEmissionsToMenu(resultObj))
 			.then(resultObj => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", resultObj));
 
-		function getEmissionData(emName, file, color) {
+		function getEmissionData(emName, emDisplayName, file, color) {
 			return new Promise((resolve, reject) => {
 				fetch(file)
 					.then(function(response) {
@@ -210,6 +210,7 @@
 					.then(myBlob => convertCSV(myBlob))
 					.then(geojson => resolve({
 						emName: emName,
+					        emDisplayName: emDisplayName,
 						color: color,
 						geojson: geojson
 					}));
@@ -353,13 +354,13 @@
 			return new Promise((resolve, reject) => {
 				var emLayers = {};
 				for (var i = 0; i < resultArr.length; i++) {
-					emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emName, resultArr[i].color);
+					emLayers[resultArr[i].emName] = addEmissionToMap(resultArr[i].geojson, resultArr[i].emDisplayName, resultArr[i].color);
 				}
 				resolve(emLayers);
 			});
 		}
 
-		function addEmissionToMap(geojson, emName, color) {
+		function addEmissionToMap(geojson, emDisplayName, color) {
 			var layers = {};
 			var dataLayer = L.geoJSON(geojson, {
 				pointToLayer: function(feature, latlon) {
@@ -383,16 +384,16 @@
 					layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
 					layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
 					layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-					layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emName);
+					layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName);
 				}
 			});
 			return (layers);
 		}
 
-		function addEmissionsToMenu(resultObj) {
+		function addEmissionsToMenu(resultArr) {
 			return new Promise((resolve, reject) => {
 				for (var i in resultObj) {
-					addEmissionToMenu(resultObj[i], i);
+					addEmissionToMenu(resultArr[i], i, resultArr[i].emDisplayName);
 				}
 				resolve(resultObj);
 			});
@@ -406,10 +407,10 @@
 			}
 		};
 
-		function addEmissionToMenu(layers, emName) {			
+		function addEmissionToMenu(layers, emName, emDisplayName) {			
 			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
 			$('div#layercontrolSub')
-				.append($('<br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br>'));
+				.append($('<br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
 				if ($(this).hasClass('icon-folder-plus')) {
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
