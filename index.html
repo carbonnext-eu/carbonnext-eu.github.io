@@ -408,8 +408,7 @@
 			}
 		};
 
-		function addEmissionToMenu(layers, emName) {			
-			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
+		function addEmissionToMenu(layers, emName) {		
 			$('div#layercontrolSub')
 				.append($('<br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
@@ -423,6 +422,7 @@
 					$('div#layercontrolSub-' + emName).hide();
 				}
 			});
+			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
 			var i = 1;
 			var keysSorted = Object.keys(layers).sort((a, b) => {
 				return layers[b].total - layers[a].total
