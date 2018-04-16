@@ -410,9 +410,9 @@
 			console.log(loadedDataWithLayers);
 			return new Promise((resolve, reject) => {
 				for (var i = 0; i < loadedDataWithLayers.length; i++) {
-					addEmissionToMenu(loadedDataWithLayers[i].layers, i);
+					addEmissionToMenu(loadedDataWithLayers[i]);
 				}
-				resolve(emLayers);
+				resolve(loadedDataWithLayers);
 			});
 		}
 		
@@ -424,10 +424,12 @@
 			}
 		};
 
-		function addEmissionToMenu(layers, emName) {
-			console.log(layers);
+		function addEmissionToMenu(loadedDataWithLayers_i) {
+			let layers = loadedDataWithLayers_i.layers;
+			let emName = loadedDataWithLayers_i.emName;
+			let emDisplayName = loadedDataWithLayers_i.emDisplayName;
 			$('div#layercontrolSub')
-				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><br>'));
+				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
 				if ($(this).hasClass('icon-folder-plus')) {
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
