@@ -211,7 +211,7 @@
 				getEmissionData('CO2', 'CO<sub>2</sub>', 'CO2.csv', "#008D4D")
 			]).then(loadedData => doStats(loadedData))
 			.then(loadedData => addEmissionsToMap(loadedData))
-			.then(emLayers => addEmissionsToMenu(emLayers))
+			.then(loadedDataWithLayers => addEmissionsToMenu(loadedDataWithLayers))
 			.then(emLayers => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", emLayers));
 
 		function getEmissionData(emName, emDisplayName, file, color) {
@@ -370,9 +370,9 @@
 			return new Promise((resolve, reject) => {
 				var emLayers = {};
 				for (var i = 0; i < loadedData.length; i++) {
-					emLayers[loadedData[i].emName] = addEmissionToMap(loadedData[i].geojson, loadedData[i].emDisplayName, loadedData[i].color);
+					loadedData[i]["layers"] = addEmissionToMap(loadedData[i].geojson, loadedData[i].emDisplayName, loadedData[i].color);
 				}
-				resolve(emLayers);
+				resolve(loadedData);
 			});
 		}
 
@@ -403,14 +403,14 @@
 					layer.bindPopup(feature.properties.FacilityName + '<br />' + feature.properties.NACEMainEconomicActivityName + '<br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName);
 				}
 			});
-			console.log(layers);
 			return (layers);
 		}
 
-		function addEmissionsToMenu(emLayers) {
+		function addEmissionsToMenu(loadedDataWithLayers) {
+			console.log(loadedDataWithLayers);
 			return new Promise((resolve, reject) => {
-				for (var i in emLayers) {
-					addEmissionToMenu(emLayers[i], i);
+				for (var i = 0; i < loadedDataWithLayers.length; i++) {
+					addEmissionToMenu(loadedDataWithLayers[i].layers, i);
 				}
 				resolve(emLayers);
 			});
@@ -424,7 +424,8 @@
 			}
 		};
 
-		function addEmissionToMenu(layers, emName) {		
+		function addEmissionToMenu(layers, emName) {
+			console.log(layers);
 			$('div#layercontrolSub')
 				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emName + '<\/label><br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
