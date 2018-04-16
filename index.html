@@ -301,7 +301,7 @@
 								return L.circleMarker(latlon, {
 									color: color,
 									weight: 0,
-									radius: 10
+									radius: getChemParkSize(potentials, feature)
 								});
 							},
 							onEachFeature: function(feature, layer) {
@@ -313,6 +313,16 @@
 					});
 			});
 		};
+		
+		function getChemParkSize(potentials, feature){
+			let size = Math.sqrt(potentials[feature.properties.FacilityName]["10000"]["CO2"] / stats.totalMax) * 50;
+			if (size > 0){
+				return size;
+			}
+			else {
+				return 3;
+			}
+		}
 		
 		function addPopupHandler(emissionLayers, feature, potentials){
 			return function(){
