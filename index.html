@@ -290,10 +290,11 @@
 
 		function addParksToMap(geojson, color, emissionLayers) {
 			return new Promise((resolve, reject) => {
+				var dataLayer;
 				fetch("potentials.json")
 					.then(response => response.json())
 					.then(potentials => {
-						var dataLayer = L.geoJSON(geojson, {
+						dataLayer = L.geoJSON(geojson, {
 							pointToLayer: function(feature, latlon) {
 								// L.circleMarker() draws a circle with fixed radius in pixels.
 								// To draw a circle overlay with a radius in meters, use L.circle()
