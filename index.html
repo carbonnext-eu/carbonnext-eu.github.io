@@ -321,7 +321,7 @@
 				for (em in potentials[feature.properties.FacilityName]["50000"]){
 					htmlstring += "<td>"+em+"</td>";
 					for (dist in potentials[feature.properties.FacilityName]){
-						htmlstring += "<td>" + potentials[em].toFixed(2) + ' MT</td>"';
+						htmlstring += "<td>" + potentials[feature.properties.FacilityName][dist][em].toFixed(2) + ' MT</td>"';
 					}
 					htmlstring += "</tr><tr>";
 				}
