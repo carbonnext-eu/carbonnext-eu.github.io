@@ -293,27 +293,27 @@
 				let potentials;
 				fetch("potentials.json")
 					.then(response => response.json())
-					.then(json => {potentials = json});
-				let potObject = {};
-				var dataLayer = L.geoJSON(geojson, {
-					pointToLayer: function(feature, latlon) {
-						// L.circleMarker() draws a circle with fixed radius in pixels.
-						// To draw a circle overlay with a radius in meters, use L.circle()
-						return L.circleMarker(latlon, {
-							color: color,
-							weight: 0,
-							radius: 10
+					.then(potentials => {
+						var dataLayer = L.geoJSON(geojson, {
+							pointToLayer: function(feature, latlon) {
+								// L.circleMarker() draws a circle with fixed radius in pixels.
+								// To draw a circle overlay with a radius in meters, use L.circle()
+								return L.circleMarker(latlon, {
+									color: color,
+									weight: 0,
+									radius: 10
+								});
+							},
+							onEachFeature: function(feature, layer) {
+								layer.bindPopup(addPopupHandler(emissionLayers, feature, potentials));						
+							}
 						});
-					},
-					onEachFeature: function(feature, layer) {
-						layer.bindPopup(addPopupHandler(emissionLayers, feature));						
-					}
-				});
+					});
 				resolve(dataLayer);
 			});
 		};
 		
-		function addPopupHandler(emissionLayers, feature){
+		function addPopupHandler(emissionLayers, feature, potentials){
 			return function(){
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions:<br /><table><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
 				for (em in potentials[feature.properties.FacilityName["50000"]]){
