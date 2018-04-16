@@ -268,7 +268,7 @@
 				.then(myBlob => convertCSV(myBlob))
 				.then(geojson => addParksToMap(geojson, color, emissionLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
-			console.log(emissionLayers);
+			//console.log(emissionLayers);
 		};
 
 		function convertCSV(myBlob) {
