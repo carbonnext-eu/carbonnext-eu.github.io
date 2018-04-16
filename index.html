@@ -307,12 +307,12 @@
 					}
 				}
 			}
-			console.log(radius, potentials);
 			return potentials;
 		};
 
 		function addParksToMap(geojson, color, emissionLayers) {
 			return new Promise((resolve, reject) => {
+				var potObject = {};
 				var dataLayer = L.geoJSON(geojson, {
 					pointToLayer: function(feature, latlon) {
 						// L.circleMarker() draws a circle with fixed radius in pixels.
@@ -324,7 +324,14 @@
 						});
 					},
 					onEachFeature: function(feature, layer) {
-						layer.bindPopup(addPopupHandler(emissionLayers, feature));					
+						layer.bindPopup(addPopupHandler(emissionLayers, feature));
+						console.log(feature);
+						/*potObject[feature.]
+						for(i in [500, 1000, 5000, 10000, 50000]){
+
+						}
+
+						console.log(potentials);*/
 					}
 				});
 				resolve(dataLayer);
@@ -332,17 +339,14 @@
 		};
 		
 		function addPopupHandler(emissionLayers, feature){
-			//return function(){
-				
-				for(i in [500, 1000, 5000, 10000, 50000]){
-					var potentials = createPotential(emissionLayers, feature, i);
-				}
+			return function(){				
+				var potentials = createPotential(emissionLayers, feature, i);
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10 km radius:<br />';
 				for (em in potentials){
 					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
 				}
 				return htmlstring;
-			//}
+			}
 		};
 
 		function addParksToMenu(dataLayer, name) {
