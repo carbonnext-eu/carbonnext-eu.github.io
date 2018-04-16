@@ -262,12 +262,13 @@
 				.call(circleKey);
 		}
 
-		function getChemparkData(name, file, color, emissionLayers) {
+		function getChemparkData(name, file, color, emissionLayers) {			
 			fetch(file)
 				.then(response => response.text())
 				.then(myBlob => convertCSV(myBlob))
 				.then(geojson => addParksToMap(geojson, color, emissionLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
+			console.log(emissionLayers);
 		};
 
 		function convertCSV(myBlob) {
@@ -370,7 +371,6 @@
 		}
 
 		function addEmissionToMap(geojson, emDisplayName, color) {
-			console.log(geojson, emDisplayName, color);
 			var layers = {};
 			var dataLayer = L.geoJSON(geojson, {
 				pointToLayer: function(feature, latlon) {
