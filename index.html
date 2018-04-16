@@ -212,7 +212,7 @@
 			]).then(loadedData => doStats(loadedData))
 			.then(loadedData => addEmissionsToMap(loadedData))
 			.then(loadedDataWithLayers => addEmissionsToMenu(loadedDataWithLayers))
-			.then(emLayers => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", emLayers));
+			.then(loadedDataWithLayers => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", loadedDataWithLayers));
 
 		function getEmissionData(emName, emDisplayName, file, color) {
 			return new Promise((resolve, reject) => {
@@ -266,11 +266,11 @@
 				.call(circleKey);
 		}
 
-		function getChemparkData(name, file, color, emissionLayers) {			
+		function getChemparkData(name, file, color, loadedDataWithLayers) {			
 			fetch(file)
 				.then(response => response.text())
 				.then(myBlob => convertCSV(myBlob))
-				.then(geojson => addParksToMap(geojson, color, emissionLayers))
+				.then(geojson => addParksToMap(geojson, color, loadedDataWithLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
 		};
 
@@ -291,7 +291,7 @@
 			});
 		};
 
-		function addParksToMap(geojson, color, emissionLayers) {
+		function addParksToMap(geojson, color, loadedDataWithLayers) {
 			return new Promise((resolve, reject) => {
 				var dataLayer;
 				fetch("potentials.json")
@@ -308,7 +308,7 @@
 								});
 							},
 							onEachFeature: function(feature, layer) {
-								layer.bindPopup(addPopupHandler(emissionLayers, feature, potentials));						
+								layer.bindPopup(addPopupHandler(loadedDataWithLayers, feature, potentials));						
 							}
 						});
 						resolve(dataLayer);
@@ -327,11 +327,13 @@
 			}
 		}
 		
-		function addPopupHandler(emissionLayers, feature, potentials){
+		function addPopupHandler(feature, potentials){
 			return function(){
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions:<br /><table><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
 				for (em in potentials[feature.properties.FacilityName]["50000"]){
-					htmlstring += "<td>"+em+"</td>";
+					let emName = em;
+					if(em == "CO2") emName = "CO<sub>2</sub>";
+					htmlstring += "<td>"+emName+"</td>";
 					for (dist in potentials[feature.properties.FacilityName]){
 						if(potentials[feature.properties.FacilityName][dist][em]){
 							//console.log(potentials[feature.properties.FacilityName], dist, potentials[feature.properties.FacilityName][dist], em);
