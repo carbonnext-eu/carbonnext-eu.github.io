@@ -287,32 +287,14 @@
 				});
 			});
 		};
-		
-		// get potential sources in a radius of 10000 m
-		function createPotential(emissionLayers, feature, radius=10000) {					  
-			var distance, potentials = {};
-			for(var em in emissionLayers){
-				for(var nace in emissionLayers[em]){
-					var curLayer = emissionLayers[em][nace].layer._layers;
-					for (var point in curLayer) {
-						var layer = curLayer[point];
-						if (typeof layer.getLatLng == 'function') {
-							ll = layer.getLatLng();
-							distance = ll.distanceTo(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
-						}
-						if (ll && distance < radius) {
-							if(potentials[em] == undefined) potentials[em] = 0;
-							potentials[em] += parseFloat(layer.feature.properties.MTonnes);
-						}
-					}
-				}
-			}
-			return potentials;
-		};
 
 		function addParksToMap(geojson, color, emissionLayers) {
 			return new Promise((resolve, reject) => {
-				var potObject = {};
+				let potentials;
+				fetch("potentials.json")
+					.then(response => response.json())
+					.then(json => {potentials = json});
+				let potObject = {};
 				var dataLayer = L.geoJSON(geojson, {
 					pointToLayer: function(feature, latlon) {
 						// L.circleMarker() draws a circle with fixed radius in pixels.
@@ -324,26 +306,24 @@
 						});
 					},
 					onEachFeature: function(feature, layer) {
-						layer.bindPopup(addPopupHandler(emissionLayers, feature));
-						potObject[feature.properties.FacilityName] = {};
-						let distances = [500, 1000, 5000, 10000, 50000];
-						for(let i=0; i<distances.length; i++){
-							potObject[feature.properties.FacilityName][distances[i]] = createPotential(emissionLayers, feature, distances[i]);
-						}
+						layer.bindPopup(addPopupHandler(emissionLayers, feature));						
 					}
-				});				
-				console.log(potObject);
+				});
 				resolve(dataLayer);
 			});
 		};
 		
 		function addPopupHandler(emissionLayers, feature){
-			return function(){				
-				var potentials = createPotential(emissionLayers, feature, i);
-				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10 km radius:<br />';
-				for (em in potentials){
-					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
+			return function(){
+				var htmlstring = feature.properties.FacilityName + '<br />Available emissions:<br /><table><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
+				for (em in potentials[feature.properties.FacilityName["50000"]]){
+					htmlstring += "<td>"+em+"</td>";
+					for (dist in potentials[feature.properties.FacilityName]){
+						htmlstring += "<td>" + potentials[em].toFixed(2) + ' MT</td>"';
+					}
+					htmlstring += "</tr><tr>";
 				}
+				htmlstring = htmlstring.slice(0, -4);
 				return htmlstring;
 			}
 		};
