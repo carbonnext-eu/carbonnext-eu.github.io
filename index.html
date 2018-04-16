@@ -317,7 +317,8 @@
 		function addPopupHandler(emissionLayers, feature, potentials){
 			return function(){
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions:<br /><table><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
-				for (em in potentials[feature.properties.FacilityName["50000"]]){
+				
+				for (em in potentials[feature.properties.FacilityName]["50000"]){
 					htmlstring += "<td>"+em+"</td>";
 					for (dist in potentials[feature.properties.FacilityName]){
 						htmlstring += "<td>" + potentials[em].toFixed(2) + ' MT</td>"';
