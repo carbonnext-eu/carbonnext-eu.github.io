@@ -332,17 +332,17 @@
 		};
 		
 		function addPopupHandler(emissionLayers, feature){
-			return function(){
+			//return function(){
 				
 				for(i in [500, 1000, 5000, 10000, 50000]){
-					var potentials = createPotential(emissionLayers, feature);
+					var potentials = createPotential(emissionLayers, feature, i);
 				}
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10 km radius:<br />';
 				for (em in potentials){
 					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
 				}
 				return htmlstring;
-			}
+			//}
 		};
 
 		function addParksToMenu(dataLayer, name) {
