@@ -325,15 +325,14 @@
 					},
 					onEachFeature: function(feature, layer) {
 						layer.bindPopup(addPopupHandler(emissionLayers, feature));
-						console.log(feature);
-						/*potObject[feature.]
-						for(i in [500, 1000, 5000, 10000, 50000]){
-
+						potObject[feature.properties.FacilityName] = {};
+						let distances = [500, 1000, 5000, 10000, 50000];
+						for(let i=0; i<distances.length; i++){
+							potObject[feature.properties.FacilityName][distances[i]] = createPotential(emissionLayers, feature, distances[i]);
 						}
-
-						console.log(potentials);*/
 					}
-				});
+				});				
+				console.log(potObject);
 				resolve(dataLayer);
 			});
 		};
