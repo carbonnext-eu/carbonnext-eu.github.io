@@ -55,6 +55,9 @@
 			stroke: currentColor;
 			fill: currentColor;
 		}
+		.icon-folder-plus, .icon-folder-minus {
+			margin-left: 8px;
+		}
 		
 		/* legend styling */
 		div#layercontrol {
@@ -268,7 +271,6 @@
 				.then(myBlob => convertCSV(myBlob))
 				.then(geojson => addParksToMap(geojson, color, emissionLayers))
 				.then(dataLayer => addParksToMenu(dataLayer, name));
-			//console.log(emissionLayers);
 		};
 
 		function convertCSV(myBlob) {
@@ -327,7 +329,6 @@
 		function addPopupHandler(emissionLayers, feature, potentials){
 			return function(){
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions:<br /><table><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
-				
 				for (em in potentials[feature.properties.FacilityName]["50000"]){
 					htmlstring += "<td>"+em+"</td>";
 					for (dist in potentials[feature.properties.FacilityName]){
