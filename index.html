@@ -307,7 +307,7 @@
 					}
 				}
 			}
-			console.log(potentials);
+			console.log(radius, potentials);
 			return potentials;
 		};
 
@@ -333,7 +333,10 @@
 		
 		function addPopupHandler(emissionLayers, feature){
 			return function(){
-				var potentials = createPotential(emissionLayers, feature);
+				
+				for(i in [500, 1000, 5000, 10000, 50000]){
+					var potentials = createPotential(emissionLayers, feature);
+				}
 				var htmlstring = feature.properties.FacilityName + '<br />Available emissions in 10 km radius:<br />';
 				for (em in potentials){
 					htmlstring += em + ": " + potentials[em].toFixed(2) + ' MT<br />';
