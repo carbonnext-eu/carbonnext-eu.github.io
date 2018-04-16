@@ -308,8 +308,9 @@
 								layer.bindPopup(addPopupHandler(emissionLayers, feature, potentials));						
 							}
 						});
-					});
-				resolve(dataLayer);
+					})
+					.then(console.log(dataLayer)
+					.then(resolve(dataLayer));
 			});
 		};
 		
