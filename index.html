@@ -308,7 +308,7 @@
 								});
 							},
 							onEachFeature: function(feature, layer) {
-								layer.bindPopup(addPopupHandler(loadedDataWithLayers, feature, potentials));						
+								layer.bindPopup(addPopupHandler(feature, potentials));						
 							}
 						});
 						resolve(dataLayer);
