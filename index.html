@@ -160,12 +160,16 @@
 	<div id="map"></div>
 	<!-- Size legend -->
 	<div id="mapTitle">
+		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg" alt="logo_eu" width="100" style="margin-right:100px;">
 		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" width="200"></a>
 		<div id="hiddenPartners">
-			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
-			<div id="eutext">
-				<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg" alt="logo_eu" width="100">
+			<div id="eutext">				
 				<div style="margin: 5px;">This project has received funding from the European Union’s Horizon 2020 Programme<br> for research, technological development and demonstration under grant agreement<br> No 723678</div>
+			</div>
+			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
+			<div id="Description">
+				<h3>Map of regulated CO and CO<sub>2</sub> emissions and possible consumers</h3>
+				Please click on the checkboxes on the right to display emissions and chemical parks. The size of each emitter corresponds to its yearly CO or CO<sub>2</sub> emission. The size of each possible consumer corresponds to the potential available emissions in a 10&nbsp;km radius. By clicking on a circle, more information is available.
 			</div>
 		</div>
 	</div>
@@ -177,7 +181,7 @@
 	<div id="layercontrol">
 		<div id="layercontrolCont">
 			<div id="layercontrolNoSub">
-				<h3>Consumers</h3>
+				<h3>Possible consumers</h3>
 			</div>
 			<div id="layercontrolSub">
 				<h3>Emitters</h3>
@@ -431,7 +435,7 @@
 			let emName = loadedDataWithLayers_i.emName;
 			let emDisplayName = loadedDataWithLayers_i.emDisplayName;
 			$('div#layercontrolSub')
-				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg><br>'));
+				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg>(select by industry)<br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
 				if ($(this).hasClass('icon-folder-plus')) {
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
