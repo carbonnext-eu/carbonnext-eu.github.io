@@ -39,6 +39,18 @@
     			align-items: center;
 			margin: 4px;
 		}
+		@media (max-width: 799px) {
+		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+			#mapTitle {
+				max-width: 80%;
+			}
+		}
+		@media (min-width: 800px) {
+		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+			#mapTitle {
+				max-width: 50%;
+			}
+		}
 		
 		#map {
 			position: absolute;
