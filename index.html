@@ -37,7 +37,7 @@
 			display: none;
 		}
 		#eutext {
-			display: inline-block;
+			display: inline;
 			max-width: 20%;
     			align-items: center;
 			font-size: x-small;
@@ -500,9 +500,9 @@
 		});
 		
 		$('#mapTitle').on('mouseover', function() {
-			$('#hiddenPartners').show();
+			$('#hiddenPartners').css("display", "inline");
 		}).on('mouseout', function() {
-			$('#hiddenPartners').hide();
+			$('#hiddenPartners').css("display", "none");
 		});
 		
 		
