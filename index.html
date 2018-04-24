@@ -452,7 +452,7 @@
 			let emName = loadedDataWithLayers_i.emName;
 			let emDisplayName = loadedDataWithLayers_i.emDisplayName;
 			$('div#layercontrolSub')
-				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" style="vertical-align:middle;" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg> <p>(select by industry)</p><br>'));
+				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" style="vertical-align:middle;" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg> (select by industry)<br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
 				if ($(this).hasClass('icon-folder-plus')) {
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
