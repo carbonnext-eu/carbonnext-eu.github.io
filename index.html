@@ -333,7 +333,7 @@
 		
 		function addPopupHandler(feature, potentials){
 			return function(){
-				var htmlstring = feature.properties.FacilityName + '<br />Available emissions:<br /><table><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
+				var htmlstring = feature.properties.FacilityName + '<br /><br /><table><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
 				for (em in potentials[feature.properties.FacilityName]["50000"]){
 					let emName = em;
 					if(em == "CO2") emName = "CO<sub>2</sub>";
