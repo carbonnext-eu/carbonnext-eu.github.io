@@ -173,7 +173,7 @@
 	<!-- Size legend -->
 	<div id="mapTitle">
 		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"title="logo_eu" alt="logo_eu" height="100" style="margin-right:20px;">
-		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" height="200"></a>
+		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" height="100"></a>
 		<div id="hiddenPartners">
 			<div id="eutext">				
 				<div style="margin: 5px;">This project has received funding from the European Union’s Horizon 2020 Programme<br> for research, technological development and demonstration under grant agreement<br> No 723678</div>
@@ -447,7 +447,7 @@
 			let emName = loadedDataWithLayers_i.emName;
 			let emDisplayName = loadedDataWithLayers_i.emDisplayName;
 			$('div#layercontrolSub')
-				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg>(select by industry)<br>'));
+				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" style="vertical-align:middle;" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg> <p>(select by industry)</p><br>'));
 			$('#' + emName + 'togglebutton').on('click', function() {
 				if ($(this).hasClass('icon-folder-plus')) {
 					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
