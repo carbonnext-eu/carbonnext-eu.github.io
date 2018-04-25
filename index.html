@@ -33,9 +33,6 @@
 			margin-bottom: 2px;
 			padding-bottom: 0px;
 		}
-		#hiddenPartners {
-			display: none;
-		}
 		#eutext {
 			display: inline-block;
 			width: 180px;
@@ -511,7 +508,9 @@
 		}).on('mouseout', function() {
 			$('#hiddenPartners').css("display", "none");
 		});
-		
+		setTimeout(function() {
+			$('#hiddenPartners').hide(500);
+		    }, 3000);
 		
 		$('#layercontrolMinimize').on('click', function() {
 			if ($(this).data("minimized")) {
