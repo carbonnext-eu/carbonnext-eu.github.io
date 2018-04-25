@@ -40,20 +40,31 @@
 			font-size: x-small;
 			margin: 4px;
 		}
-		#eulogo {
-			height:100px;
-			margin-left:20px;
-		}
+		
 		@media (max-width: 799px) {
 		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
 			#mapTitle {
 				max-width: 80%;
+			}
+			#eulogo {
+				height:80px;
+				margin-left:10px;
+			}
+			#carbonnextlogo {
+				height: 80px;
 			}
 		}
 		@media (min-width: 800px) {
 		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
 			#mapTitle {
 				max-width: 50%;
+			}
+			#eulogo {
+				height:100px;
+				margin-left:20px;
+			}
+			#carbonnextlogo {
+				height: 100px;
 			}
 		}
 		
@@ -180,7 +191,7 @@
 	<div id="map"></div>
 	<!-- Size legend -->
 	<div id="mapTitle">
-		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" height="100"></a>
+		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" id="carbonnextlogo"></a>
 		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"title="logo_eu" alt="logo_eu" id="eulogo">
 		<div id="hiddenPartners">
 			<div id="eutext">				
