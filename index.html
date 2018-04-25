@@ -38,10 +38,14 @@
 		}
 		#eutext {
 			display: inline;
-			max-width: 20%;
-    			align-items: center;
+			width: 180px;
+    			vertical-align: top;
 			font-size: x-small;
 			margin: 4px;
+		}
+		#eulogo {
+			height:100px;
+			margin-right:20px;
 		}
 		@media (max-width: 799px) {
 		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
@@ -120,7 +124,7 @@
 			z-index: 8009;
 			left: 46px;
 			top: 10px;
-			padding: 3px;	
+			padding: 7px;	
 		}
 		
 		/* Size legend styling */
@@ -177,7 +181,7 @@
 	<!-- Size legend -->
 	<div id="mapTitle">
 		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" height="100"></a>
-		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"title="logo_eu" alt="logo_eu" height="100" style="margin-right:20px;">
+		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"title="logo_eu" alt="logo_eu" id="eulogo">
 		<div id="hiddenPartners">
 			<div id="eutext">				
 				This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678
