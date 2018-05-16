@@ -10,6 +10,7 @@ const connect = () => {
     stitch = window.stitch;
     const stitchClientPromise = new stitch.StitchClientFactory.create("carbonnextkey");
     stitchClientPromise.then(stitchClient => {
+      console.log(stitchClient);
       stitchClient.authenticate("apiKey", "ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8")
         .then(() => generateData(stitchClient);      
     }).catch(error => {
