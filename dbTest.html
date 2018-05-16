@@ -10,8 +10,8 @@
     client.authenticate('apiKey', 'ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8')
     .then(() => fetch("https://ipapi.co/json/"))
     .then(response =>	{return response.json()})
-    .then(ipjson => db.collection('risk-votes').updateOne({owner_ip: ipjson.ip}, {$set:{number:42}}, {upsert:true}))
-    .then(()=> db.collection('risk-votes').find({owner_id: client.authedId()}).limit(100).execute())
+    .then(ipjson => {db.collection('risk-votes').updateOne({owner_ip: ipjson.ip}, {$set:{number:42}}, {upsert:true}); return ipjson})
+    .then(ipjson => db.collection('risk-votes').find({owner_ip: ipjson.ip}).limit(100).execute())
     .then(docs => {
       console.log("Found docs", docs)
       console.log("[MongoDB Stitch] Connected to Stitch")
