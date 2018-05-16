@@ -1,24 +1,24 @@
 <html>
 <head>
-<script src="https://s3.amazonaws.com/stitch-sdks/js/library/stable/stitch.min.js" />
+  <script src="https://s3.amazonaws.com/stitch-sdks/js/library/v3/stable/stitch.min.js"></script>
 </head>
 <body>
-<script>
-const clientPromise = stitch.StitchClientFactory.create('carbonnext-wxsil');
-clientPromise.then(client => {
-  const db = client.service('mongodb', 'mongodb-atlas').db('carbonnext');
-  client.authenticate("apiKey", "ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8").then(() =>
-    db.collection('risk-votes').updateOne({owner_id: client.authedId()}, {$set:{number:42}}, {upsert:true})
-  ).then(()=>
-    db.collection('risk-votes').find({owner_id: client.authedId()}).limit(100).execute()
-  ).then(docs => {
-    console.log("Found docs", docs)
-    console.log("[MongoDB Stitch] Connected to Stitch")
-  }).catch(err => {
-    console.error(err)
+  <script>
+  const clientPromise = stitch.StitchClientFactory.create('carbonnext-wxsil');
+  clientPromise.then(client => {
+    const db = client.service('mongodb', 'mongodb-atlas').db('carbonnext');
+    client.authenticate("apiKey", "ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8").then(() =>
+      db.collection('risk-votes').updateOne({owner_id: client.authedId()}, {$set:{number:42}}, {upsert:true})
+    ).then(()=>
+      db.collection('risk-votes').find({owner_id: client.authedId()}).limit(100).execute()
+    ).then(docs => {
+      console.log("Found docs", docs)
+      console.log("[MongoDB Stitch] Connected to Stitch")
+    }).catch(err => {
+      console.error(err)
+    });
   });
-});
 
-</script>
+  </script>
 </body>
 </html>
