@@ -12,6 +12,8 @@ const connect = () => {
     stitchClientPromise.then(stitchClient => {
       stitchClient.authenticate("apiKey", "ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8")
         .then(() => generateData(stitchClient);      
+    }).catch(error => {
+      console.log(error);
     });
     return true;
   } catch ( err) {
