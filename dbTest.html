@@ -5,37 +5,35 @@
 <body>
 <script>
 let stitch;
-function connect(){
-    stitch = window.stitch;
-    stitch.StitchClientFactory.create("carbonnextkey")
-      .then(stitchClient => {
-        console.log(stitchClient);
-        stitchClient.authenticate("apiKey", "ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8")
-          .then(() => generateData(stitchClient);      
+
+function connect() {
+  stitch = window.stitch;
+  stitch.StitchClientFactory.create("carbonnextkey")
+    .then(stitchClient => {
+      console.log(stitchClient);
+      stitchClient.authenticate("apiKey", "ckfmTPiUCHZhMPQG3Fjx87qjm4PDGsXmFBEnr3hR5rO4B9zQZ3qdBdWbcEy0uBw8")
+        .then(() => generateData(stitchClient));
     }).catch(error => {
       console.log(error);
     });
 }
-
-connect();
-
 // Send sample data while within this loop
-function generateData(stitchClient){
+function generateData(stitchClient) {
   // Create a random temperature and humidity data point with
   // temp ranging from -20 to 20 °C
   const data = {
-    "temp" : Math.floor(Math.random() * 20) - 20,
-    "humid" : Math.floor(Math.random() * 100)
+    "temp": Math.floor(Math.random() * 20) - 20,
+    "humid": Math.floor(Math.random() * 100)
   };
-
   // Print to the console
   console.log(data);
-
   // Simulate write to MongoDB every 2 minutes
-  stitchClient.executeFunction("Votes_Write", data).then(
-    setTimeout(() => generateData(stitchClient), 120000)
-  );
+  stitchClient.executeFunction("Votes_Write", data)
+    .then(() => {
+      setTimeout(() => generateData(stitchClient), 120000)
+    });
 }
+
 </script>
 </body>
 </html>
