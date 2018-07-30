@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>leaflet-map-simple</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta charset="utf-8">
+	<!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
+	<link href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" rel="stylesheet">
+	<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js">
+	</script>
+	<!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
+	<script src='https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'>
+	</script>
+	<script src="/js/jquery-3.3.1.min.js">
+	</script>
+	<!-- Load d3: only for size legend for now -->
+	<script src="//d3js.org/d3.v3.min.js">
+	</script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: "Whitney SSm A", "Whitney SSm B", "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+			font-size: small;
+		}
+		h2 {
+			margin: 0;
+			padding: 0;
+			font: bold 12px sans-serif;	
+		}
+		h3 {
+			margin-bottom: 2px;
+			padding-bottom: 0px;
+		}
+		#eutext {
+			display: inline-block;
+			width: 180px;
+    			vertical-align: top;
+			font-size: x-small;
+			margin: 4px;
+		}
+		
+		@media (max-width: 899px) {
+		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+			#mapTitle {
+				max-width: 80%;
+			}
+			#eulogo {
+				height:80px;
+				margin-left:10px;
+			}
+			#carbonnextlogo {
+				height: 80px;
+			}
+		}
+		@media (min-width: 900px) {
+		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+			#mapTitle {
+				max-width: 50%;
+			}
+			#eulogo {
+				height:100px;
+				margin-left:20px;
+			}
+			#carbonnextlogo {
+				height: 100px;
+			}
+		}
+		
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+		}
+		.popupTable th, .popupTable td {
+			background: #f3f5f9;	
+		}
+		.icon {
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			stroke-width: 0;
+			stroke: currentColor;
+			fill: currentColor;
+		}
+		.icon-folder-plus, .icon-folder-minus {
+			margin-left: 5px;
+			margin-bottom: 5px;
+		}
+		
+		/* legend styling */
+		div#layercontrol {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			bottom: 15px;
+			width: 250px;
+			padding: 3px;
+			background-color: rgba(0, 78, 131, 0.3); /* 226, 238, 246 */
+			border-radius: 5px;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			z-index: 7000;
+		}
+		#layercontrolCont {
+			overflow-y: auto;
+			height: 100%;
+			width: 100%;
+		}
+		#layercontrolMinimize {
+			position: absolute;
+			display: block;
+			top: 50%;
+			left: -8px;
+			margin-top: -8px;
+			height: 16px;
+			z-index: 8000;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			background-color: rgb(226, 238, 246);
+		}
+		div[id*="layercontrolSub-"] {
+			padding-left: 12px;
+			font-size: small;
+			display: none;
+		}
+		
+		/* Title */
+		#mapTitle {
+			position: absolute;
+			background-color: white;
+			border-radius: 5px;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			z-index: 8009;
+			left: 46px;
+			top: 10px;
+			padding: 7px;	
+		}
+		
+		/* Size legend styling */
+		#scale {
+			position: absolute;
+			background-color: rgba(0, 78, 131, 0.3);
+			border-radius: 5px;
+			border: 1px solid rgba(0, 78, 131, 0.9);
+			z-index: 8000;
+			left: 5px;
+			bottom: 15px;
+			padding: 3px;
+			font: 10px sans-serif;
+		}
+		.legend path,
+		.legend line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+			opacity: 1;
+		}
+		.circle-legend line {
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+		.circle-legend circle {
+			stroke: #ccc;
+			stroke-dasharray: 4, 2;
+			fill: none;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Symbol definition -->
+	<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<symbol id="icon-folder-plus" viewbox="0 0 32 32">
+				<title>folder-plus</title>
+				<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-4v4h-4v-4h-4v-4h4v-4h4v4h4v4z"></path>
+			</symbol>
+			<symbol id="icon-folder-minus" viewbox="0 0 32 32">
+				<title>folder-minus</title>
+				<path d="M18 8l-4-4h-14v26h32v-22h-14zM22 22h-12v-4h12v4z"></path>
+			</symbol>
+			<symbol id="icon-play3" viewbox="0 0 32 32">
+				<title>play3</title>
+				<path d="M6 4l20 12-20 12z"></path>
+			</symbol>
+		</defs>
+	</svg>
+	<!-- Map takes whole screen -->
+	<div id="map"></div>
+	<!-- Size legend -->
+	<div id="mapTitle">
+		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" id="carbonnextlogo"></a>
+		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"title="logo_eu" alt="logo_eu" id="eulogo">
+		<div id="hiddenPartners">
+			<div id="eutext">				
+				This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678
+			</div>
+			<div id="Description">
+				<h1>Map of regulated CO and CO<sub>2</sub> emissions and possible consumers</h1>
+				Please click on the checkboxes on the right to display emissions and chemical parks. The size of each emitter corresponds to its yearly CO or CO<sub>2</sub> emission. The size of each possible consumer corresponds to the potential available emissions in a 10&nbsp;km radius. By clicking on a circle, more information is available.
+			</div>
+			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
+			
+		</div>
+	</div>
+	<!-- Size legend -->
+	<div id="scale">
+		<h3>Emissions in Megatonnes</h3>
+	</div>
+	<!-- Legend and control -->
+	<div id="layercontrol">
+		<div id="layercontrolCont">
+			<div id="layercontrolNoSub">
+				<h3>Possible consumers</h3>
+			</div>
+			<div id="layercontrolSub">
+				<h3>Emitters</h3>
+			</div>
+		</div><span data-minimized="false" id="layercontrolMinimize"><svg class="icon icon-play3">
+		<use xlink:href="#icon-play3"></use></svg></span>
+	</div>
+	<script>		
+		/* Set up the map with initial center and zoom level */
+		let map = L.map('map', {
+			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
+			zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+			scrollWheelZoom: false
+		});
+		/* Carto light-gray basemap tiles with labels */
+		let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
+			})
+			.addTo(map);
+
+		let stats = {
+			totalMax: 0
+		};
+		
+		let emissionLayers;
+
+
+		/* Load all csv data files and create menu*/
+		Promise.all([
+				getEmissionData('CO', 'CO', 'CO.csv', "#004e83"),
+				getEmissionData('CO2', 'CO<sub>2</sub>', 'CO2.csv', "#008D4D")
+			]).then(loadedData => doStats(loadedData))
+			.then(loadedData => addEmissionsToMap(loadedData))
+			.then(loadedDataWithLayers => addEmissionsToMenu(loadedDataWithLayers))
+			.then(loadedDataWithLayers => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300", loadedDataWithLayers));
+
+		function getEmissionData(emName, emDisplayName, file, color) {
+			return new Promise((resolve, reject) => {
+				fetch(file)
+					.then(function(response) {
+						return response.text();
+					})
+					.then(myBlob => convertCSV(myBlob))
+					.then(geojson => resolve({
+						emName: emName,
+					        emDisplayName: emDisplayName,
+						color: color,
+						geojson: geojson
+					}));
+			});
+		};
+
+		function doStats(loadedData) {
+			return new Promise((resolve, reject) => {
+				for (var i = 0; i < loadedData.length; i++) {
+					var max = Math.max.apply(Math, loadedData[i].geojson.features.map(function(o) {
+						return o.properties.MTonnes;
+					}));
+					stats.totalMax = Math.max(stats.totalMax, max);
+					/*var min = Math.min.apply(Math, resultObj[i].geojson.features.map(function(o) {
+					return o.properties.MTonnes;
+					}));
+					stats.totalMin = Math.min(stats.totalMin, min);*/
+				}
+				createScale();
+				resolve(loadedData);
+			});
+		}
+
+		function createScale() {
+			var svg = d3.select('#scale').append('svg').attr('width', 185).attr('height', 120);
+			svg = svg.append('g').attr('transform', 'translate(0,5)');
+			var scale = d3.scale.sqrt().domain([0, stats.totalMax]).range([0, 50]);
+			var formatSI = d3.format('.1f');
+			var formatCurrencySI = function(d) {
+				return formatSI(d) + ' MT'
+			}
+			var circleKey = circleLegend()
+				.scale(scale)
+				.tickValues([stats.totalMax / 100, stats.totalMax / 10, stats.totalMax])
+				.tickFormat(formatCurrencySI)
+				.tickPadding(10)
+				.orient("left"); //default
+			svg.append('g')
+				.attr('transform', 'translate(116, 100)')
+				.call(circleKey);
+		}
+
+		function getChemparkData(name, file, color, loadedDataWithLayers) {			
+			fetch(file)
+				.then(response => response.text())
+				.then(myBlob => convertCSV(myBlob))
+				.then(geojson => addParksToMap(geojson, color, loadedDataWithLayers))
+				.then(dataLayer => addParksToMenu(dataLayer, name));
+		};
+
+		function convertCSV(myBlob) {
+			return new Promise((resolve, reject) => {
+				csv2geojson.csv2geojson(myBlob, {
+					latfield: 'latitude',
+					lonfield: 'longitude',
+					delimiter: ';',
+				}, (err, geojson) => {
+					if (err) {
+						console.error(err);
+						reject(err);
+					} else {
+						resolve(geojson);
+					}
+				});
+			});
+		};
+
+		function addParksToMap(geojson, color, loadedDataWithLayers) {
+			return new Promise((resolve, reject) => {
+				var dataLayer;
+				fetch("potentials.json")
+					.then(response => response.json())
+					.then(potentials => {
+						dataLayer = L.geoJSON(geojson, {
+							pointToLayer: function(feature, latlon) {
+								// L.circleMarker() draws a circle with fixed radius in pixels.
+								// To draw a circle overlay with a radius in meters, use L.circle()
+								return L.circleMarker(latlon, {
+									color: color,
+									weight: 0,
+									radius: getChemParkSize(potentials, feature)
+								});
+							},
+							onEachFeature: function(feature, layer) {
+								layer.bindPopup(addPopupHandler(feature, potentials));						
+							}
+						});
+						resolve(dataLayer);
+						console.log(potentials, dataLayer);
+					});
+			});
+		};
+		
+		function getChemParkSize(potentials, feature){
+			let size = Math.sqrt(potentials[feature.properties.FacilityName]["10000"]["CO2"] / stats.totalMax) * 50;
+			if (size > 0){
+				return size;
+			}
+			else {
+				return 3;
+			}
+		}
+		
+		function addPopupHandler(feature, potentials){
+			return function(){
+				var htmlstring = '<h3>' + feature.properties.FacilityName + '</h3><table class="popupTable"><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
+				for (em in potentials[feature.properties.FacilityName]["50000"]){
+					let emName = em;
+					if(em == "CO2") emName = "CO<sub>2</sub>";
+					htmlstring += "<td>"+emName+"</td>";
+					for (dist in potentials[feature.properties.FacilityName]){
+						if(potentials[feature.properties.FacilityName][dist][em]){
+							//console.log(potentials[feature.properties.FacilityName], dist, potentials[feature.properties.FacilityName][dist], em);
+							htmlstring += "<td>" + potentials[feature.properties.FacilityName][dist][em].toFixed(2) + ' MT</td>';
+						}
+						else { htmlstring += "<td></td>";}
+					}
+					htmlstring += "</tr><tr>";
+				}
+				htmlstring = htmlstring.slice(0, -4);
+				return htmlstring;
+			}
+		};
+
+		function addParksToMenu(dataLayer, name) {
+			let escName = name.replace(" ", "_");
+			let layercontrolNoSub = d3.select('div#layercontrolNoSub');
+			let label = layercontrolNoSub.append('label');
+			let input = label.append('input');
+			input.attr("type","checkbox")
+				.attr("class", escName)
+				.attr("id", escName + 'checkbAll');
+			label.append("div").attr("style","display:inline;").text(name);
+			layercontrolNoSub.append("br");
+			input.on('change', function() {
+					if (input.property("checked")) {
+						map.addLayer(dataLayer);
+					} else {
+						map.removeLayer(dataLayer);
+					}
+				});
+		}
+
+		function addEmissionsToMap(loadedData) {
+			console.log(loadedData);
+			return new Promise((resolve, reject) => {
+				var emLayers = {};
+				for (var i = 0; i < loadedData.length; i++) {
+					loadedData[i]["layers"] = addEmissionToMap(loadedData[i].geojson, loadedData[i].emDisplayName, loadedData[i].color);
+				}
+				resolve(loadedData);
+			});
+		}
+
+		function addEmissionToMap(geojson, emDisplayName, color) {
+			var layers = {};
+			var dataLayer = L.geoJSON(geojson, {
+				pointToLayer: function(feature, latlon) {
+					// L.circleMarker() draws a circle with fixed radius in pixels.
+					// To draw a circle overlay with a radius in meters, use L.circle()
+					return L.circleMarker(latlon, {
+						color: color,
+						weight: 0,
+						radius: (Math.sqrt(feature.properties.MTonnes / stats.totalMax) * 50)
+					});
+				},
+				onEachFeature: function(feature, layer) {
+					feature.properties.NACEMainEconomicActivityName = feature.properties.NACEMainEconomicActivityName.replace("'", "&#39;");
+					if (layers[feature.properties.NACEMainEconomicActivityName] == undefined) {
+						layers[feature.properties.NACEMainEconomicActivityName] = {
+							layer: new L.LayerGroup(),
+							total: 0,
+							count: 0
+						};
+					}
+					layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
+					layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
+					layers[feature.properties.NACEMainEconomicActivityName].count += 1;
+					layer.bindPopup('<h3>' + feature.properties.FacilityName + '</h3><i>' + feature.properties.NACEMainEconomicActivityName + '</i><br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName);
+				}
+			});
+			return (layers);
+		}
+
+		function addEmissionsToMenu(loadedDataWithLayers) {
+			console.log(loadedDataWithLayers);
+			return new Promise((resolve, reject) => {
+				for (var i = 0; i < loadedDataWithLayers.length; i++) {
+					addEmissionToMenu(loadedDataWithLayers[i]);
+				}
+				resolve(loadedDataWithLayers);
+			});
+		}
+		
+		/* Enables parent emission class toggle to trigger all children */
+		jQuery.propHooks.checked = {
+			set: function(el, value) {
+				el.checked = value;
+				$(el).trigger('change');
+			}
+		};
+
+		function addEmissionToMenu(loadedDataWithLayers_i) {
+			let layers = loadedDataWithLayers_i.layers;
+			let emName = loadedDataWithLayers_i.emName;
+			let emDisplayName = loadedDataWithLayers_i.emDisplayName;
+			$('div#layercontrolSub')
+				.append($('<label><input type="checkbox" class="' + emName + '" id="' + emName + 'checkbAll">' + emDisplayName + '<\/label><br><svg class="icon icon-folder-plus" style="vertical-align:middle;" id="' + emName + 'togglebutton"><use xlink:href="#icon-folder-plus"><\/use><\/svg> (select by industry)<br>'));
+			$('#' + emName + 'togglebutton').on('click', function() {
+				if ($(this).hasClass('icon-folder-plus')) {
+					$(this).removeClass('icon-folder-plus').addClass('icon-folder-minus');
+					$("use", this).attr("xlink:href", "#icon-folder-minus");
+					$('div#layercontrolSub-' + emName).show();
+				} else {
+					$(this).removeClass('icon-folder-minus').addClass('icon-folder-plus');
+					$("use", this).attr("xlink:href", "#icon-folder-plus");
+					$('div#layercontrolSub-' + emName).hide();
+				}
+			});
+			$('div#layercontrolSub').append($('<div id="layercontrolSub-' + emName + '">'));
+			var i = 1;
+			var keysSorted = Object.keys(layers).sort((a, b) => {
+				return layers[b].total - layers[a].total
+			});
+			for (var layerName in keysSorted) {
+				$('div#layercontrolSub-' + emName)
+					.append($('<label><input type="checkbox" data-layer=\'' + keysSorted[layerName] + '\' class="' + emName + '">' + keysSorted[layerName] + ' (' + layers[keysSorted[layerName]].total.toFixed(2) + '&nbsp;Mt, ' + layers[keysSorted[layerName]].count + ')<\/label><br>'));
+				i = i + 1;
+			}
+			$('div#layercontrolSub input[type="checkbox"].' + emName)
+				.on('change', function() {
+					if ($(this).is(':checked')) {
+						if (this.id == emName + "checkbAll") {
+							$('div#layercontrolSub-' + emName + ' input[type="checkbox"]').prop("checked", true);
+						} else {
+							map.addLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
+						}
+					} else {
+						if (this.id == emName + "checkbAll") {
+							$('div#layercontrolSub-' + emName + ' input[type="checkbox"]').prop("checked", false);
+						} else {
+							map.removeLayer(layers[$(this).attr('data-layer').replace("'", "&#39;")].layer);
+						}
+					}
+				});
+		}
+
+		map.on('focus', () => {
+			map.scrollWheelZoom.enable();
+		});
+		map.on('blur', () => {
+			map.scrollWheelZoom.disable();
+		});
+		
+		$('#mapTitle').on('mouseover', function() {
+			$('#hiddenPartners').css("display", "inline");
+		}).on('mouseout', function() {
+			$('#hiddenPartners').css("display", "none");
+		});
+		setTimeout(function() {
+			$('#hiddenPartners').hide(500);
+		    }, 3000);
+		
+		$('#layercontrolMinimize').on('click', function() {
+			if ($(this).data("minimized")) {
+				$(this).data("minimized", false);
+				$('#layercontrol').css('width', "250px");
+				$("svg", this).css('transform', "rotate(0deg)");
+			} else {
+				$(this).data("minimized", true);
+				$('#layercontrol').css('width', "20px");
+				$("svg", this).css('transform', "rotate(180deg)");
+			}
+		});
+
+		// Adapted from https://github.com/mbostock/d3/blob/master/src/svg/axis.js
+		// forked from http://bl.ocks.org/aubergene/4723857
+		var circleLegend = function circleLegend() {
+			'use strict';
+
+			var scale,
+				orient = 'left',
+				tickPadding = 3,
+				tickExtend = 5,
+				tickArguments_ = [10],
+				tickValues = null,
+				tickFormat_,
+				ε = 1e-6;
+
+
+			function key(selection) {
+				selection.each(function() {
+					var g = d3.select(this);
+
+					g.attr('class', 'circle-legend');
+
+					// Stash a snapshot of the new scale, and retrieve the old snapshot.
+					var scale0 = this.__chart__ || scale,
+						scale1 = this.__chart__ = scale.copy();
+
+					// Ticks, or domain values for ordinal scales.
+					var ticks = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments_) : scale.domain()) : tickValues,
+						ticks = ticks.slice().filter(function(d) {
+							return d > 0
+						}).sort(d3.descending),
+						tickFormat = tickFormat_ == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments_) : String) : tickFormat_,
+						tick = g.selectAll('.tick').data(ticks, scale1),
+						tickEnter = tick.enter().insert('g', '.tick').attr('class', 'tick').style('opacity', ε),
+						tickExit = d3.transition(tick.exit()).style('opacity', ε).remove(),
+						tickUpdate = d3.transition(tick.order()).style('opacity', 1),
+						tickTransform;
+
+					tickEnter.each(function(tick) {
+						var gg = d3.select(this);
+
+						var tickText = tickFormat(tick);
+
+						if (!tickText) return;
+
+						gg.append('circle')
+							.attr('cx', 0)
+							.attr('cy', 0)
+							.attr('r', scale(tick));
+
+						gg.append('line')
+							.attr('y1', 0)
+							.attr('y2', 0)
+							.attr('stroke', '#000')
+							.text(tick);
+
+						gg.append('text')
+							.attr('dy', '.35em')
+							.style('text-anchor', 'left' == orient ? 'end' : 'start')
+							.text(tickText);
+
+					});
+					tickEnter.call(d3_svg_legend, scale0);
+					tickUpdate.call(d3_svg_legend, scale1);
+					tickExit.call(d3_svg_legend, scale1);
+
+					function d3_svg_legend(selection, scale) {
+						selection.select('circle')
+							.attr('r', scale);
+
+						var x2 = scale(ticks[0]) + tickExtend;
+						var sign = 'left' == orient ? -1 : 1;
+
+						selection.select('text')
+							.attr('transform', 'translate(' + (x2 + tickPadding) * sign + ', 0)');
+
+						selection.select('line')
+							.attr('x1', function(d) {
+								return scale(d) * sign
+							})
+							.attr('x2', x2 * sign);
+
+						selection.attr('transform', function(d) {
+							return 'translate(0,' + -scale(d) + ')';
+						});
+					}
+
+				});
+			}
+
+			key.scale = function(value) {
+				if (!arguments.length) return scale;
+				scale = value;
+				return key;
+			};
+
+			key.orient = function(value) {
+				if (!arguments.length) return orient;
+				orient = value;
+				return key;
+			};
+
+			key.ticks = function() {
+				if (!arguments.length) return tickArguments_;
+				tickArguments_ = arguments;
+				return key;
+			};
+
+			key.tickFormat = function(x) {
+				if (!arguments.length) return tickFormat_;
+				tickFormat_ = x;
+				return key;
+			};
+
+			key.tickValues = function(x) {
+				if (!arguments.length) return tickValues;
+				tickValues = x;
+				return key;
+			};
+
+			key.tickPadding = function(x) {
+				if (!arguments.length) return tickPadding;
+				tickPadding = +x;
+				return key;
+			};
+
+			key.tickExtend = function(x) {
+				if (!arguments.length) return tickExtend;
+				tickExtend = +x;
+				return key;
+			};
+
+			key.width = function(value) {
+				if (!arguments.length) return width;
+				width = value;
+				return key;
+			};
+
+			key.height = function(value) {
+				if (!arguments.length) return height;
+				height = value;
+				return key;
+			};
+
+			return key;
+		};
+	</script>
+</body>
+
+</html>
