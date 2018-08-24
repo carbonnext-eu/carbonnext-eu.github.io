@@ -5,7 +5,7 @@ var routeChart = dc.rowChart("#route");
 var costsChart = dc.rowChart("#costs");
 
 
-d3.csv("results-data.csv", function(error, experiments) {
+d3.csv("results-data.csv", function(experiments, error) {
   console.log(experiments);
   console.log(error);
   var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price"];
