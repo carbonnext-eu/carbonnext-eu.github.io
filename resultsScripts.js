@@ -57,7 +57,7 @@ d3.csv("results-data.csv", function(experiments) {
     .legend(dc.legend().x(550).y(10));
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
-  console.log(chart);
+  chart.render();
   sourceChart
   			.width(192)
         .radius(80)
