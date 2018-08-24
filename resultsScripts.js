@@ -16,19 +16,7 @@ d3.csv("results-data.csv", function(experiments) {
       experiments2.push(ex2);
     }
   });
-
-  var pathways = function(d) {
-    if(d.Pathway == "Propylene") {
-      return "Ethylene";
-    }
-    if(d.Pathway == "Xylene") {
-      return "Benzene";
-    }
-    if(d.Pathway == "FT Gasoline") {
-      return "FT Diesel";
-    }
-    return d.Pathway;
-  };
+  console.log(experiments2);
 
   var symbolScale         = d3.scaleOrdinal().range(d3.symbols),
     //symbolAccessor      = function(d) { return symbolScale(d.key[0]); },
@@ -45,12 +33,7 @@ d3.csv("results-data.csv", function(experiments) {
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
-var subChart = function(c) {
-    return dc.scatterPlot(c)
-    //    .symbol(symbolAccessor)
-        .symbolSize(8)
-        .highlightedSize(10)
-  };
+  console.log(ndx);
   chart
     .width(768)
     .height(480)
@@ -97,6 +80,26 @@ var subChart = function(c) {
   
   dc.renderAll();
 });
+
+var subChart = function(c) {
+  return dc.scatterPlot(c)
+  //    .symbol(symbolAccessor)
+      .symbolSize(8)
+      .highlightedSize(10)
+};
+var pathways = function(d) {
+  if(d.Pathway == "Propylene") {
+    return "Ethylene";
+  }
+  if(d.Pathway == "Xylene") {
+    return "Benzene";
+  }
+  if(d.Pathway == "FT Gasoline") {
+    return "FT Diesel";
+  }
+  return d.Pathway;
+};
+
 function reduceAddAvg(attr) {
   return function(p,v) {
     ++p.count
