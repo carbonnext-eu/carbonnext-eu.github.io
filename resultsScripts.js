@@ -5,10 +5,10 @@ var routeChart = dc.rowChart("#route");
 var costsChart = dc.rowChart("#costs");
 
 
-d3.csv("results-data.csv", function(data){}, function(error,experiments) {
-  console.log(experiments);
+d3.csv("results-data.csv").then(function(data) {
+  console.log(data);
   var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price"];
-  experiments.forEach(function(ex){
+  data.forEach(function(ex){
     for(i=1;i<5;i++){
       ex2=JSON.parse(JSON.stringify(ex));;
       ex2.costs = ex["costs"+i];
