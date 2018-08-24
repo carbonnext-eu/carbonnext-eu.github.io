@@ -34,6 +34,7 @@ d3.csv("results-data.csv", function(experiments) {
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   console.log(ndx);
+  console.log(chart);
   chart
     .width(768)
     .height(480)
@@ -56,6 +57,7 @@ d3.csv("results-data.csv", function(experiments) {
     .legend(dc.legend().x(550).y(10));
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
+  console.log(chart);
   sourceChart
   			.width(192)
         .radius(80)
