@@ -35,7 +35,7 @@ d3.csv("results-data.csv").then(function(data) {
   data.forEach(function(ex){
     for(i=1;i<5;i++){
       ex2=JSON.parse(JSON.stringify(ex));
-      ex2.costs = ex["costs"+i] *100;
+      ex2.costs = (ex["costs"+i]-0) *100.0;
       ex2.costScen = costNames[i-1];
       ex2.diff = ex.diff -0;
       experiments2.push(ex2);
