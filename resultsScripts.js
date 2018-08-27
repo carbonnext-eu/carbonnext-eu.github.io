@@ -32,7 +32,7 @@ d3.csv("results-data.csv").then(function(data) {
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
     pathwayDimension    = ndx.dimension(function(d) {return d.Pathway;}),
-    pathwayGroup       = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
+    pathwayGroup       = pathwayDimension.group().reduceSum(function(d) {return d.costs;}),
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
