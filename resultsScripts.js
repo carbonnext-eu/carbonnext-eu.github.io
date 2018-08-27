@@ -128,12 +128,12 @@ d3.csv("results-data.csv").then(function(data) {
         .xAxis().ticks(0);
   console.log(pathwayChart);
   dc.renderAll();
-  
-  var texts = document.getElementsByTagName('text');
+  console.log("render done");
+  /*var texts = document.getElementsByTagName('text');
   for(var i = 0; i < texts.length; i++) {
     texts[i].innerHTML = texts[i].innerHTML.replace("CO2","CO&#8322;");
   }
-  console.log(texts);
+  console.log(texts);*/
 });
 
 var subChart = function(c) {
