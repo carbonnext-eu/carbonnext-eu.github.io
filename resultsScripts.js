@@ -30,7 +30,7 @@ d3.csv("results-data.csv").then(function(data) {
     costsGroup          = costsDimension.group().reduceSum(function(d) {return d.costs;}),
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
-    diffDimension       = ndx.dimension(function(d) {return [pathways(d), +d.diff];}),    
+    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costs, d.route, +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   chart
@@ -97,11 +97,12 @@ var subChart = function(c) {
         console.log(d);
         return [
             d.source,
-            '<b>pathway:</b> ' + d.Pathway,
-            '<b>GHG scenario:</b> ' + d.scenario,
-            '<b>cost scenario:</b> ' + d.costScen,
-            '<b>cost increase:</b> ' + d.key[0],
-            '<b>GHG increase/decrease:</b> ' + d.key[1],
+            'pathway: ' + d.key[0],
+            'GHG scenario: ' + d.key[1],
+            'cost scenario: ' + d.key[2],
+            'syngas route: ' + d.key[3],
+            'cost increase: ' + d.value[0],
+            'GHG increase/decrease: ' + d.value.avg,
         ].join('\n');
       })
 };
