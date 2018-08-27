@@ -78,13 +78,13 @@ d3.csv("results-data.csv").then(function(data) {
     .brushOn(false)
     .renderVerticalGridLines(true)
     .renderHorizontalGridLines(true)
-    .yAxisLabel("Cost difference to reference [€/kg]")
+    .yAxisLabel("Relative cost increase/decrease to reference [%]")
     .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")    
     .dimension(diffDimension)
     .group(minCostSumGroup)
     .seriesAccessor(function(d) {return d.key[0];})
-    .keyAccessor(function(d) {return +d.key[4];})
-    .valueAccessor(function(d) {return +d.value.avg;})
+    .keyAccessor(function(d) {return d.key[4];})
+    .valueAccessor(function(d) {return d.value.avg;})
     .legend(dc.legend().x(bigWidth-140).y(bigHeight-260));
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
