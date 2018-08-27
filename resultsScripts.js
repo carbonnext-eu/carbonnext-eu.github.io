@@ -10,7 +10,7 @@ d3.csv("results-data.csv").then(function(data) {
   var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price"];
   data.forEach(function(ex){
     for(i=1;i<5;i++){
-      ex2=JSON.parse(JSON.stringify(ex));;
+      ex2=JSON.parse(JSON.stringify(ex));
       ex2.costs = ex["costs"+i];
       ex2.costScen = costNames[i-1];
       experiments2.push(ex2);
@@ -50,6 +50,10 @@ d3.csv("results-data.csv").then(function(data) {
     .renderHorizontalGridLines(true)
     .yAxisLabel("Cost difference to reference [€/kg]")
     .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")
+    .label(function(d){
+      console.log(d);
+      return d.source + ", " + d.source + ", " + d.Pathway + ", " + d.scenario + ", " + d.costScen + ", [" + d.key[1]+ ", " + d.key[2]+ "]";
+    })
     .dimension(diffDimension)
     .group(minCostSumGroup)
     .seriesAccessor(function(d) {return d.key[0];})
