@@ -94,7 +94,7 @@ var subChart = function(c) {
       .highlightedSize(10)
       .renderTitle(true)
       .title(function(d){
-        console.log(d);
+        //console.log(d);
         return [
             d.source,
             'pathway: ' + d.key[0],
