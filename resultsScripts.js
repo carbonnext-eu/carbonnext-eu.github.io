@@ -9,16 +9,16 @@ var screenWidth = Math.min(document.documentElement.clientWidth, window.innerWid
     screenHeight = Math.min(document.documentElement.clientHeight, window.innerHeight || 480),
     smallWidth, smallHeight, bigWidth, bigHeight;
 if (screenWidth < 1200) {
-  smallWidth = 300;
-  bigWidth = screenWidth > 768 ? screenWidth : 768;
+  smallWidth = 295;
+  bigWidth = screenWidth > 788 ? screenWidth-20 : 768;
 }
 else if (screenWidth > 1600) {
   smallWidth = 380;
   bigWidth = 1200;
 }
 else {
-  smallWidth = screenWidth/4-40;
-  bigWidth = screenWidth-smallWidth;
+  smallWidth = screenWidth/4-60;
+  bigWidth = screenWidth-smallWidth-20;
 }
 if (screenHeight < 800) {
     smallHeight = 200;
