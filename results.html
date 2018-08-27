@@ -7,7 +7,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.6/dc.css" integrity="sha256-ACDRNg4XMj44gU4axHnGqrSOjcSnoARDUboXDFX3FiY=" crossorigin="anonymous" />
 </head>
 <body>
-  <div id="source"></div>
+  <div id="source" class="dc-chart">
+        <strong>Carbon source</strong> (share of circle: cost increase over reference)
+        <a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
+           style='visibility: hidden;'>reset</a>
+
+        <div class="clearfix"></div>
+    </div>
   <div id="scenario"></div>
   <div id="route"></div>
   <div id="costs"></div>
