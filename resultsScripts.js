@@ -12,7 +12,7 @@ if (screenWidth < 1200) {
   smallWidth = 300;
   bigWidth = screenWidth > 768 ? screenWidth : 768;
 }
-elsif (screenWidth > 1600) {
+else if (screenWidth > 1600) {
   smallWidth = 380;
   bigWidth = 1200;
 }
