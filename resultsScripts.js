@@ -5,6 +5,21 @@ var routeChart = dc.rowChart("#route");
 var costsChart = dc.rowChart("#costs");
 var pathwayChart = dc.rowChart("#pathway");
 
+var screenWidth = Math.min(document.documentElement.clientWidth, window.innerWidth || 768),
+    screenHeight = Math.min(document.documentElement.clientHeight, window.innerHeight || 480),
+    smallWidth, smallHeight, bigWidth, bigHeight;
+if (screenWidth < 1200) {
+  smallWidth = 300;
+  bigWidth = screenWidth > 768 ? screenWidth : 768;
+}
+elsif (screenWidth > 1600) {
+  smallWidth = 380;
+  bigWidth = 1200;
+}
+else {
+  smallWidth = screenWidth/4-1;
+  bigWidth = screenWidth-smallWidth;
+}
 
 d3.csv("results-data.csv").then(function(data) {
   //console.log(data);
@@ -43,7 +58,7 @@ d3.csv("results-data.csv").then(function(data) {
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   chart
-    .width(768)
+    .width(bigWidth)
     .height(480)
     .ordinalColors(colorPalette)
     .x(d3.scaleLinear().domain([-100,100]))
@@ -66,31 +81,31 @@ d3.csv("results-data.csv").then(function(data) {
     chart.yAxis().ticks(3, "s");
   chart.render();
   sourceChart
-  			.width(300)
+  			.width(smallWidth)
         .radius(80)
         .dimension(sourceDimension)
         .group(sourceGroup);
   
   scenarioChart
-  			.width(300)
+  			.width(smallWidth)
         .elasticX(true)
         .dimension(scenarioDimension)
         .group(scenarioGroup)
         .xAxis().ticks(0);
   costsChart
-  			.width(300)
+  			.width(smallWidth)
         .elasticX(true)
         .dimension(costsDimension)
         .group(costsGroup)
         .xAxis().ticks(0);
   routeChart
-  			.width(300)
+  			.width(3smallWidth00)
         .elasticX(true)
         .dimension(routeDimension)
         .group(routeGroup)
         .xAxis().ticks(0);
   pathwayChart
-  			.width(300)
+  			.width(smallWidth)
         .height(480)
         .elasticX(true)
         .ordinalColors(colorPalette)
