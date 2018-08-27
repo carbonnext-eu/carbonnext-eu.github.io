@@ -30,7 +30,7 @@ else {
 }
 
 d3.csv("results-data.csv").then(function(data) {
-  console.log(data);
+  //console.log(data);
   var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price"];
   data.forEach(function(ex){
     for(i=1;i<5;i++){
@@ -41,7 +41,7 @@ d3.csv("results-data.csv").then(function(data) {
       experiments2.push(ex2);
     }
   });
-  console.log(experiments2);
+  //console.log(experiments2);
 
   var symbolScale       = d3.scaleOrdinal().range(d3.symbols),      
     // https://flatuicolors.com/palette/de
@@ -126,13 +126,14 @@ d3.csv("results-data.csv").then(function(data) {
         .dimension(pathwayDimension)
         .group(pathwayGroup)
         .xAxis().ticks(0);
-  
+  console.log(pathwayChart);
   dc.renderAll();
   
   var texts = document.getElementsByTagName('text');
   for(var i = 0; i < texts.length; i++) {
     texts[i].innerHTML = texts[i].innerHTML.replace("CO2","CO&#8322;");
   }
+  console.log(texts);
 });
 
 var subChart = function(c) {
