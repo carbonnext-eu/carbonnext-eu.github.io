@@ -82,7 +82,6 @@ d3.csv("results-data.csv").then(function(data) {
         .xAxis().ticks(0);
   
   dc.renderAll();
-  document.body.innerHTML = document.body.innerHTML.replace('CO2', 'CO<sub>2</sub>');
 });
 
 var subChart = function(c) {
