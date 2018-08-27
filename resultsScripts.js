@@ -1,4 +1,4 @@
-var chart = dc.seriesChart("#test");
+var chart = dc.seriesChart("#results");
 var sourceChart = dc.pieChart("#source");
 var scenarioChart = dc.rowChart("#scenario");
 var routeChart = dc.rowChart("#route");
