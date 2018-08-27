@@ -49,7 +49,7 @@ d3.csv("results-data.csv").then(function(data) {
     .renderVerticalGridLines(true)
     .renderHorizontalGridLines(true)
     .yAxisLabel("Cost difference to reference [€/kg]")
-    .xAxisLabel("GHG difference to reference [kg CO<sub>2</sub>-eq/kg]")
+    .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")
     .dimension(diffDimension)
     .group(minCostSumGroup)
     .seriesAccessor(function(d) {return d.key[0];})
@@ -82,6 +82,7 @@ d3.csv("results-data.csv").then(function(data) {
         .xAxis().ticks(0);
   
   dc.renderAll();
+  document.body.innerHTML = document.body.innerHTML.replace('CO2', 'CO<sub>2</sub>');
 });
 
 var subChart = function(c) {
