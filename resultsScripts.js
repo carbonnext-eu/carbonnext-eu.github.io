@@ -96,7 +96,6 @@ var subChart = function(c) {
       .title(function(d){
         //console.log(d);
         return [
-            d.source,
             'pathway: ' + d.key[0],
             'GHG scenario: ' + d.key[1],
             'cost scenario: ' + d.key[2],
