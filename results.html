@@ -8,16 +8,35 @@
 </head>
 <body>
   <div id="source" class="dc-chart">
-        <strong>Carbon source</strong> (share of circle: cost increase over reference)
-        <a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
-           style="display: none;">reset</a>
-
-        <div class="clearfix"></div>
-    </div>
-  <div id="scenario"></div>
-  <div id="route"></div>
-  <div id="costs"></div>
-  <div id="test"></div>
+      <strong>Carbon source</strong><br>(share of circle: cost increase over reference)
+      <a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
+         style="display: none;">reset</a>
+      <div class="clearfix"></div>
+  </div>
+  <div id="scenario" class="dc-chart">
+      <strong>GHG scenario</strong><br>(Value: GHG increase/decrease over reference)
+      <a class="reset" href="javascript:scenarioChart.filterAll();dc.redrawAll();"
+         style="display: none;">reset</a>
+      <div class="clearfix"></div>
+  </div>
+  <div id="route" class="dc-chart">
+      <strong>Syngas route</strong><br>(Value: cost increase over reference)
+      <a class="reset" href="javascript:routeChart.filterAll();dc.redrawAll();"
+         style="display: none;">reset</a>
+      <div class="clearfix"></div>
+  </div>
+  <div id="costs" class="dc-chart">
+      <strong>Costs scenario</strong><br>(Value: cost increase over reference)
+      <a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();"
+         style="display: none;">reset</a>
+      <div class="clearfix"></div>
+  </div>
+  <div id="results" class="dc-chart">
+      <strong>Results</strong>
+      <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();"
+         style="display: none;">reset</a>
+      <div class="clearfix"></div>
+  </div>
   
   <script src="resultsScripts.js"></script>
 </body>
