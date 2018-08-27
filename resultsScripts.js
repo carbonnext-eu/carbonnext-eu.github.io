@@ -47,19 +47,7 @@ d3.csv("results-data.csv").then(function(data) {
     .renderVerticalGridLines(true)
     .renderHorizontalGridLines(true)
     .yAxisLabel("Cost difference to reference [€/kg]")
-    .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")
-    .renderTitle(true)
-    .title(function(d){
-      //console.log(d);
-      return [
-          d.source,
-          '<b>pathway:</b> ' + d.Pathway,
-          '<b>GHG scenario:</b> ' + d.scenario,
-          '<b>cost scenario:</b> ' + d.costScen,
-          '<b>cost increase:</b> ' + d.key[1],
-          '<b>GHG increase/decrease:</b> ' + d.key[2],
-      ].join('\n');
-    })
+    .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")    
     .dimension(diffDimension)
     .group(minCostSumGroup)
     .seriesAccessor(function(d) {return d.key[0];})
@@ -104,6 +92,18 @@ var subChart = function(c) {
   //    .symbol(symbolAccessor)
       .symbolSize(8)
       .highlightedSize(10)
+      .renderTitle(true)
+      .title(function(d){
+        //console.log(d);
+        return [
+            d.source,
+            '<b>pathway:</b> ' + d.Pathway,
+            '<b>GHG scenario:</b> ' + d.scenario,
+            '<b>cost scenario:</b> ' + d.costScen,
+            '<b>cost increase:</b> ' + d.key[1],
+            '<b>GHG increase/decrease:</b> ' + d.key[2],
+        ].join('\n');
+      })
 };
 var pathways = function(d) {
   if(d.Pathway == "Propylene") {
