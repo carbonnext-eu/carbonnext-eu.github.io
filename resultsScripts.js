@@ -6,7 +6,7 @@ var costsChart = dc.rowChart("#costs");
 
 
 d3.csv("results-data.csv").then(function(data) {
-  console.log(data);
+  //console.log(data);
   var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price"];
   data.forEach(function(ex){
     for(i=1;i<5;i++){
@@ -16,7 +16,7 @@ d3.csv("results-data.csv").then(function(data) {
       experiments2.push(ex2);
     }
   });
-  console.log(experiments2);
+  //console.log(experiments2);
 
   var symbolScale         = d3.scaleOrdinal().range(d3.symbols),
     //symbolAccessor      = function(d) { return symbolScale(d.key[0]); },
@@ -33,8 +33,6 @@ d3.csv("results-data.csv").then(function(data) {
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
-  console.log(ndx);
-  console.log(chart);
   chart
     .width(768)
     .height(480)
