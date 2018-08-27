@@ -17,7 +17,7 @@ else if (screenWidth > 1600) {
   bigWidth = 1200;
 }
 else {
-  smallWidth = screenWidth/4-1;
+  smallWidth = screenWidth/4-40;
   bigWidth = screenWidth-smallWidth;
 }
 if (screenHeight < 800) {
@@ -26,7 +26,7 @@ if (screenHeight < 800) {
 }
 else {
     smallHeight = 300;
-    bigHeight = screenHeight-301;
+    bigHeight = screenHeight-310;
 }
 
 d3.csv("results-data.csv").then(function(data) {
