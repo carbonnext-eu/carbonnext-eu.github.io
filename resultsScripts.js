@@ -170,7 +170,7 @@ var pathways = function(d) {
 function reduceAddAvg(attr) {
   return function(p,v) {
     ++p.count
-    p.sum += +v[attr];
+    p.sum += v[attr];
     p.avg = p.sum/p.count;
     return p;
   };
@@ -178,7 +178,7 @@ function reduceAddAvg(attr) {
 function reduceRemoveAvg(attr) {
   return function(p,v) {
     --p.count
-    p.sum -= +v[attr];
+    p.sum -= v[attr];
     p.avg = p.count ? p.sum/p.count : 0;
     return p;
   };
