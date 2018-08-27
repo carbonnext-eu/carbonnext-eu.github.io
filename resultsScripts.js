@@ -35,8 +35,9 @@ d3.csv("results-data.csv").then(function(data) {
   data.forEach(function(ex){
     for(i=1;i<5;i++){
       ex2=JSON.parse(JSON.stringify(ex));
-      ex2.costs = ex["costs"+i];
+      ex2.costs = ex["costs"+i] -0;
       ex2.costScen = costNames[i-1];
+      ex2.diff = ex.diff -0;
       experiments2.push(ex2);
     }
   });
@@ -62,7 +63,7 @@ d3.csv("results-data.csv").then(function(data) {
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
     pathwayDimension    = ndx.dimension(function(d) {return pathways(d);}),
     pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
-    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, +d.diff];}),    
+    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   chart
