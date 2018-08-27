@@ -90,7 +90,7 @@ d3.csv("results-data.csv").then(function(data) {
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
   chart.render();
-  break;
+  return;
   sourceChart
   		.width(smallWidth)
         .height(smallHeight)
