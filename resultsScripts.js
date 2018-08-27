@@ -88,7 +88,7 @@ d3.csv("results-data.csv").then(function(data) {
     .legend(dc.legend().x(bigWidth-140).y(bigHeight-260));
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
-  chart.render();
+  //chart.render();
   sourceChart
   		.width(smallWidth)
         .height(smallHeight)
