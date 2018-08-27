@@ -107,7 +107,7 @@ d3.csv("results-data.csv").then(function(data) {
         .group(costsGroup)
         .xAxis().ticks(0);
   routeChart
-  			.width(3smallWidth00)
+  			.width(smallWidth)
         .elasticX(true)
         .dimension(routeDimension)
         .group(routeGroup)
