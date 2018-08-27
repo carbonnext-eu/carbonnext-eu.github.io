@@ -36,8 +36,8 @@ d3.csv("results-data.csv").then(function(data) {
   chart
     .width(768)
     .height(480)
-    .ordinalColors(["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3",
-       "#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"])
+    .ordinalColors(["#eb3b5a","#fa8231","#f7b731","#20bf6b","#0fb9b1",
+       "#45aaf2","#4b7bec","#a55eea","#d1d8e0","#778ca3","#ccebc5","#ffed6f"])
     .x(d3.scaleLinear().domain([-100,100]))
     .elasticX(true)
     .elasticY(true)
