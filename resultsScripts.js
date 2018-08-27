@@ -67,7 +67,7 @@ d3.csv("results-data.csv").then(function(data) {
 
   chart
     .width(bigWidth)
-    .height(480)
+    .height(bigHeight)
     .ordinalColors(colorPalette)
     .x(d3.scaleLinear().domain([-100,100]))
     .elasticX(true)
@@ -89,32 +89,36 @@ d3.csv("results-data.csv").then(function(data) {
     chart.yAxis().ticks(3, "s");
   chart.render();
   sourceChart
-  			.width(smallWidth)
+  		.width(smallWidth)
+        .height(smallHeight)
         .radius(80)
         .dimension(sourceDimension)
         .group(sourceGroup);
   
   scenarioChart
-  			.width(smallWidth)
+  		.width(smallWidth)
+        .height(smallHeight)
         .elasticX(true)
         .dimension(scenarioDimension)
         .group(scenarioGroup)
         .xAxis().ticks(0);
   costsChart
-  			.width(smallWidth)
+  		.width(smallWidth)
+        .height(smallHeight)
         .elasticX(true)
         .dimension(costsDimension)
         .group(costsGroup)
         .xAxis().ticks(0);
   routeChart
-  			.width(smallWidth)
+  		.width(smallWidth)
+        .height(smallHeight)
         .elasticX(true)
         .dimension(routeDimension)
         .group(routeGroup)
         .xAxis().ticks(0);
   pathwayChart
-  			.width(smallWidth)
-        .height(480)
+  		.width(smallWidth)
+        .height(bigHeight)
         .elasticX(true)
         .ordinalColors(colorPalette)
         .ordering(dc.pluck('key'))
