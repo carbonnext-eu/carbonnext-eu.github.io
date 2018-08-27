@@ -50,9 +50,17 @@ d3.csv("results-data.csv").then(function(data) {
     .renderHorizontalGridLines(true)
     .yAxisLabel("Cost difference to reference [€/kg]")
     .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")
+    .renderTitle(true)
     .title(function(d){
-      console.log(d);
-      return d.source + ", " + d.source + ", " + d.Pathway + ", " + d.scenario + ", " + d.costScen + ", [" + d.key[1]+ ", " + d.key[2]+ "]";
+      //console.log(d);
+      return [
+          d.source,
+          '<b>pathway:</b> ' + d.Pathway,
+          '<b>GHG scenario:</b> ' + d.scenario,
+          '<b>cost scenario:</b> ' + d.costScen,
+          '<b>cost increase:</b> ' + d.key[1],
+          '<b>GHG increase/decrease:</b> ' + d.key[2],
+      ].join('\n');
     })
     .dimension(diffDimension)
     .group(minCostSumGroup)
