@@ -85,7 +85,7 @@ d3.csv("results-data.csv").then(function(data) {
   
   var texts = document.getElementsByTagName('text');
   for(var i = 0; i < texts.length; i++) {
-    texts[i].innerHTML = texts[i].innerHTML.replace("CO2","CO<sub>2</sub>");
+    texts[i].innerHTML = texts[i].innerHTML.replace("CO2","CO&#8322;");
   }
 });
 
