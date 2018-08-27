@@ -60,23 +60,23 @@ d3.csv("results-data.csv").then(function(data) {
     chart.yAxis().ticks(3, "s");
   chart.render();
   sourceChart
-  			.width(192)
+  			.width(300)
         .radius(80)
         .dimension(sourceDimension)
         .group(sourceGroup);
   
   scenarioChart
-  			.width(192)
+  			.width(300)
         .dimension(scenarioDimension)
         .group(scenarioGroup)
         .xAxis().ticks(0);
   costsChart
-  			.width(192)
+  			.width(300)
         .dimension(costsDimension)
         .group(costsGroup)
         .xAxis().ticks(0);
   routeChart
-  			.width(192)
+  			.width(300)
         .dimension(routeDimension)
         .group(routeGroup)
         .xAxis().ticks(0);
