@@ -73,22 +73,26 @@ d3.csv("results-data.csv").then(function(data) {
   
   scenarioChart
   			.width(300)
+        .elasticX(true)
         .dimension(scenarioDimension)
         .group(scenarioGroup)
         .xAxis().ticks(0);
   costsChart
   			.width(300)
+        .elasticX(true)
         .dimension(costsDimension)
         .group(costsGroup)
         .xAxis().ticks(0);
   routeChart
   			.width(300)
+        .elasticX(true)
         .dimension(routeDimension)
         .group(routeGroup)
         .xAxis().ticks(0);
   pathwayChart
   			.width(300)
         .height(480)
+        .elasticX(true)
         .ordinalColors(colorPalette)
         .dimension(pathwayDimension)
         .group(pathwayGroup)
