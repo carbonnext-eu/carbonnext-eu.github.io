@@ -19,7 +19,13 @@ d3.csv("results-data.csv").then(function(data) {
   });
   //console.log(experiments2);
 
-  var symbolScale         = d3.scaleOrdinal().range(d3.symbols),
+  var symbolScale       = d3.scaleOrdinal().range(d3.symbols),      
+    // https://flatuicolors.com/palette/de
+    colorPalette        = ["#eb3b5a","#fa8231","#f7b731","#20bf6b","#0fb9b1",
+       "#45aaf2","#4b7bec","#a55eea","#d1d8e0","#778ca3","#ccebc5","#ffed6f"],
+    //colorScale = d3.scale.ordinal()
+    //   .domain(["San Francisco", "New York", "Seattle"])
+    //   .range(colorPalette);
     //symbolAccessor      = function(d) { return symbolScale(d.key[0]); },
     ndx                 = crossfilter(experiments2),
     all                 = ndx.groupAll(),
@@ -32,16 +38,14 @@ d3.csv("results-data.csv").then(function(data) {
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
     pathwayDimension    = ndx.dimension(function(d) {return d.Pathway;}),
-    pathwayGroup       = pathwayDimension.group().reduceSum(function(d) {return d.costs;}),
+    pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.costs;}),
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   chart
     .width(768)
     .height(480)
-    // https://flatuicolors.com/palette/de
-    .ordinalColors(["#eb3b5a","#fa8231","#f7b731","#20bf6b","#0fb9b1",
-       "#45aaf2","#4b7bec","#a55eea","#d1d8e0","#778ca3","#ccebc5","#ffed6f"])
+    .ordinalColors(colorPalette)
     .x(d3.scaleLinear().domain([-100,100]))
     .elasticX(true)
     .elasticY(true)
@@ -84,6 +88,8 @@ d3.csv("results-data.csv").then(function(data) {
         .xAxis().ticks(0);
   pathwayChart
   			.width(300)
+        .height(480)
+        .ordinalColors(colorPalette)
         .dimension(pathwayDimension)
         .group(pathwayGroup)
         .xAxis().ticks(0);
