@@ -3,6 +3,7 @@ var sourceChart = dc.pieChart("#source");
 var scenarioChart = dc.rowChart("#scenario");
 var routeChart = dc.rowChart("#route");
 var costsChart = dc.rowChart("#costs");
+var pathwayChart = dc.rowChart("#pathway");
 
 
 d3.csv("results-data.csv").then(function(data) {
@@ -30,6 +31,8 @@ d3.csv("results-data.csv").then(function(data) {
     costsGroup          = costsDimension.group().reduceSum(function(d) {return d.costs;}),
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
+    pathwayDimension    = ndx.dimension(function(d) {return d.Pathway;}),
+    pathwayGroup       = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
@@ -77,6 +80,11 @@ d3.csv("results-data.csv").then(function(data) {
   			.width(300)
         .dimension(routeDimension)
         .group(routeGroup)
+        .xAxis().ticks(0);
+  pathwayChart
+  			.width(300)
+        .dimension(pathwayDimension)
+        .group(pathwayGroup)
         .xAxis().ticks(0);
   
   dc.renderAll();
