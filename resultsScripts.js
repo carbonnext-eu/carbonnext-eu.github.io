@@ -37,9 +37,9 @@ d3.csv("results-data.csv").then(function(data) {
     costsGroup          = costsDimension.group().reduceSum(function(d) {return d.costs;}),
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
-    pathwayDimension    = ndx.dimension(function(d) {return d.Pathway;}),
-    pathwayGroup        = pathwayDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg),
-    diffDimension       = ndx.dimension(function(d) {return [d.Pathway, d.scenario, d.costScen, d.syngas, +d.diff];}),    
+    pathwayDimension    = ndx.dimension(function(d) {return pathways(d);}),
+    pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
+    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   chart
@@ -126,7 +126,7 @@ var subChart = function(c) {
         ].join('\n');
       })
 };
-/*var pathways = function(d) {
+var pathways = function(d) {
   if(d.Pathway == "Propylene") {
     return "Ethylene";
   }
@@ -138,7 +138,7 @@ var subChart = function(c) {
   }
   return d.Pathway;
 };
-*/
+
 function reduceAddAvg(attr) {
   return function(p,v) {
     ++p.count
