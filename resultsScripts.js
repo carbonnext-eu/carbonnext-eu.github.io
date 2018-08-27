@@ -50,7 +50,7 @@ d3.csv("results-data.csv").then(function(data) {
     .renderHorizontalGridLines(true)
     .yAxisLabel("Cost difference to reference [€/kg]")
     .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")
-    .label(function(d){
+    .title(function(d){
       console.log(d);
       return d.source + ", " + d.source + ", " + d.Pathway + ", " + d.scenario + ", " + d.costScen + ", [" + d.key[1]+ ", " + d.key[2]+ "]";
     })
