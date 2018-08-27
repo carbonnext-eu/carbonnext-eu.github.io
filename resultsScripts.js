@@ -41,7 +41,7 @@ d3.csv("results-data.csv").then(function(data) {
       experiments2.push(ex2);
     }
   });
-  //console.log(experiments2);
+  console.log(experiments2);
 
   var symbolScale       = d3.scaleOrdinal().range(d3.symbols),      
     // https://flatuicolors.com/palette/de
