@@ -20,6 +20,14 @@ else {
   smallWidth = screenWidth/4-1;
   bigWidth = screenWidth-smallWidth;
 }
+if (screenHeight < 800) {
+    smallHeight = 200;
+    bigHeight = 480;
+}
+else {
+    smallHeight = 300;
+    bigHeight = screenHeight-301;
+}
 
 d3.csv("results-data.csv").then(function(data) {
   //console.log(data);
