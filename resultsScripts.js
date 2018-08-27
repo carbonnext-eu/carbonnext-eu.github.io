@@ -94,14 +94,14 @@ var subChart = function(c) {
       .highlightedSize(10)
       .renderTitle(true)
       .title(function(d){
-        //console.log(d);
+        console.log(d);
         return [
             d.source,
             '<b>pathway:</b> ' + d.Pathway,
             '<b>GHG scenario:</b> ' + d.scenario,
             '<b>cost scenario:</b> ' + d.costScen,
-            '<b>cost increase:</b> ' + d.key[1],
-            '<b>GHG increase/decrease:</b> ' + d.key[2],
+            '<b>cost increase:</b> ' + d.key[0],
+            '<b>GHG increase/decrease:</b> ' + d.key[1],
         ].join('\n');
       })
 };
