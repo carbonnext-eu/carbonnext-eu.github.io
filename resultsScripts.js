@@ -89,7 +89,8 @@ d3.csv("results-data.csv").then(function(data) {
     .legend(dc.legend().x(bigWidth-140).y(bigHeight-260));
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
-  //chart.render();
+  chart.render();
+  break;
   sourceChart
   		.width(smallWidth)
         .height(smallHeight)
@@ -127,7 +128,6 @@ d3.csv("results-data.csv").then(function(data) {
         .dimension(pathwayDimension)
         .group(pathwayGroup)
         .xAxis().ticks(0);
-  console.log(pathwayChart);
   dc.renderAll();
   console.log("render done");
   /*var texts = document.getElementsByTagName('text');
