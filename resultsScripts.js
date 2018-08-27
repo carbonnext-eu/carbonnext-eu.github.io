@@ -37,8 +37,8 @@ d3.csv("results-data.csv").then(function(data) {
     costsGroup          = costsDimension.group().reduceSum(function(d) {return d.costs;}),
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
-    pathwayDimension    = ndx.dimension(function(d) {return d.Pathway;}),
-    pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.costs;}),
+    pathwayDimension    = ndx.dimension(function(d) {return pathways(d);}),
+    pathwayGroup        = pathwayDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg),
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, +d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
@@ -94,6 +94,7 @@ d3.csv("results-data.csv").then(function(data) {
         .height(480)
         .elasticX(true)
         .ordinalColors(colorPalette)
+        .ordering(dc.pluck('key'))
         .dimension(pathwayDimension)
         .group(pathwayGroup)
         .xAxis().ticks(0);
