@@ -51,7 +51,7 @@ d3.csv("results-data.csv").then(function(data) {
     .dimension(diffDimension)
     .group(minCostSumGroup)
     .seriesAccessor(function(d) {return d.key[0];})
-    .keyAccessor(function(d) {return +d.key[1];})
+    .keyAccessor(function(d) {return +d.key[4];})
     .valueAccessor(function(d) {return +d.value.avg;})
     .legend(dc.legend().x(600).y(200));
     chart.xAxis().ticks(3, "s");
