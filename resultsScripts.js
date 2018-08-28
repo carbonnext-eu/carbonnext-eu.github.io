@@ -151,8 +151,8 @@ var subChart = function(c) {
             'cost scenario: ' + d.key[2],
             'syngas route: ' + d.key[3],
             ,
-            'cost increase: ' + d.key[4],
-            'GHG increase/decrease: ' + d.value.avg,
+            'cost increase/decrease: ' + d.value.avg + "%",
+            'GHG increase/decrease: ' + d.key[4] + "kg CO&#8322;-eq",
         ].join('\n');
       })
 };
