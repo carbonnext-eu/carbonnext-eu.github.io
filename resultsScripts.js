@@ -66,6 +66,8 @@ d3.csv("results-data.csv").then(function(data) {
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
+  console.log(diffDimension);
+  console.log(minCostSumGroup);  
   chart
     .width(bigWidth)
     .height(bigHeight)
