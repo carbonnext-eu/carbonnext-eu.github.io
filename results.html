@@ -3,13 +3,21 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.6/crossfilter.min.js" integrity="sha256-KWOElvqz05e5RJMjM8TG7qJ2g6Xg0nfpsTwtKAUWaOI=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.6/dc.js" integrity="sha256-FGJS2nrJ2Qodoaflk/q1D0EwSOe9uxiR0DoHK5+OJbI=" crossorigin="anonymous"></script>
-  
+
   <style>
+    body {
+      background: #fefdfc;
+    }
     #results.dc-chart .symbol.fadeout {
       fill-opacity: 0.05;
       stroke-opacity: 0;
     }
+    .clearfix {
+      border-bottom: 1px solid #ececed;
+    }
     .dc-chart {
+      background: white;
+      text-align: center;
       margin: 5px;
       padding: 3px;
       border: 1px solid #ececed;
@@ -23,7 +31,7 @@
   <div id="source" class="dc-chart">
       <strong>Carbon source </strong><a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
          style="display: none;"> reset</a>
-    <br>(share of circle: cost increase)      
+    <br>(share of circle: cost increase)
       <div class="clearfix"></div>
   </div>
   <div id="scenario" class="dc-chart">
@@ -42,11 +50,12 @@
   <div id="costs" class="dc-chart">
       <strong>Costs scenario </strong><a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();"
          style="display: none;"> reset</a>
-    <br>(Value: cost increase)      
+    <br>(Value: cost increase)
       <div class="clearfix"></div>
   </div>
   <div id="results" class="dc-chart">
       <strong>Results </strong>
+      <br>(Relative cost increase over absolute GHG difference. Values below and left of absolute zero are best.)
       <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();"
          style="display: none;"> reset</a>
       <div class="clearfix"></div>
@@ -54,7 +63,7 @@
   <div id="pathway" class="dc-chart">
       <strong>Pathways </strong><a class="reset" href="javascript:pathwayChart.filterAll();dc.redrawAll();"
          style="display: none;"> reset</a>
-    <br>(Value: GHG increase/decrease)      
+    <br>(Value: GHG increase/decrease)
       <div class="clearfix"></div>
   </div>
   <script src="resultsScripts.js"></script>
