@@ -35,13 +35,13 @@ d3.csv("results-data.csv").then(function(data) {
   data.forEach(function(ex){
     for(i=1;i<5;i++){
       ex2=JSON.parse(JSON.stringify(ex));
-      ex2.costs = ex["costs"+i] -0;
+      ex2.costs = ex["costs"+i] *100;
       ex2.costScen = costNames[i-1];
       ex2.diff = ex.diff -0;
       experiments2.push(ex2);
     }
   });
-  console.log(experiments2);
+  //console.log(experiments2);
 
   var symbolScale       = d3.scaleOrdinal().range(d3.symbols),      
     // https://flatuicolors.com/palette/de
@@ -63,7 +63,7 @@ d3.csv("results-data.csv").then(function(data) {
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
     pathwayDimension    = ndx.dimension(function(d) {return pathways(d);}),
     pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
-    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff -0];}),    
+    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff];}),    
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
   chart
@@ -89,9 +89,6 @@ d3.csv("results-data.csv").then(function(data) {
     chart.xAxis().ticks(3, "s");
     chart.yAxis().ticks(3, "s");
   chart.render();
-  console.log(chart);
-  return;
-    
   sourceChart
   		.width(smallWidth)
         .height(smallHeight)
@@ -129,13 +126,13 @@ d3.csv("results-data.csv").then(function(data) {
         .dimension(pathwayDimension)
         .group(pathwayGroup)
         .xAxis().ticks(0);
+  
   dc.renderAll();
-  console.log("render done");
-  /*var texts = document.getElementsByTagName('text');
+  
+  var texts = document.getElementsByTagName('text');
   for(var i = 0; i < texts.length; i++) {
     texts[i].innerHTML = texts[i].innerHTML.replace("CO2","CO&#8322;");
   }
-  console.log(texts);*/
 });
 
 var subChart = function(c) {
@@ -151,7 +148,7 @@ var subChart = function(c) {
             'GHG scenario: ' + d.key[1],
             'cost scenario: ' + d.key[2],
             'syngas route: ' + d.key[3],
-            '',
+            ,
             'cost increase: ' + d.key[4],
             'GHG increase/decrease: ' + d.value.avg,
         ].join('\n');
@@ -173,7 +170,7 @@ var pathways = function(d) {
 function reduceAddAvg(attr) {
   return function(p,v) {
     ++p.count
-    p.sum += v[attr] -0;
+    p.sum += v[attr];
     p.avg = p.sum/p.count;
     return p;
   };
@@ -181,7 +178,7 @@ function reduceAddAvg(attr) {
 function reduceRemoveAvg(attr) {
   return function(p,v) {
     --p.count
-    p.sum -= v[attr] -0;
+    p.sum -= v[attr];
     p.avg = p.count ? p.sum/p.count : 0;
     return p;
   };
