@@ -73,6 +73,7 @@ d3.csv("results-data.csv").then(function(data) {
     .height(bigHeight)
     .ordinalColors(colorPalette)
     .x(d3.scaleLinear().domain([-100,100]))
+    .y(d3.scaleLinear().domain([-100,100]))
     .elasticX(true)
     .elasticY(true)
     .shareTitle(false)
@@ -151,8 +152,8 @@ var subChart = function(c) {
             'cost scenario: ' + d.key[2],
             'syngas route: ' + d.key[3],
             ,
-            'cost increase/decrease: ' + d.value.avg + "%",
-            'GHG increase/decrease: ' + d.key[4] + "kg CO&#8322;-eq",
+            'cost increase/decrease: ' + d.value.avg + " %",
+            'GHG increase/decrease: ' + d.key[4] + " kg CO2-eq",
         ].join('\n');
       })
 };
