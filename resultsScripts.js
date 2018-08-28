@@ -6,19 +6,19 @@ var costsChart = dc.rowChart("#costs");
 var pathwayChart = dc.rowChart("#pathway");
 
 var screenWidth = Math.min(document.documentElement.clientWidth, window.innerWidth || 768),
-    screenHeight = Math.min(document.documentElement.clientHeight, window.innerHeight || 480),
+    screenHeight = window.innerHeight,
     smallWidth, smallHeight, bigWidth, bigHeight;
 if (screenWidth < 1200) {
   smallWidth = 295;
-  bigWidth = screenWidth > 788 ? screenWidth-20 : 768;
+  bigWidth = screenWidth > 788 ? screenWidth-38 : 768;
 }
 else if (screenWidth > 1600) {
-  smallWidth = 380;
+  smallWidth = 388;
   bigWidth = 1200;
 }
 else {
-  smallWidth = screenWidth/4-60;
-  bigWidth = screenWidth-smallWidth-20;
+  smallWidth = screenWidth/4-28;
+  bigWidth = smallWidth*3+36;
 }
 if (screenHeight < 800) {
     smallHeight = 200;
@@ -26,7 +26,8 @@ if (screenHeight < 800) {
 }
 else {
     smallHeight = 300;
-    bigHeight = screenHeight-310;
+    bigHeight = screenHeight-450;
+    console.log(window.innerHeight, screenHeight, bigHeight, smallHeight);
 }
 
 d3.csv("results-data.csv").then(function(data) {
@@ -43,7 +44,7 @@ d3.csv("results-data.csv").then(function(data) {
   });
   //console.log(experiments2);
 
-  var symbolScale       = d3.scaleOrdinal().range(d3.symbols),      
+  var symbolScale       = d3.scaleOrdinal().range(d3.symbols),
     // https://flatuicolors.com/palette/de
     colorPalette        = ["#eb3b5a","#fa8231","#f7b731","#20bf6b","#0fb9b1",
        "#45aaf2","#4b7bec","#a55eea","#d1d8e0","#778ca3","#ccebc5","#ffed6f"],
@@ -63,26 +64,25 @@ d3.csv("results-data.csv").then(function(data) {
     scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
     pathwayDimension    = ndx.dimension(function(d) {return pathways(d);}),
     pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
-    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff];}),    
+    diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff];}),
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
-  console.log(diffDimension);
-  console.log(minCostSumGroup);  
   chart
     .width(bigWidth)
     .height(bigHeight)
     .ordinalColors(colorPalette)
     .x(d3.scaleLinear().domain([-100,100]))
-    .y(d3.scaleLinear().domain([-100,100]))
     .elasticX(true)
+    .xAxisPadding("3%")
     .elasticY(true)
+    .yAxisPadding("3%")
     .shareTitle(false)
     .chart(subChart)
     .brushOn(false)
     .renderVerticalGridLines(true)
     .renderHorizontalGridLines(true)
-    .yAxisLabel("Relative cost increase/decrease to reference [%]")
-    .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")    
+    .yAxisLabel("Relative cost increase/decrease to reference [%]", 24) //second number is padding
+    .xAxisLabel("GHG difference to reference [kg CO2-eq/kg]")
     .dimension(diffDimension)
     .group(minCostSumGroup)
     .seriesAccessor(function(d) {return d.key[0];})
@@ -90,15 +90,15 @@ d3.csv("results-data.csv").then(function(data) {
     .valueAccessor(function(d) {return d.value.avg;})
     .legend(dc.legend().x(bigWidth-140).y(bigHeight-260));
     chart.xAxis().ticks(3, "s");
-    chart.yAxis().ticks(3, "s");
-  chart.render();
+    chart.yAxis().ticks(3, "s").tickFormat(d3.format(',.0r'));
+  //chart.render();
   sourceChart
   		.width(smallWidth)
         .height(smallHeight)
         .radius(80)
         .dimension(sourceDimension)
         .group(sourceGroup);
-  
+
   scenarioChart
   		.width(smallWidth)
         .height(smallHeight)
@@ -129,13 +129,20 @@ d3.csv("results-data.csv").then(function(data) {
         .dimension(pathwayDimension)
         .group(pathwayGroup)
         .xAxis().ticks(0);
-  
+
+
+
   dc.renderAll();
-  
+
   var texts = document.getElementsByTagName('text');
   for(var i = 0; i < texts.length; i++) {
     texts[i].innerHTML = texts[i].innerHTML.replace("CO2","CO&#8322;");
   }
+
+  // don't know why, but needs to wait a bit for dc to finish?
+  setTimeout(function(){d3.select("#results").selectAll('.y-axis-label')
+    .attr("transform", "translate(12,224),rotate(-90)");}, 200);
+
 });
 
 var subChart = function(c) {
