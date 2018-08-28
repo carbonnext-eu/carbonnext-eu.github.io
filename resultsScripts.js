@@ -140,8 +140,10 @@ d3.csv("results-data.csv").then(function(data) {
   }
 
   // don't know why, but needs to wait a bit for dc to finish?
-  setTimeout(function(){d3.select("#results").selectAll('.y-axis-label')
-    .attr("transform", "translate(12,224),rotate(-90)");}, 200);
+  setTimeout(function(){
+      var l = d3.select("#results").selectAll('.y-axis-label');
+      l.attr("transform", l.attr("transform").replace("translate(24", "translate(12");
+   }, 200);
 
 });
 
