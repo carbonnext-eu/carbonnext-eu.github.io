@@ -18,25 +18,6 @@
     margin: 0px;
     text-align: center;
   }
-  #results.dc-chart .symbol.fadeout {
-    fill-opacity: 0.05;
-    stroke-opacity: 0;
-  }
-  .clearfix {
-    border-bottom: 1px solid #ececed;
-  }
-  body div.dc-chart {
-    display: inline-block;
-    float: none;
-    background: white;
-    text-align: center;
-    margin: 5px;
-    padding: 3px;
-    border: 1px solid #ececed;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
-  }
-
   /* Title */
   #title {
     background-color: white;
@@ -88,9 +69,36 @@
   }
   .infoSpan:hover { transform: scale(1.25); }
   #title > .additionalInfo {
-    margin: 3px 10px 0px 10px;    
+    margin: 3px 10px 0px 10px;
     width: 100%;
   }
+
+  #results.dc-chart .symbol.fadeout {
+    fill-opacity: 0.05;
+    stroke-opacity: 0;
+  }
+  .clearfix {
+    border-bottom: 1px solid #ececed;
+  }
+  .resultBlock {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .resultBlock div.dc-chart {
+    display: inline-block;
+    float: none;
+    background: white;
+    text-align: center;
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid #ececed;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
+
+
   .additionalInfo {
     max-height: 0;
     overflow-y: hidden;
@@ -126,61 +134,64 @@
 
     </div>
   </div>
-  <div id="source" class="dc-chart narrow-chart">
-    <strong>Carbon source </strong><a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
-    style="display: none;"> reset</a>
-    <br>(share of circle: cost increase)
-    <div class="additionalInfo">
-      Click on a source to limit the analysis to this source. The part of the circle shows the average cost increase over all filtered results.
+  <div class="resultBlock">
+
+    <div id="source" class="dc-chart narrow-chart">
+      <strong>Carbon source </strong><a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
+      style="display: none;"> reset</a>
+      <br>(share of circle: cost increase)
+      <div class="additionalInfo">
+        Click on a source to limit the analysis to this source. The part of the circle shows the average cost increase over all filtered results.
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div id="scenario" class="dc-chart narrow-chart">
-    <strong>GHG scenario </strong><a class="reset" href="javascript:scenarioChart.filterAll();dc.redrawAll();"
-    style="display: none;"> reset</a>
-    <br>(Value: GHG increase/decrease)
-    <div class="additionalInfo">
-      Click on a scenario to limit the analysis to this scenario. The bar length shows the average GHG increase/decrease over all filtered results. Click to the left of the "zero" for "empty" pathways. Those have no GHG change compared to the reference.
+    <div id="scenario" class="dc-chart narrow-chart">
+      <strong>GHG scenario </strong><a class="reset" href="javascript:scenarioChart.filterAll();dc.redrawAll();"
+      style="display: none;"> reset</a>
+      <br>(Value: GHG increase/decrease)
+      <div class="additionalInfo">
+        Click on a scenario to limit the analysis to this scenario. The bar length shows the average GHG increase/decrease over all filtered results. Click to the left of the "zero" for "empty" pathways. Those have no GHG change compared to the reference.
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div id="route" class="dc-chart narrow-chart">
-    <strong>Syngas route </strong>
-    <a class="reset" href="javascript:routeChart.filterAll();dc.redrawAll();"
-    style="display: none;"> reset</a>
-    <br>(Value: cost increase)
-    <div class="additionalInfo">
-      Click on a syngas route to limit the analysis to this route. The bar length shows the average cost increase over all filtered results.
+    <div id="route" class="dc-chart narrow-chart">
+      <strong>Syngas route </strong>
+      <a class="reset" href="javascript:routeChart.filterAll();dc.redrawAll();"
+      style="display: none;"> reset</a>
+      <br>(Value: cost increase)
+      <div class="additionalInfo">
+        Click on a syngas route to limit the analysis to this route. The bar length shows the average cost increase over all filtered results.
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div id="costs" class="dc-chart narrow-chart">
-    <strong>Costs scenario </strong><a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();"
-    style="display: none;"> reset</a>
-    <br>(Value: cost increase)
-    <div class="additionalInfo">
-      Click on a scenario to limit the analysis to this scenario. The bar length shows the average cost increase over all filtered results.
+    <div id="costs" class="dc-chart narrow-chart">
+      <strong>Costs scenario </strong><a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();"
+      style="display: none;"> reset</a>
+      <br>(Value: cost increase)
+      <div class="additionalInfo">
+        Click on a scenario to limit the analysis to this scenario. The bar length shows the average cost increase over all filtered results.
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div id="results" class="dc-chart wide-chart">
-    <strong>Results </strong>
-    <br>(Relative cost increase over absolute GHG difference. Values below and left of absolute zero are best.)
-    <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();"
-    style="display: none;"> reset</a>
-    <div class="additionalInfo">
-      Each dot represents one source / pathway / cost scenario / GHG scenario / syngas route combination. By clicking on the other charts, you can filter the results. By hovering over a dot, you can see detailed information. By hovering over a pathway in a legend, you can highlight all dots from this pathway.
+    <div id="results" class="dc-chart wide-chart">
+      <strong>Results </strong>
+      <br>(Relative cost increase over absolute GHG difference. Values below and left of absolute zero are best.)
+      <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();"
+      style="display: none;"> reset</a>
+      <div class="additionalInfo">
+        Each dot represents one source / pathway / cost scenario / GHG scenario / syngas route combination. By clicking on the other charts, you can filter the results. By hovering over a dot, you can see detailed information. By hovering over a pathway in a legend, you can highlight all dots from this pathway.
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div id="pathway" class="dc-chart narrow-chart">
-    <strong>Pathways </strong><a class="reset" href="javascript:pathwayChart.filterAll();dc.redrawAll();"
-    style="display: none;"> reset</a>
-    <br>(Value: GHG increase/decrease)
-    <div class="additionalInfo">
-      Click on a pathway to limit the analysis to this pathway. The bar length shows the average GHG increase/decrease over all filtered results. Click to the left of the "zero" for "empty" pathways. Those have no GHG change compared to the reference.
+    <div id="pathway" class="dc-chart narrow-chart">
+      <strong>Pathways </strong><a class="reset" href="javascript:pathwayChart.filterAll();dc.redrawAll();"
+      style="display: none;"> reset</a>
+      <br>(Value: GHG increase/decrease)
+      <div class="additionalInfo">
+        Click on a pathway to limit the analysis to this pathway. The bar length shows the average GHG increase/decrease over all filtered results. Click to the left of the "zero" for "empty" pathways. Those have no GHG change compared to the reference.
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
   </div>
   <script src="resultsScripts.js"></script>
 </body>
