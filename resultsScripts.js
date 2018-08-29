@@ -26,7 +26,7 @@ if (screenHeight < 800) {
 }
 else {
     smallHeight = 300;
-    bigHeight = screenHeight-450;
+    bigHeight = screenHeight-500;
     console.log(window.innerHeight, screenHeight, bigHeight, smallHeight);
 }
 
@@ -55,15 +55,15 @@ d3.csv("results-data.csv").then(function(data) {
     ndx                 = crossfilter(experiments2),
     all                 = ndx.groupAll(),
     sourceDimension     = ndx.dimension(function(d) {return d.source;}),
-    sourceGroup         = sourceDimension.group().reduceSum(function(d) {return d.costs;}),
+    sourceGroup         = sourceDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg),
     routeDimension      = ndx.dimension(function(d) {return d.syngas;}),
-    routeGroup          = routeDimension.group().reduceSum(function(d) {return d.costs;}),
+    routeGroup          = routeDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg),
     costsDimension      = ndx.dimension(function(d) {return d.costScen;}),
-    costsGroup          = costsDimension.group().reduceSum(function(d) {return d.costs;}),
+    costsGroup          = costsDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg),
     scenarioDimension   = ndx.dimension(function(d) {return d.scenario;}),
-    scenarioGroup       = scenarioDimension.group().reduceSum(function(d) {return d.diff;}),
+    scenarioGroup       = scenarioDimension.group().reduce(reduceAddAvg('diff'), reduceRemoveAvg('diff'), reduceInitAvg),
     pathwayDimension    = ndx.dimension(function(d) {return pathways(d);}),
-    pathwayGroup        = pathwayDimension.group().reduceSum(function(d) {return d.diff;}),
+    pathwayGroup        = pathwayDimension.group().reduce(reduceAddAvg('diff'), reduceRemoveAvg('diff'), reduceInitAvg),
     diffDimension       = ndx.dimension(function(d) {return [pathways(d), d.scenario, d.costScen, d.syngas, d.diff];}),
     minCostSumGroup     = diffDimension.group().reduce(reduceAddAvg('costs'), reduceRemoveAvg('costs'), reduceInitAvg);
 
@@ -71,7 +71,7 @@ d3.csv("results-data.csv").then(function(data) {
     .width(bigWidth)
     .height(bigHeight)
     .ordinalColors(colorPalette)
-    .x(d3.scaleLinear().domain([-100,100]))
+    .x(d3.scaleLinear().domain([-10,20]))
     .elasticX(true)
     .xAxisPadding("3%")
     .elasticY(true)
@@ -97,6 +97,7 @@ d3.csv("results-data.csv").then(function(data) {
         .height(smallHeight)
         .radius(80)
         .dimension(sourceDimension)
+        .valueAccessor(function(d) {return d.value.avg;})
         .group(sourceGroup);
 
   scenarioChart
@@ -104,6 +105,7 @@ d3.csv("results-data.csv").then(function(data) {
         .height(smallHeight)
         .elasticX(true)
         .dimension(scenarioDimension)
+        .valueAccessor(function(d) {return d.value.avg;})
         .group(scenarioGroup)
         .xAxis().ticks(0);
   costsChart
@@ -111,6 +113,7 @@ d3.csv("results-data.csv").then(function(data) {
         .height(smallHeight)
         .elasticX(true)
         .dimension(costsDimension)
+        .valueAccessor(function(d) {return d.value.avg;})
         .group(costsGroup)
         .xAxis().ticks(0);
   routeChart
@@ -118,6 +121,7 @@ d3.csv("results-data.csv").then(function(data) {
         .height(smallHeight)
         .elasticX(true)
         .dimension(routeDimension)
+        .valueAccessor(function(d) {return d.value.avg;})
         .group(routeGroup)
         .xAxis().ticks(0);
   pathwayChart
@@ -127,6 +131,7 @@ d3.csv("results-data.csv").then(function(data) {
         .ordinalColors(colorPalette)
         .ordering(dc.pluck('key'))
         .dimension(pathwayDimension)
+        .valueAccessor(function(d) {return d.value.avg;})
         .group(pathwayGroup)
         .xAxis().ticks(0);
 
@@ -140,12 +145,35 @@ d3.csv("results-data.csv").then(function(data) {
   }
 
   // don't know why, but needs to wait a bit for dc to finish?
-  setTimeout(function(){
-      var l = d3.select("#results").selectAll('.y-axis-label');
-      l.attr("transform", l.attr("transform").replace("translate(24", "translate(12");
-   }, 200);
-
+  chart.on('postRedraw', correctYLabel);
+  setTimeout(setupLayout, 1000);
 });
+
+var correctYLabel = function () {
+    var l = d3.select("#results").selectAll('.y-axis-label');
+    l.attr("transform", l.attr("transform").replace("translate(24", "translate(12"));
+}
+
+var setupLayout = function () {
+  correctYLabel();
+  console.log("switched");
+  d3.selectAll(".infoIcon").attr("fill", "#004E83").active = false;
+  d3.selectAll(".additionalInfo")
+    .style("max-height", "0")
+    .style("padding", "0");
+}
+
+
+d3.selectAll(".infoIcon").on("click", function(){
+  this.active = !this.active;
+  this.setAttribute("fill", this.active ? "red" : "#004E83");
+  d3.selectAll(".additionalInfo")
+    .style("max-height", this.active ? "9999px" : "0")
+    .style("padding", this.active ? "3px" : "0");
+});
+
+d3.selectAll(".narrow-chart").style("width", smallWidth);
+d3.selectAll(".wide-chart").style("width", bigWidth);
 
 var subChart = function(c) {
   return dc.scatterPlot(c)
