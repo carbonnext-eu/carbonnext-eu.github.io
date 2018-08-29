@@ -26,7 +26,7 @@ if (screenHeight < 800) {
 }
 else {
     smallHeight = 300;
-    bigHeight = screenHeight-500;
+    bigHeight = screenHeight-505;
     console.log(window.innerHeight, screenHeight, bigHeight, smallHeight);
 }
 
@@ -146,7 +146,7 @@ d3.csv("results-data.csv").then(function(data) {
 
   // don't know why, but needs to wait a bit for dc to finish?
   chart.on('postRedraw', correctYLabel);
-  setTimeout(setupLayout, 1000);
+  setTimeout(correctYLabel, 200);
 });
 
 var correctYLabel = function () {
@@ -154,19 +154,10 @@ var correctYLabel = function () {
     l.attr("transform", l.attr("transform").replace("translate(24", "translate(12"));
 }
 
-var setupLayout = function () {
-  correctYLabel();
-  console.log("switched");
-  d3.selectAll(".infoIcon").attr("fill", "#004E83").active = false;
-  d3.selectAll(".additionalInfo")
-    .style("max-height", "0")
-    .style("padding", "0");
-}
 
-
-d3.selectAll(".infoIcon").on("click", function(){
+d3.selectAll(".infoSpan").on("click", function(){
   this.active = !this.active;
-  this.setAttribute("fill", this.active ? "red" : "#004E83");
+  d3.selectAll(".infoIcon").attr("fill", this.active ? "red" : "#004E83");
   d3.selectAll(".additionalInfo")
     .style("max-height", this.active ? "9999px" : "0")
     .style("padding", this.active ? "3px" : "0");
