@@ -6,164 +6,181 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.6/dc.js" integrity="sha256-FGJS2nrJ2Qodoaflk/q1D0EwSOe9uxiR0DoHK5+OJbI=" crossorigin="anonymous"></script>
 
   <style>
-    body {
-      background: linear-gradient(27deg, #fcfcfc 5px, transparent 5px) 0 5px,
-                  linear-gradient(207deg, #fcfcfc 5px, transparent 5px) 10px 0px,
-                  linear-gradient(27deg, #fdfdfd 5px, transparent 5px) 0px 10px,
-                  linear-gradient(207deg, #fdfdfd 5px, transparent 5px) 10px 5px,
-                  linear-gradient(90deg, #fdfdfd 10px, transparent 10px),
-                  linear-gradient(#fcfcfc 25%, #fefefe 25%, #fefefe 50%, transparent 50%, transparent 75%, #fbfbfb 75%, #fbfbfb);
-      background-color: #fff;
-      background-size: 10px 10px;
-      margin: 0px;
-    }
-    #results.dc-chart .symbol.fadeout {
-      fill-opacity: 0.05;
-      stroke-opacity: 0;
-    }
-    .clearfix {
-      border-bottom: 1px solid #ececed;
-    }
-    .dc-chart {
-      background: white;
-      text-align: center;
-      margin: 5px;
-      padding: 3px;
-      border: 1px solid #ececed;
-      border-radius: 3px;
-      box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    }
+  body {
+    background: linear-gradient(27deg, #fcfcfc 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #fcfcfc 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #fdfdfd 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #fdfdfd 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #fdfdfd 10px, transparent 10px),
+    linear-gradient(#fcfcfc 25%, #fefefe 25%, #fefefe 50%, transparent 50%, transparent 75%, #fbfbfb 75%, #fbfbfb);
+    background-color: #fff;
+    background-size: 10px 10px;
+    margin: 0px;
+    text-align: center;
+  }
+  #results.dc-chart .symbol.fadeout {
+    fill-opacity: 0.05;
+    stroke-opacity: 0;
+  }
+  .clearfix {
+    border-bottom: 1px solid #ececed;
+  }
+  body div.dc-chart {
+    display: inline-block;
+    float: none;
+    background: white;
+    text-align: center;
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid #ececed;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
 
-    /* Title */
-		#title {
-			background-color: white;
-      margin: 0px;
-      margin-bottom: 5px;
-      padding: 8px;
-      border-bottom: 1px solid #ececed;
-      box-shadow: 0 1px 1px rgba(0,0,0,.05);
-		}
-			#eulogo {
-				height:50px;
-				margin-left:10px;
-        float: right;
-			}
-			#carbonnextlogo {
-				height: 50px;
-        vertical-align: middle;
-			}
-      #eutext {
-			display: inline-block;
-			width: 300px;
-    	vertical-align: top;
-			font-size: x-small;
-			margin-left: 4px;
-      float: right;
-		}
-    h1 {
-      display: inline-block;
-      margin: 0 50px;
-    }
-    @media (max-width: 899px) {
-      #eutext {
-      float: none;
-      margin-top: 10px;
-      }
-      h1 {
-        margin-left:0px;
-        margin-top: 10px;
-      }
-    }
-    .infoIcon {
-      width: 20px;
-      height: 20px;
-      transition: all .3s ease-in-out;
-    }
-    .infoIcon:hover { transform: scale(1.25); }
-    .additionalInfo {
-      max-height: 9999px;
-      overflow-y: hidden;
-      background: rgba(0,78,131,0.3);
-      padding: 3px;
-      margin-top: 3px;
-      transition: max-height 0.3s ease-in-out;
-    }
-    span.clear { clear: both; display: block; }
+  /* Title */
+  #title {
+    background-color: white;
+    margin: 0px;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-bottom: 1px solid #ececed;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #title > * {
+    margin: 5px 10px;
+  }
+  #eulogo {
+    height:50px;
+  }
+  #carbonnextlogo {
+    height: 50px;
+    vertical-align: middle;
+  }
+  .euBox {
+    display: flex;
+    justify-content: space-between;
+  }
+  .euText {
+    width: 210px;
+    margin-left: 5px;
+    text-align: left;
+    font-size: x-small;
+  }
+  h1 {
+    margin: 0px;
+  }
+  .infoIcon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    transform: translateY(-2px);
+    transition: all .3s ease-in-out;
+  }
+  .infoSpan {
+    font-size: 1em;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #004E83;
+  }
+  .infoSpan:hover { transform: scale(1.25); }
+  #title > .additionalInfo {
+    margin: 3px 10px 0px 10px;    
+    width: 100%;
+  }
+  .additionalInfo {
+    max-height: 0;
+    overflow-y: hidden;
+    background: rgba(0,78,131,0.3);
+    padding: 0px;
+    transition: max-height 0.3s ease-in-out;
+  }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.6/dc.css" integrity="sha256-ACDRNg4XMj44gU4axHnGqrSOjcSnoARDUboXDFX3FiY=" crossorigin="anonymous" />
 </head>
 <body>
   <div id="title">
-		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" id="carbonnextlogo"></a>
-    <h1>Cost and GHG analysis <svg class="infoIcon" fill="red" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><g><path d="M50.433,0.892c-27.119,0-49.102,21.983-49.102,49.102s21.983,49.103,49.102,49.103s49.101-21.984,49.101-49.103   S77.552,0.892,50.433,0.892z M59,79.031C59,83.433,55.194,87,50.5,87S42,83.433,42,79.031V42.469c0-4.401,3.806-7.969,8.5-7.969   s8.5,3.568,8.5,7.969V79.031z M50.433,31.214c-5.048,0-9.141-4.092-9.141-9.142c0-5.049,4.092-9.141,9.141-9.141   c5.05,0,9.142,4.092,9.142,9.141C59.574,27.122,55.482,31.214,50.433,31.214z"></path></g></svg></h1>
-    <div id="eutext">
-      <img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg" title="logo_eu" alt="logo_eu" id="eulogo">
-      This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678
+    <div class="carbonNextBox">
+      <a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" id="carbonnextlogo"></a>
     </div>
-		<div class="additionalInfo">
-			<div id="Description">
+
+    <h1>Cost and GHG analysis</h1>
+    <div class="infoSpan" title="Click here to show more information">
+      <svg class="infoIcon" fill="#004E83" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><g><path d="M50.433,0.892c-27.119,0-49.102,21.983-49.102,49.102s21.983,49.103,49.102,49.103s49.101-21.984,49.101-49.103   S77.552,0.892,50.433,0.892z M59,79.031C59,83.433,55.194,87,50.5,87S42,83.433,42,79.031V42.469c0-4.401,3.806-7.969,8.5-7.969   s8.5,3.568,8.5,7.969V79.031z M50.433,31.214c-5.048,0-9.141-4.092-9.141-9.142c0-5.049,4.092-9.141,9.141-9.141   c5.05,0,9.142,4.092,9.142,9.141C59.574,27.122,55.482,31.214,50.433,31.214z"></path></g>
+      </svg> &nbsp;Show info
+    </div>
+    <div class="euBox">
+      <img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg" title="logo_eu" alt="logo_eu" id="eulogo">
+      <div class="euText">
+        This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678
+      </div>
+    </div>
+    <div class="additionalInfo">
+      <div id="Description">
         This website displays the results of the CarbonNext economic and GHG assessment. For detals see <a href="http://carbonnext.eu" target="_blank">the website</a>.
       </div>
-			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
+      <p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
 
-		</div>
-    <span class="clear"></span>
-</div>
+    </div>
+  </div>
   <div id="source" class="dc-chart narrow-chart">
-      <strong>Carbon source </strong><a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
-         style="display: none;"> reset</a>
+    <strong>Carbon source </strong><a class="reset" href="javascript:sourceChart.filterAll();dc.redrawAll();"
+    style="display: none;"> reset</a>
     <br>(share of circle: cost increase)
     <div class="additionalInfo">
       Click on a source to limit the analysis to this source. The part of the circle shows the average cost increase over all filtered results.
     </div>
-      <div class="clearfix"></div>
+    <div class="clearfix"></div>
   </div>
   <div id="scenario" class="dc-chart narrow-chart">
-      <strong>GHG scenario </strong><a class="reset" href="javascript:scenarioChart.filterAll();dc.redrawAll();"
-         style="display: none;"> reset</a>
+    <strong>GHG scenario </strong><a class="reset" href="javascript:scenarioChart.filterAll();dc.redrawAll();"
+    style="display: none;"> reset</a>
     <br>(Value: GHG increase/decrease)
     <div class="additionalInfo">
       Click on a scenario to limit the analysis to this scenario. The bar length shows the average GHG increase/decrease over all filtered results. Click to the left of the "zero" for "empty" pathways. Those have no GHG change compared to the reference.
     </div>
-      <div class="clearfix"></div>
+    <div class="clearfix"></div>
   </div>
   <div id="route" class="dc-chart narrow-chart">
-      <strong>Syngas route </strong>
+    <strong>Syngas route </strong>
     <a class="reset" href="javascript:routeChart.filterAll();dc.redrawAll();"
-         style="display: none;"> reset</a>
+    style="display: none;"> reset</a>
     <br>(Value: cost increase)
     <div class="additionalInfo">
       Click on a syngas route to limit the analysis to this route. The bar length shows the average cost increase over all filtered results.
     </div>
-      <div class="clearfix"></div>
+    <div class="clearfix"></div>
   </div>
   <div id="costs" class="dc-chart narrow-chart">
-      <strong>Costs scenario </strong><a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();"
-         style="display: none;"> reset</a>
+    <strong>Costs scenario </strong><a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();"
+    style="display: none;"> reset</a>
     <br>(Value: cost increase)
     <div class="additionalInfo">
       Click on a scenario to limit the analysis to this scenario. The bar length shows the average cost increase over all filtered results.
     </div>
-      <div class="clearfix"></div>
+    <div class="clearfix"></div>
   </div>
   <div id="results" class="dc-chart wide-chart">
-      <strong>Results </strong>
-      <br>(Relative cost increase over absolute GHG difference. Values below and left of absolute zero are best.)
-      <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();"
-         style="display: none;"> reset</a>
-         <div class="additionalInfo">
-           Each dot represents one source / pathway / cost scenario / GHG scenario / syngas route combination. By clicking on the other charts, you can filter the results. By hovering over a dot, you can see detailed information. By hovering over a pathway in a legend, you can highlight all dots from this pathway.
-         </div>
-      <div class="clearfix"></div>
+    <strong>Results </strong>
+    <br>(Relative cost increase over absolute GHG difference. Values below and left of absolute zero are best.)
+    <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();"
+    style="display: none;"> reset</a>
+    <div class="additionalInfo">
+      Each dot represents one source / pathway / cost scenario / GHG scenario / syngas route combination. By clicking on the other charts, you can filter the results. By hovering over a dot, you can see detailed information. By hovering over a pathway in a legend, you can highlight all dots from this pathway.
+    </div>
+    <div class="clearfix"></div>
   </div>
   <div id="pathway" class="dc-chart narrow-chart">
-      <strong>Pathways </strong><a class="reset" href="javascript:pathwayChart.filterAll();dc.redrawAll();"
-         style="display: none;"> reset</a>
+    <strong>Pathways </strong><a class="reset" href="javascript:pathwayChart.filterAll();dc.redrawAll();"
+    style="display: none;"> reset</a>
     <br>(Value: GHG increase/decrease)
     <div class="additionalInfo">
       Click on a pathway to limit the analysis to this pathway. The bar length shows the average GHG increase/decrease over all filtered results. Click to the left of the "zero" for "empty" pathways. Those have no GHG change compared to the reference.
     </div>
-      <div class="clearfix"></div>
+    <div class="clearfix"></div>
   </div>
   <script src="resultsScripts.js"></script>
 </body>
