@@ -30,16 +30,20 @@ else {
     console.log(window.innerHeight, screenHeight, bigHeight, smallHeight);
 }
 
-d3.csv("results-data.csv").then(function(data) {
+d3.csv("results-data.csv").then(data => plotAllData(data));
+
+var plotAllData = function(data) {
   //console.log(data);
-  var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price"];
-  data.forEach(function(ex){
-    for(i=1;i<5;i++){
-      ex2=JSON.parse(JSON.stringify(ex));
-      ex2.costs = ex["costs"+i] -0;
-      ex2.costScen = costNames[i-1];
-      ex2.diff = ex.diff -0;
-      experiments2.push(ex2);
+  var experiments2 = [], ex2, costNames=["High e- and H2 price", "Low e-price and high H2 price", "High e-price and low H2 price", "Low e- and H2-price", "Custom"];
+  data.forEach( function(ex) {
+    for (i=1;i<6;i++){
+      if (ex["costs"+i]) {
+        ex2=JSON.parse(JSON.stringify(ex));
+        ex2.costs = ex["costs"+i] -0;
+        ex2.costScen = costNames[i-1];
+        ex2.diff = ex.diff -0;
+        experiments2.push(ex2);
+      }
     }
   });
   //console.log(experiments2);
@@ -147,7 +151,7 @@ d3.csv("results-data.csv").then(function(data) {
   // don't know why, but needs to wait a bit for dc to finish?
   chart.on('postRedraw', correctYLabel);
   setTimeout(correctYLabel, 200);
-});
+};
 
 var correctYLabel = function () {
     var l = d3.select("#results").selectAll('.y-axis-label');
@@ -216,4 +220,42 @@ function reduceRemoveAvg(attr) {
 }
 function reduceInitAvg() {
   return {count:0, sum:0, avg:0};
+}
+
+
+var reader = new FileReader();
+
+function loadFile() {
+  var file = document.querySelector('input[type=file]').files[0];
+  reader.addEventListener("load", parseFile, false);
+  if (file) {
+    reader.readAsText(file);
+  }
+}
+
+function parseFile(){
+  var doesColumnExist = false;
+  var lines = reader.result;
+  for (var i=0;i<3;i++) lines = lines.substring(lines.indexOf("\n") + 1);
+  lines = "source,scenario,syngas,Pathway,diff,costs1,costs2,costs3,costs4,costs5\n"+lines;
+  var source, scenario, syngas;
+  var data = d3.dsvFormat(",").parse(lines, function(d){
+    source = d.source === "" ? source : d.source;
+    scenario = d.scenario === "" ? scenario : d.scenario;
+    syngas = d.syngas === "" ? syngas : d.syngas;
+    return {
+      source : source,
+      scenario: scenario,
+      syngas: syngas,
+      Pathway: d.Pathway,
+      diff: d.diff,
+      costs1: d.costs1*100,
+      costs2: d.costs2*100,
+      costs3: d.costs3*100,
+      costs4: d.costs4*100,
+      costs5: d.costs5*100
+    };
+  });
+  //console.log(data);
+  plotAllData(data);
 }
