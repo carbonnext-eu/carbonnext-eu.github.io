@@ -106,6 +106,18 @@
     padding: 0px;
     transition: max-height 0.3s ease-in-out;
   }
+  .partnerLogo {
+    margin: 2px 5px;
+  }
+  .uploadDiv {
+    max-width: 600px;
+    margin: 6px auto;
+    padding: 3px;
+    border: 1px solid #ececed;
+    background: #ececed;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.6/dc.css" integrity="sha256-ACDRNg4XMj44gU4axHnGqrSOjcSnoARDUboXDFX3FiY=" crossorigin="anonymous" />
 </head>
@@ -126,12 +138,21 @@
         This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678
       </div>
     </div>
-    <div class="additionalInfo">
-      <div id="Description">
-        This website displays the results of the CarbonNext economic and GHG assessment. For detals see <a href="http://carbonnext.eu" target="_blank">the website</a>.
+    <div class="additionalInfo topInfo">
+      <div>
+        <div id="Description">
+          This website displays the results of the CarbonNext economic and GHG assessment. For details see <a href="http://carbonnext.eu" target="_blank">the CarbonNext website</a>.
+        </div>
+        <div>
+          <a href="http://www.dechema.de" target="_blank"><img class="partnerLogo" title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a>
+          <a href="http://www.sheffield.ac.uk/"><img class="partnerLogo" title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a>
+          <a href="http://trinomics.eu/"><img class="partnerLogo" title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a>
+        </div>
       </div>
-      <p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
-
+      <div class="uploadDiv">
+        You can upload your own data from the Excel tool. Please create your own calculations in the Excel tool, go to the sheet "For website" and click on the button. Then upload the created csv file here:
+        <input type="file" onchange="loadFile()" />
+      </div>
     </div>
   </div>
   <div class="resultBlock">
