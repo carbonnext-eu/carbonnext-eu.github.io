@@ -150,6 +150,9 @@ var plotAllData = function(data) {
 
   // don't know why, but needs to wait a bit for dc to finish?
   chart.on('postRedraw', correctYLabel);
+  d3.selectAll(".infoSpan").on("click", toggleInfo);
+  d3.selectAll(".narrow-chart").style("width", smallWidth);
+  d3.selectAll(".wide-chart").style("width", bigWidth);
   setTimeout(correctYLabel, 200);
 };
 
@@ -158,17 +161,15 @@ var correctYLabel = function () {
     l.attr("transform", l.attr("transform").replace("translate(24", "translate(12"));
 }
 
-
-d3.selectAll(".infoSpan").on("click", function(){
-  this.active = !this.active;
-  d3.selectAll(".infoIcon").attr("fill", this.active ? "red" : "#004E83");
+function toggleInfo(that) {
+  if (!that) that = this;
+  console.log(that);
+  that.active = !that.active;
+  d3.selectAll(".infoIcon").attr("fill", that.active ? "red" : "#004E83");
   d3.selectAll(".additionalInfo")
-    .style("max-height", this.active ? "9999px" : "0")
-    .style("padding", this.active ? "3px" : "0");
-});
-
-d3.selectAll(".narrow-chart").style("width", smallWidth);
-d3.selectAll(".wide-chart").style("width", bigWidth);
+    .style("max-height", that.active ? "9999px" : "0")
+    .style("padding", that.active ? "3px" : "0");
+}
 
 var subChart = function(c) {
   return dc.scatterPlot(c)
@@ -256,6 +257,6 @@ function parseFile(){
       costs5: d.costs5*100
     };
   });
-  console.log(data);
+  toggleInfo(d3.selectAll(".infoSpan").nodes()[0]);
   plotAllData(data);
 }
