@@ -46,7 +46,7 @@ var plotAllData = function(data) {
       }
     }
   });
-  //console.log(experiments2);
+  console.log(experiments2);
 
   var symbolScale       = d3.scaleOrdinal().range(d3.symbols),
     // https://flatuicolors.com/palette/de
@@ -256,6 +256,6 @@ function parseFile(){
       costs5: d.costs5*100
     };
   });
-  //console.log(data);
+  console.log(data);
   plotAllData(data);
 }
