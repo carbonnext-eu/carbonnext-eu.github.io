@@ -1119,14 +1119,16 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1342003;2014;Carbon dioxide (CO2);0.414;EVN Abfallverwertung Niederösterreich GmbH;Dürnrohr;Austria;48.32739;15.932417;Treatment and disposal of non-hazardous waste
 1342007;2014;Carbon dioxide (CO2);0.265;Norske Skog Bruck GmbH;Berndorf;Austria;47.416862;15.277111;Manufacture of paper and paperboard
 1342009;2014;Carbon dioxide (CO2);0.175;M.Kaindl KG;Siezenheim;Austria;47.822777;12.999722;Manufacture of veneer sheets and wood-based panels
-1342013;2014;Carbon dioxide (CO2);0.408;Wopfinger Baustoffindustrie;Wopfing;Austria;47.87225;16.085917;Manufacture of mortars
+1342013;2014;Carbon dioxide (CO2);0.314;Baumit GmbH;Wopfing;Austria;47.87271;16.08428;Manufacture of cement
+9999999;2014;Carbon dioxide (CO2);0.089;Baumit GmbH;Wopfing;Austria;47.87387;16.08616;Manufacture of lime and plaster
 1342020;2014;Carbon dioxide (CO2);2.71;OMV Refining and Marketing GmbH;Schwechat;Austria;48.144722;16.493889;Manufacture of refined petroleum products
 1342024;2014;Carbon dioxide (CO2);0.379;WIEN ENERGIE GmbH;Wien,Donaustadt;Austria;48.183334;16.45;Production of electricity
 1342025;2014;Carbon dioxide (CO2);0.152;Trans Austria Gasleitung GmbH;Baumgarten an der March;Austria;48.316223;16.875084;Transport via pipeline
 1342026;2014;Carbon dioxide (CO2);0.105;Trans Austria Gasleitung GmbH;Altenmarkt;Austria;46.674416;14.756639;Transport via pipeline
 1342046;2014;Carbon dioxide (CO2);0.204;Kirchdorfer Zementwerk Hofmann GmbH;Kirchdorf an der Krems;Austria;47.9;14;Manufacture of cement
 1342054;2014;Carbon dioxide (CO2);0.111;Linz Strom GmbH;Linz;Austria;48.268055;14.346667;Production of electricity
-1342071;2014;Carbon dioxide (CO2);0.271;Zementwerk Leube GmbH;Sankt Leonhard;Austria;47.721443;13.052528;Manufacture of cement
+1342071;2014;Carbon dioxide (CO2);0.302;Zementwerk Leube GmbH;Sankt Leonhard;Austria;47.72272;13.05229;Manufacture of cement
+9999997;2014;Carbon dioxide (CO2);0.07;Zementwerk Leube GmbH;Sankt Leonhard;Austria;47.57708;13.17722;Manufacture of lime and plaster
 1342092;2014;Carbon dioxide (CO2);0.199;W. Hamburger GmbH;Pitten;Austria;47.683334;16.133333;Manufacture of paper and paperboard
 1342094;2014;Carbon dioxide (CO2);0.196;WIEN ENERGIE GmbH;Wien,Ottakring;Austria;48.20667;16.289444;Steam and air conditioning supply
 1342096;2014;Carbon dioxide (CO2);0.302;Lafarge Zementwerke GmbH;Ehrenhausen;Austria;46.728058;15.58;Manufacture of cement
@@ -2122,3 +2124,5 @@ FacilityReportID;ReportingYear;PollutantName;MTonnes;FacilityName;City;CountryNa
 1565778;2014;Carbon dioxide (CO2);0.323;Finnfjord;FINNSNES;Norway;69.2225952;18.0821819;Manufacture of basic iron and steel and of ferro-alloys
 1565801;2014;Carbon dioxide (CO2);0.144;Sør-Norge Aluminium;Husnes;Norway;59.86813;5.768265;Aluminium production
 1565874;2014;Carbon dioxide (CO2);0.304;Statoil ASA Tjeldbergodden Metanolfabrikk;Kjørsvikbugen;Norway;63.4124222;8.68502;Temporary employment agency activities
+1101707;2014;Carbon dioxide (CO2);0.185;SCHRETTER & CIE GmbH & Co KG;Vils;Austria;47.55217;10.63637;Manufacture of cement
+9999998;2014;Carbon dioxide (CO2);0.038;SCHRETTER & CIE GmbH & Co KG;Vils;Austria;47.55217;10.63637;Manufacture of lime and plaster

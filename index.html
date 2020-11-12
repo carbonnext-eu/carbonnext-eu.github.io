@@ -201,6 +201,9 @@
 				<h1>Map of regulated CO and CO<sub>2</sub> emissions and possible consumers</h1>
 				Please click on the checkboxes on the right to display emissions and chemical parks. The size of each emitter corresponds to its yearly CO or CO<sub>2</sub> emission. The size of each possible consumer corresponds to the potential available emissions in a 10&nbsp;km radius. By clicking on a circle, more information is available.
 			</div>
+			<div>
+				For data sources and copyright, see <a href="https://github.com/carbonnext-eu/carbonnext-eu.github.io">the Readme</a>
+			</div>
 			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
 			
 		</div>
@@ -230,7 +233,7 @@
 		});
 		/* Carto light-gray basemap tiles with labels */
 		let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>. <a href="https://github.com/carbonnext-eu/carbonnext-eu.github.io">more</a>'
 			})
 			.addTo(map);
 
@@ -439,7 +442,7 @@
 					layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
 					layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
 					layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-					layer.bindPopup('<h3>' + feature.properties.FacilityName + '</h3>' + feature.properties.City + ',&nbsp;&nbsp;&nbsp;' + feature.properties.latitude + ',' + feature.properties.longitude + '<br/><i>' + feature.properties.NACEMainEconomicActivityName + '</i><br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName);
+					layer.bindPopup('<h3>' + feature.properties.FacilityName + '</h3>' + feature.properties.City + ',&nbsp;&nbsp;&nbsp;' + feature.geometry.coordinates + '<br/><i>' + feature.properties.NACEMainEconomicActivityName + '</i><br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName+'<br/>Reported year: '+feature.properties.ReportingYear);
 				}
 			});
 			return (layers);
