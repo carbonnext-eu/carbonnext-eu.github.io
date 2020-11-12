@@ -439,7 +439,7 @@
 					layers[feature.properties.NACEMainEconomicActivityName].layer.addLayer(layer);
 					layers[feature.properties.NACEMainEconomicActivityName].total += parseFloat(feature.properties.MTonnes);
 					layers[feature.properties.NACEMainEconomicActivityName].count += 1;
-					layer.bindPopup('<h3>' + feature.properties.FacilityName + '</h3><i>' + feature.properties.NACEMainEconomicActivityName + '</i><br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName);
+					layer.bindPopup('<h3>' + feature.properties.FacilityName + '</h3>' + feature.properties.City + ',&nbsp;&nbsp;&nbsp;' + feature.properties.latitude + ',' + feature.properties.longitude + '<br/><i>' + feature.properties.NACEMainEconomicActivityName + '</i><br />' + feature.properties.MTonnes + ' Mt ' + emDisplayName);
 				}
 			});
 			return (layers);
