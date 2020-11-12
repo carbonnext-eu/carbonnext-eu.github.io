@@ -27,7 +27,7 @@
 		h2 {
 			margin: 0;
 			padding: 0;
-			font: bold 12px sans-serif;	
+			font: bold 12px sans-serif;
 		}
 		h3 {
 			margin-bottom: 2px;
@@ -40,7 +40,7 @@
 			font-size: x-small;
 			margin: 4px;
 		}
-		
+
 		@media (max-width: 899px) {
 		  /* CSS that should be displayed if width is equal to or less than 800px goes here */
 			#mapTitle {
@@ -67,7 +67,7 @@
 				height: 100px;
 			}
 		}
-		
+
 		#map {
 			position: absolute;
 			top: 0;
@@ -76,7 +76,7 @@
 			left: 0;
 		}
 		.popupTable th, .popupTable td {
-			background: #f3f5f9;	
+			background: #f3f5f9;
 		}
 		.icon {
 			display: inline-block;
@@ -90,7 +90,7 @@
 			margin-left: 5px;
 			margin-bottom: 5px;
 		}
-		
+
 		/* legend styling */
 		div#layercontrol {
 			position: absolute;
@@ -125,7 +125,7 @@
 			font-size: small;
 			display: none;
 		}
-		
+
 		/* Title */
 		#mapTitle {
 			position: absolute;
@@ -135,9 +135,9 @@
 			z-index: 8009;
 			left: 46px;
 			top: 10px;
-			padding: 7px;	
+			padding: 7px;
 		}
-		
+
 		/* Size legend styling */
 		#scale {
 			position: absolute;
@@ -194,7 +194,7 @@
 		<a href="http://carbonnext.eu" target="_blank"><img title="logo_dech" src="img/CarbonNEXT_Logo_lowRes.png" alt="logo_carbonnext" id="carbonnextlogo"></a>
 		<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"title="logo_eu" alt="logo_eu" id="eulogo">
 		<div id="hiddenPartners">
-			<div id="eutext">				
+			<div id="eutext">
 				This project has received funding from the European Union’s Horizon 2020 Programme for research, technological development and demonstration under grant agreement No 723678
 			</div>
 			<div id="Description">
@@ -202,7 +202,7 @@
 				Please click on the checkboxes on the right to display emissions and chemical parks. The size of each emitter corresponds to its yearly CO or CO<sub>2</sub> emission. The size of each possible consumer corresponds to the potential available emissions in a 10&nbsp;km radius. By clicking on a circle, more information is available.
 			</div>
 			<p><a href="http://www.dechema.de" target="_blank"><img title="logo_dech" src="img/logo_dech.png" alt="logo_dech" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://www.sheffield.ac.uk/"><img title="logo_sheffield" src="img/logo_sheffield.png" alt="logo_sheffield" width="200" height="120"></a> &nbsp; &nbsp; <a href="http://trinomics.eu/"><img title="logo_trinomics" src="img/logo_trinomics.png" alt="logo_trinomics" width="200" height="120"></a></p>
-			
+
 		</div>
 	</div>
 	<!-- Size legend -->
@@ -221,7 +221,7 @@
 		</div><span data-minimized="false" id="layercontrolMinimize"><svg class="icon icon-play3">
 		<use xlink:href="#icon-play3"></use></svg></span>
 	</div>
-	<script>		
+	<script>
 		/* Set up the map with initial center and zoom level */
 		let map = L.map('map', {
 			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
@@ -237,7 +237,7 @@
 		let stats = {
 			totalMax: 0
 		};
-		
+
 		let emissionLayers;
 
 
@@ -302,7 +302,7 @@
 				.call(circleKey);
 		}
 
-		function getChemparkData(name, file, color, loadedDataWithLayers) {			
+		function getChemparkData(name, file, color, loadedDataWithLayers) {
 			fetch(file)
 				.then(response => response.text())
 				.then(myBlob => convertCSV(myBlob))
@@ -344,7 +344,7 @@
 								});
 							},
 							onEachFeature: function(feature, layer) {
-								layer.bindPopup(addPopupHandler(feature, potentials));						
+								layer.bindPopup(addPopupHandler(feature, potentials));
 							}
 						});
 						resolve(dataLayer);
@@ -352,7 +352,7 @@
 					});
 			});
 		};
-		
+
 		function getChemParkSize(potentials, feature){
 			let size = Math.sqrt(potentials[feature.properties.FacilityName]["10000"]["CO2"] / stats.totalMax) * 50;
 			if (size > 0){
@@ -362,7 +362,7 @@
 				return 3;
 			}
 		}
-		
+
 		function addPopupHandler(feature, potentials){
 			return function(){
 				var htmlstring = '<h3>' + feature.properties.FacilityName + '</h3><table class="popupTable"><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
@@ -453,7 +453,7 @@
 				resolve(loadedDataWithLayers);
 			});
 		}
-		
+
 		/* Enables parent emission class toggle to trigger all children */
 		jQuery.propHooks.checked = {
 			set: function(el, value) {
@@ -513,7 +513,7 @@
 		map.on('blur', () => {
 			map.scrollWheelZoom.disable();
 		});
-		
+
 		$('#mapTitle').on('mouseover', function() {
 			$('#hiddenPartners').css("display", "inline");
 		}).on('mouseout', function() {
@@ -522,7 +522,7 @@
 		setTimeout(function() {
 			$('#hiddenPartners').hide(500);
 		    }, 3000);
-		
+
 		$('#layercontrolMinimize').on('click', function() {
 			if ($(this).data("minimized")) {
 				$(this).data("minimized", false);
